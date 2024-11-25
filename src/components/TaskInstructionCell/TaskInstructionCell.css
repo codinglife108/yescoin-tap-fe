@@ -1,0 +1,11 @@
+.TaskInstructionCell--container {
+    width: 100%;
+    padding: 0px;
+    /* box-sizing: border-box; */
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+.TaskInstructionCell--video {
+    width: 100%;
+}

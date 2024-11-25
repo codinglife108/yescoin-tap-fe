@@ -1,0 +1,7 @@
+.BackgroundGlow {
+    height: 100%;
+    position: fixed;
+    left: -150px;
+    right: -150px;
+    z-index: -1000;
+}

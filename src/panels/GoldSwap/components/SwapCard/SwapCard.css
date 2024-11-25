@@ -1,0 +1,25 @@
+.SwapCard--container {
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    border-radius: 24px;
+    background: var(--foreground_color);
+}
+
+.SwapCard--header, .SwapCard--body {
+    width: 100%;
+    display: flex;
+}
+
+.SwapCard--header--after {
+    margin-left: auto;
+}
+
+.SwapCard--body {
+    margin-top: 12px;
+}
+
+.SwapCard--body--after {
+    margin-left: auto;
+    font-size: 18px;
+}

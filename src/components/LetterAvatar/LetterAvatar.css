@@ -1,0 +1,19 @@
+.LetterAvatar--container {
+    background: var(--foreground_color);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.LetterAvatar--container:first-child {
+    margin: 0 auto;
+}
+
+/*
+.LetterAvatar--container img {
+    width: ;
+}*/

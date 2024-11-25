@@ -1,0 +1,26 @@
+.Tab--container {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 0;
+    box-sizing: border-box;
+    border-radius: 24px;
+
+    transition: background .2s;
+}
+
+.Tab--container:hover {
+    background: rgba(256, 256, 256, .035);
+}
+
+.Tab--container img {
+    width: 24px;
+    height: 24px;
+    margin: 0 auto;
+}
+
+.Tab--container p {
+    margin-top: 4px;
+    font-size: 10px;
+    font-weight: 500;
+}

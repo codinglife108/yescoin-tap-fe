@@ -1,0 +1,79 @@
+.CoinButton--container {
+    width: 100%;
+    margin-bottom: calc(3vh - 28px);
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    z-index: 20000;
+}
+
+.CoinButton--content {
+    margin: auto;
+    max-width: min(calc(100% - 48px), 260px);
+    max-height: 38vh;
+    aspect-ratio: 1 / 1;
+    background-image: url("../../../../assets/images/coins/rocket_coin_front_400x400.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.CoinButton--content:active {
+    transform: scale(.90);
+}
+
+.CoinButton--digits--container {
+    position: fixed;
+    top: 0;
+    max-width: 0 !important;
+    min-width: 0 !important;
+    width: 0 !important;
+    left: 0;
+    background: #0a84ff;
+}
+
+.CoinButton--digits--container p {
+    position: absolute;
+    z-index: 999;
+    font-weight: 700;
+    font-size: 54px;
+    pointer-events: none;
+
+    animation: click-animation 1s ease forwards;
+}
+
+@keyframes click-animation {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-200px);
+    }
+}
+
+/*@media screen and (max-height: 670px) {
+    .CoinButton--content {
+        width: min(calc(100% - 48px), 220px);
+    }
+}
+
+@media screen and (max-height: 610px) {
+    .CoinButton--content {
+        width: min(calc(100% - 48px), 160px);
+    }
+}*/
+
+@media screen and (max-height: 640px) {
+    .CoinButton--content {
+        max-height: 35vh;
+    }
+}
+@media screen and (max-height: 580px) {
+    .CoinButton--content {
+        max-height: 30vh;
+    }
+}

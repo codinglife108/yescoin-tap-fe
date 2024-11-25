@@ -1,0 +1,19 @@
+.EnergyInfo--container {
+
+}
+
+.EnergyInfo--score {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+.EnergyInfo--score p {
+    margin-right: 5%;
+}
+.EnergyInfo--countdown {
+    width: max-content;
+    margin: 0 auto;
+    font-size: 14px;
+    color: var(--gray_light_color)
+}

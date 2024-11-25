@@ -1,0 +1,25 @@
+.TeamHeader--container {
+    width: 100%;
+    max-height: 161px;
+}
+
+.TeamHeader--container img {
+    margin: 0 auto 6px auto;
+}
+
+.TeamHeader--title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: max-content;
+    margin: 0 auto;
+}
+
+.TeamHeader--avatar {
+    width: max-content;
+    margin: 0 auto 6px auto;
+}
+
+.TeamHeader--title .Icon24ExternalLink {
+    margin-top: 7px;
+}

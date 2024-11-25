@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+.CountdownToDate--coutndown-container {
+    display: block;
+}
+
+.CountdownToDate--coutndown-yescoin {
+    margin-bottom: 40px;
+    font-weight: 500;
+    font-size: 52px;
+    font-family: "Ubuntu" !important;
+
+    background: linear-gradient(90deg, #B01908, #FE2B3A, #FF9416);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.CountdownToDate--coutndown-title {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 40px;
+    font-family: Inter !important;
+}
+
+.CountdownToDate--coutndown-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
+    margin-bottom: 40px;
+}
+
+.CountdownToDate--coutndown-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+}
+
+.CountdownToDate--coutndown-number {
+    color: #fff;
+    font-size: 46px;
+    font-weight: 400;
+    font-family: Inter !important;
+}
+
+.CountdownToDate--coutndown-text {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+    font-family: Inter !important;
+}
+
+.CountdownToDate--progress {
+    max-width: 500px;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.CountdownToDate--progress-bar {
+    background: linear-gradient(90deg, #B01908, #FE2B3A, #FF9416) !important;
+}

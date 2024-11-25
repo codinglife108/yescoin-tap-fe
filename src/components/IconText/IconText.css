@@ -1,0 +1,6 @@
+.IconText--content {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    width: max-content;
+}

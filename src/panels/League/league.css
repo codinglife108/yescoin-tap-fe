@@ -1,0 +1,187 @@
+
+.LeagueRankPage--container {
+    min-height: 100vh;
+    position: relative;
+
+    padding: 16px;
+    color: white;
+    font-family: Arial, sans-serif;
+    transition: background 0.5s ease;
+}
+.LeagueRankPage--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.LeagueRankPage--backButton,
+.LeagueRankPage--menuButton {
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.LeagueRankPage--backButton:hover,
+.LeagueRankPage--menuButton:hover {
+    transform: scale(1.1);
+}
+.LeagueRankPage--title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+.LeagueRankPage--leagueIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.LeagueRankPage--iconWrapper {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+    transition: transform 0.3s ease;
+}
+.LeagueRankPage--iconWrapper.changing {
+    transform: scale(0.8);
+}
+.LeagueRankPage--chevron {
+    color: white;
+    font-size: 32px;
+    width: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.LeagueRankPage--chevron:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+.LeagueRankPage--leagueName {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    transition: opacity 0.3s ease;
+}
+.LeagueRankPage--leagueName.changing {
+    opacity: 0;
+}
+.LeagueRankPage--leagueDescription {
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 20px;
+    transition: opacity 0.3s ease;
+}
+.LeagueRankPage--leagueDescription.changing {
+    opacity: 0;
+}
+.LeagueRankPage--tabsPanel {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    min-height: 65px;
+    margin-bottom: 16px;
+}
+.LeagueRankPage--tabs {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.LeagueRankPage--tab {
+    flex: 1;
+    padding: 12px 0;
+    margin:10px;
+    border: none;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 1;
+}
+.LeagueRankPage--tab.active {
+    color: #fff;
+}
+.LeagueRankPage--tabIndicator {
+    position: absolute;
+    margin:10px;
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    top: 0;
+    border-radius: 12px;
+    background-color: #f00;
+    transition: transform 0.3s ease;
+}
+.LeagueRankPage--periodTabs {
+    display: flex;
+    min-height: 55px;
+    border-bottom: 1px solid #333;
+    position: relative;
+}
+.LeagueRankPage--periodTab {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-weight: bold;
+    padding: 12px 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.LeagueRankPage--periodTab.active {
+    color: white;
+}
+.LeagueRankPage--periodIndicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 50%;
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+.LeagueRankPage--playerList {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius:  12px;
+    min-height: 300px;
+    height: 100%;
+    padding: 16px;
+}
+.LeagueRankPage--playerRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    height: 50px;
+    animation: fadeInUp 0.5s forwards;
+}
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.LeagueRankPage--playerRank {
+    width: 44px;
+    height: 44px;
+    margin-right: 12px;
+}
+.LeagueRankPage--playerInfo {
+    flex-grow: 1;
+    display: flex;
+    margin-left: 24px;
+    flex-direction: column;
+}
+.LeagueRankPage--playerName {
+    font-weight: bold;
+}
+.LeagueRankPage--playerCoins {
+    color: #aaa;
+}

@@ -1,0 +1,27 @@
+.UploadPhoto--button, .UploadPhoto--button-1 {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.UploadPhoto--button img {
+    margin: 0 auto;
+}
+
+.UploadPhoto--button-1 img {
+    margin: 0 auto;
+}
+
+.UploadPhoto--container {
+    text-align: center;
+}
+
+.UploadPhoto--container p {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--white_color);
+    margin-top: -28px;
+}

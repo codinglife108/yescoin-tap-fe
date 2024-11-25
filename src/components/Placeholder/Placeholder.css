@@ -1,0 +1,16 @@
+.Placeholder--container {
+    text-align: center;
+}
+
+.Placeholder--container img {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 24px auto;
+}
+
+.Placeholder--container p {
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 16px;
+    color: var(--gray_light_color);
+}

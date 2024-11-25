@@ -1,0 +1,10 @@
+.GoldRocketSwap--container input {
+    height: 22px;
+    width: 100%;
+    text-align: right;
+    font-size: 18px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    background: transparent;
+}

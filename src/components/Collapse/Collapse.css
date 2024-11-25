@@ -1,0 +1,14 @@
+.Collapse--container {
+    width: 100%;
+    padding: 16px 16px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background: var(--foreground_color);
+}
+
+.Collapse--container .Cell--container {
+    margin-bottom: 16px;
+}
+.Collapse--container .Cell--container:last-child {
+    margin-bottom: 0;
+}

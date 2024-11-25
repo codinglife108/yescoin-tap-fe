@@ -1,0 +1,67 @@
+.TeamInfo--container {
+    width: 100%;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    border-radius: 24px;
+    background: var(--foreground_color2);
+    max-height: 236px;
+}
+
+.TeamInfo--info {
+    display: flex;
+    align-items: center;
+}
+
+.TeamInfo--info--left, .TeamInfo--info--right {
+    width: 100%;
+}
+
+.TeamInfo--caption {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray_light_color);
+}
+
+.TeamInfo--info--left .TeamInfo--caption {
+    margin: 4px 0 0 33px;
+}
+
+.TeamInfo--separator {
+    width: 1px;
+    height: 52px;
+    background: var(--gray_light_color);
+    margin-left: 16px;
+}
+
+.TeamInfo--info--right {
+    margin-left: 16px;
+}
+
+.TeamInfo--info--right--title {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.TeamInfo--info--right .TeamInfo--caption {
+    margin-top: 4px;
+}
+
+.TeamInfo--actions {
+    margin-top: 10px;
+}
+.team-image-container{
+    padding: 4px;
+    border-radius: 12px;
+    background: var(--foreground_color);
+    aspect-ratio: 1;
+    width: 60px;
+    height: 60px;
+}
+.team-image-container.small{
+    width: 60px;
+    height: 60px;
+}
+.team-image-container.large{
+    width: 80px;
+    height: 77px;
+}
