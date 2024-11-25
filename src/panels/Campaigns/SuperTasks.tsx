@@ -25,6 +25,8 @@ import { ROUTE_HOME } from '../../routes';
 import { useNavigate } from 'react-router-dom';
 import InviteModal from '../../modals/inviteModal';
 import { copyText } from '../../utils/utils';
+import { resetMainButton } from '../../utils/tgButtonUtils';
+import iconLogo from "../../assets/images/coins/rocket_coin_back_100x100.png";
 
 // @ts-ignore
 const tg = window['Telegram']['WebApp'];
@@ -311,6 +313,7 @@ const SuperTasks = () => {
     }, [])
 
     useEffect(() => {
+        resetMainButton();
         // @ts-ignore
         tg.MainButton.setText("Share & Earn");
         // @ts-ignore
@@ -603,8 +606,9 @@ const SuperTasks = () => {
             <Spacing size={64} />
             {openInviteModal && (
                 <InviteModal
-                    sendButtonText={"Send"}
-                    copyButtonText={"Copy link"}
+          iconLogo={iconLogo}
+                    sendButtonText={t('modalSendButtonLabel')}
+                    copyButtonText={t('modalCopyLinkButtonLabel')}
                     containerStyle={{
                         height: "min-content",
                         paddingTop: "20px",
@@ -614,7 +618,7 @@ const SuperTasks = () => {
                     sendCallback={handleInviteFriends}
                     copyCallback={inviteLinkCopied}
                     itemData={{
-                        title: "Invite to Earn",
+                        title: t('inviteToEarn'),
                         subtitle: `When users click on this referral link, they will be directed to the ${taskData?.title} Task page, as this referral link is specific to that task.`,
                     }}
                 />

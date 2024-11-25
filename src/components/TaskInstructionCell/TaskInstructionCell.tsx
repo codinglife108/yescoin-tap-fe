@@ -5,12 +5,6 @@ const TaskInstructionCell: FC = () => {
     return (
         <a href="https://telegra.ph/Bitget-Wallet--Yescoin-Giveaway-Terms-and-Condiotions-07-20" target="_blank">
             <div className="TaskInstructionCell--container">
-                {/* <img
-                    src={require("../../assets/images/tasks/tasks_instructions.webp")}
-                    alt=""
-                    style={{ width: "100%" }}
-                /> */}
-
                 <video loop muted playsInline autoPlay className="TaskInstructionCell--video">
                     <source src={require("../../assets/images/tasks/bitget_task_video.mp4")} type="video/mp4" />
                 </video>

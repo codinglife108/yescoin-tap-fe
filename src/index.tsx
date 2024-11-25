@@ -24,6 +24,10 @@ if (tg && // @ts-ignore
     tg.setBackgroundColor('#08121D');
     // @ts-ignore
     tg.enableClosingConfirmation();
+    // // @ts-ignore
+    // tg.requestFullscreen();
+    // // @ts-ignore
+    // tg.addToHomeScreen();
     // @ts-ignore
     tg.ready();
     // @ts-ignore
@@ -46,18 +50,18 @@ root.render(
     <Provider store={store}>
         <WebAppProvider options={{ smoothButtonsTransition: false }}>
             <NextUIProvider>
-                    <TonConnectUIProvider manifestUrl={`${process.env.REACT_APP_URL}/tonconnect-manifest.json`}>
-                        <OkxWalletProvider>
-                            {/* <Web3ModalProvider> */}
-                                <main className="dark text-foreground">
-                                    <ErrorBoundary>
-                                        <App />
-                                    </ErrorBoundary>
-                                </main>
+                <TonConnectUIProvider manifestUrl={`${process.env.REACT_APP_URL}/tonconnect-manifest.json`}>
+                    <OkxWalletProvider>
+                        {/* <Web3ModalProvider> */}
+                        <main className="dark text-foreground">
+                            <ErrorBoundary>
+                                <App />
+                            </ErrorBoundary>
+                        </main>
 
-                            {/* </Web3ModalProvider> */}
-                        </OkxWalletProvider>
-                    </TonConnectUIProvider>
+                        {/* </Web3ModalProvider> */}
+                    </OkxWalletProvider>
+                </TonConnectUIProvider>
             </NextUIProvider>
         </WebAppProvider>
     </Provider>

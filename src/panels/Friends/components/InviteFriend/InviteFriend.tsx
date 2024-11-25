@@ -1,15 +1,12 @@
 import { FC, useState, useEffect } from 'react';
-import Div from "../../../../components/Div/Div";
-import { Button } from "@nextui-org/react";
-import Spacing from "../../../../components/Spacing/Spacing";
-import BottomLayout from "../../../../components/BottomLayout/BottomLayout";
 import { useTranslation } from "react-i18next";
 import { fetchData } from "../../../../utils/api";
-import { hideButton, setButtonLoader, setButtonText, showButton } from "../../../../utils/tgButtonUtils";
+import { hideButton, resetMainButton, setButtonText, showButton } from "../../../../utils/tgButtonUtils";
 import { copyText } from '../../../../utils/utils';
 import { useDispatch } from 'react-redux';
 import { SET_TOAST, getDispatchObject } from '../../../../store/reducer';
 import InviteModal from '../../../../modals/inviteModal';
+import iconLogo from "../../../../assets/images/coins/rocket_coin_back_100x100.png";
 
 // @ts-ignore
 const tg = window["Telegram"]['WebApp'];
@@ -44,7 +41,7 @@ const InviteFriend: FC<InviteFriendProps> = () => {
   const closeModal = () => {
     setOpenInviteModal(false)
     // @ts-ignore
-    tg.MainButton.setText("Share & Earn");
+    tg.MainButton.setText(t('friendsInviteButton'));
     // @ts-ignore
     tg.MainButton.show();
     // @ts-ignore
@@ -56,6 +53,7 @@ const InviteFriend: FC<InviteFriendProps> = () => {
       tg.MainButton.hide();
     }
   }
+
   const setCopyLink = async () => {
     // @ts-ignore
     const startAppParams = JSON.stringify({ inviter: `r_${tg['initDataUnsafe']['user']['id']}` });
@@ -81,6 +79,7 @@ const InviteFriend: FC<InviteFriendProps> = () => {
   }, []);
 
   useEffect(() => {
+    resetMainButton();
     // @ts-ignore
     tg.MainButton.onClick(copyLink);
     hideButton();
@@ -99,8 +98,9 @@ const InviteFriend: FC<InviteFriendProps> = () => {
     <div>
       {openInviteModal && (
         <InviteModal
-          sendButtonText={"Send"}
-          copyButtonText={"Copy link"}
+          iconLogo={iconLogo}
+          sendButtonText={t('modalSendButtonLabel')}
+          copyButtonText={t('modalCopyLinkButtonLabel')}
           containerStyle={{
             height: "min-content",
             paddingTop: "20px",
@@ -110,7 +110,7 @@ const InviteFriend: FC<InviteFriendProps> = () => {
           sendCallback={linkSend}
           copyCallback={inviteLinkCopied}
           itemData={{
-            title: "Invite a Fren",
+            title: t('friendsInviteButton'),
             subtitle: "",
           }}
         />

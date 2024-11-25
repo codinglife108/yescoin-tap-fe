@@ -12,6 +12,7 @@ import { copyText } from "../../../../utils/utils";
 import { useDispatch } from "react-redux";
 import { getDispatchObject, SET_TOAST } from "../../../../store/reducer";
 import InviteModal from '../../../../modals/inviteModal';
+import iconLogo from "../../../../assets/images/coins/rocket_coin_back_100x100.png";
 
 // @ts-ignore
 const tg = window["Telegram"]['WebApp'];
@@ -154,8 +155,9 @@ const TeamInfo: FC<TeamInfoProps> = ({ id, gold, players, role, onJoin, onLeave 
             </div>
             {openInviteModal && (
                 <InviteModal
-                    sendButtonText={"Send"}
-                    copyButtonText={"Copy link"}
+                    iconLogo={iconLogo}
+                    sendButtonText={t('modalSendButtonLabel')}
+                    copyButtonText={t('modalCopyLinkButtonLabel')}
                     containerStyle={{
                         height: "min-content",
                         paddingTop: "20px",
@@ -165,7 +167,7 @@ const TeamInfo: FC<TeamInfoProps> = ({ id, gold, players, role, onJoin, onLeave 
                     sendCallback={linkSend}
                     copyCallback={inviteLinkCopied}
                     itemData={{
-                        title: "Invite to Squad",
+                        title: t('inviteToSquad'),
                         subtitle: '',
                     }}
                 />

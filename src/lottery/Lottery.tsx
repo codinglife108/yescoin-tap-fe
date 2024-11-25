@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import RandomPopupInstantiator from "./BottomPopup/BottomPopup";
 import { ROUTE_LOTTERY_TUTORIAL, ROUTE_TASKS } from "../routes";
 import InformationModal from "../modals/InformationModal";
-import { hideButton, setButtonLoader, setButtonText, showButton } from "../utils/tgButtonUtils";
+import { hideButton, setButtonLoader, setButtonText, showButton, resetMainButton } from "../utils/tgButtonUtils";
 // @ts-ignore
 const tg = window["Telegram"]["WebApp"];
 //1 telegram premium
@@ -115,6 +115,7 @@ const Lottery = () => {
     tickets,
   ]);
   useEffect(() => {
+    resetMainButton();
     hideButton();
     setTimeout(() => {
       showButton();

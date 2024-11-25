@@ -61,3 +61,8 @@ tg.MainButton.showProgress(leaveActive);
 tg.MainButton.hideProgress();
   }
 };
+
+export const resetMainButton = () => {
+  tg.MainButton.hide();
+  tg.MainButton.offClick(); 
+};

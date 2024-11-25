@@ -1,13 +1,9 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { CancelOutlined } from "@mui/icons-material";
-import Tooltip from '@mui/material/Tooltip'
-import IconText from "../components/IconText/IconText";
-import { formatNumberWithSpaces } from "../utils/mathUtils";
 import { Button } from "@nextui-org/react";
 import "./modals.css";
-import { ModalTypes } from "../hooks/useModal";
-// @ts-ignore
-const tg = window["Telegram"]["WebApp"];
+import Spacing from "../components/Spacing/Spacing";
+import Img from "../components/Img/Img";
 
 interface BoostConfirmationModalProps {
     close: (() => void) | false;
@@ -18,6 +14,7 @@ interface BoostConfirmationModalProps {
         title: string;
         subtitle: string;
     };
+    iconLogo: string;
     sendButtonText?: string;
     copyButtonText?: string;
     containerStyle?: React.CSSProperties;
@@ -31,6 +28,7 @@ function InviteModal({
     sendButtonText = "Send",
     copyButtonText = "Copy link",
     containerStyle,
+    iconLogo,
 }: BoostConfirmationModalProps) {
     const { title, subtitle } = itemData;
     const [isVisible, setIsVisible] = useState(false);
@@ -60,6 +58,13 @@ function InviteModal({
                         <CancelOutlined />
                     </div>
                 )}
+                <br></br>
+                <Img
+                    radius={6}
+                    width={170}
+                    src={iconLogo}
+                />
+                <br></br>
                 {title && (
                     <p
                         className={`text-center font-bold text-4xl`}
@@ -90,7 +95,7 @@ function InviteModal({
                 </Button>
                 <Button
                     size="lg"
-                    style={{ minHeight: 50, background: '#39a9ffed' }}
+                    style={{ minHeight: 50, background: 'rgb(31 39 52)', color: '#4886e6' }}
                     onClick={() => {
                         setTooltip(true)
                         copyCallback();
@@ -99,6 +104,7 @@ function InviteModal({
                 >
                     {copyButtonText}
                 </Button>
+                <Spacing size={32} />
             </div>
         </div>
     );

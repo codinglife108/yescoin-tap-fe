@@ -132,7 +132,9 @@ function InformationModal({
         >
           {buttonText}
         </Button>
-        {isBoost && (
+
+        {/* We have to enable this code later. for now will disable */}
+        {/* {isBoost && (
           <Button
             size="lg"
             style={{ minHeight: floatingCenter ? 50 : isBoost ? 50 : "unset" }}
@@ -144,7 +146,8 @@ function InformationModal({
           >
             Buy with Rockets
           </Button>
-        )}
+        )} */}
+        
       </div>
     </div>
   );
