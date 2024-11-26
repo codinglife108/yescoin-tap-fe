@@ -103,7 +103,7 @@ const Admin: FC = () => {
               {data['tasks']['channels'].map((channel: any, index: number) => (
                 <Cell
                   key={index}
-                  title={channel['channelAddress'] ?? channel['link'] ?? channel['botAddress']}
+                  title={channel['channelAddress'] ?? channel['link'] ?? channel['botaddress']}
                   after={<Icon16Chevron />}
                   onClick={() => setActiveModal(MODAL_ADMIN_TASK, channel)}
                   before={

@@ -73,7 +73,13 @@ const SuperTasks = () => {
             const response = await fetchData("/tasks/get");
 
             const tasks = response.result.tasks;
+            let sections = response.result.sections;
             const superTasks = response.result.superTasks;
+
+            sections = sections.map((section: any) => ({
+                ...section,
+                steps: tasks.filter((task: any) => task.section_id === section.id)
+            }));
 
             const independentTasks = tasks.filter((task: any) => !task.supertask_id);
 
@@ -81,8 +87,9 @@ const SuperTasks = () => {
             const superTasksWithSteps = superTasks.map((superTask: any) => ({
                 ...superTask,
                 type: 'supertask',
-                steps: tasks.filter((task: any) => task.supertask_id === superTask.id)
-            }));
+                sections: sections.filter((section: any) => section.supertask_id === superTask.id),
+                steps: tasks.filter((task: any) => (task.supertask_id === superTask.id && (task?.section_id == null || task?.section_id == '' || task?.section_id == undefined)))
+            })).sort((a: any, b: any) => a.orderpriority - b.orderpriority);
 
             const allCampaigns = [
                 ...superTasksWithSteps,
@@ -154,9 +161,9 @@ const SuperTasks = () => {
         } else {
 
             if (task["award"] === -1) {
-                if (task["botAddress"]) {
+                if (task["botaddress"]) {
                     // @ts-ignore
-                    tg.openTelegramLink(`https://t.me/${task['botAddress'].replace('@', '')}`);
+                    tg.openTelegramLink(`https://t.me/${task['botaddress'].replace('@', '')}`);
                     return;
                 } else if (task["link"]) {
                     if (task["link"].startsWith("https://t.me/")) {
@@ -181,11 +188,12 @@ const SuperTasks = () => {
 
             if (task["require_input"] === true) {
                 setActiveModal(MODAL_TASK_INPUT, task);
+                return;
             }
 
-            if (task["botAddress"]) {
+            if (task["botaddress"]) {
                 // @ts-ignore
-                tg.openTelegramLink(`https://t.me/${task['botAddress'].replace('@', '')}`);
+                tg.openTelegramLink(`https://t.me/${task['botaddress'].replace('@', '')}`);
                 return
             } else if (task["link"]) {
                 if (task["link"].startsWith("https://t.me/")) {
@@ -465,9 +473,120 @@ const SuperTasks = () => {
                     }
                 </div>
 
+                {taskData?.sections?.length > 0 ? (
+                    <>
+                        {taskData.sections.map((section: any) => (
+                            <div key={section.id} className='d-block'>
+                                <div className="banner-content ">
+                                    <div className="banner-card flex items-center gap-1">
+                                        <Img
+                                            radius={12}
+                                            src={section.logourl}
+                                            width={48}
+                                            height={48}
+                                            className={"mr-3 aspect-square object-cover"}
+                                            alt={section.title}
+                                        />
+                                        <h3 className="h3">{section.title}</h3>
+                                    </div>
+                                    <div className={"my-5"}>
+                                        <p>{section.description}</p>
+                                    </div>
+                                </div>
+                                {section?.steps?.map((step: any, index: number) => {
+                                    if (step["type"] === "connect_bitget_wallet") {
+                                        return (
+                                            <TaskConnectWallet
+                                                icon={step.media_url}
+                                                taskId={step["id"]}
+                                                reward={step["award"]}
+                                                isCompleted={step["award"] === -1}
+                                            />
+                                        )
+                                    }
+                                    if (step["type"] === "refer_link_add") {
+                                        return (
+                                            <ReferralItem data={step} />
+                                        )
+                                    }
+
+                                    return (
+                                        <>
+                                            <div
+                                                key={step.id}
+                                                onClick={() => handleStepClick(index)}
+                                                id={(isStepDisabled(index) || step.award === -1) ? ("step-" + step.id) : "active-step"}
+                                                data-index={index}
+                                                className={`step-card `}
+                                            >
+                                                {step.award === -1 ? (
+                                                    <EmojiRectangle style={emojyStyle}>
+                                                        <CheckIcon />
+                                                    </EmojiRectangle>
+                                                ) : isStepDisabled(index) ? (
+                                                    <EmojiRectangle style={emojyStyle}>
+                                                        <LockRounded style={{ color: "#f7b719" }} />
+                                                    </EmojiRectangle>
+                                                ) : step.media_url ? (
+                                                    <img src={step.media_url} alt={step.title} className="step-image" />
+                                                ) : (
+                                                    <EmojiRectangle style={emojyStyle}>
+                                                        <Img
+                                                            radius={0}
+                                                            src={"/money_fly.png"}
+                                                        />
+                                                    </EmojiRectangle>
+                                                )}
+                                                <div className="step-content">
+                                                    <h4 style={{
+                                                        marginBottom: 0,
+                                                        color: isStepDisabled(index) ? "#f7b719" : "white"
+                                                    }}>
+                                                        {step.title}
+                                                    </h4>
+                                                    <Spacing size={8} />
+                                                    {okxContext.isConfirming ? (
+                                                        <p className={"text-success"}>Confirming...</p>
+                                                    ) :
+                                                        step.award === -1 || (step.type == "walllet-connect" && okxContext.isWalletConnected) || (step.type == "claim_free_mnt" && okxContext.isClaimed) ? (
+                                                            <p className={"text-success"}>Completed!</p>
+                                                        ) : (
+                                                            <IconText
+                                                                size="small"
+                                                                textColor={isStepDisabled(index) ? "#f7b719" : "white"}
+                                                                centered
+                                                                imgPath={'/rocket_coin_back_36x36.png'}
+                                                                text={formatNumberWithSpaces(step.award)}
+                                                            />
+                                                        )
+                                                    }
+                                                </div>
+                                                {step.award !== -1 ? (
+                                                    <ChevronRight isStepDisabled={isStepDisabled(index)} />
+                                                ) : null}
+                                            </div>
+                                            {isPencil && step.type === Pencils.taskLearnMoreType && (
+                                                <span style={{ color: "#3b82f6" }}
+                                                    className={"flex justify-center w-full cursor-pointer my-3"}
+                                                    onClick={() => window.open(Pencils.intruction_url, "_blank")}>
+                                                    Learn More
+                                                </span>
+                                            )}
+                                        </>
+                                    )
+
+                                })}
+                            </div>
+                        ))}
+                    </>
+                ) : (
+                    <h2 className={"h2-task-steps"}>Task Steps</h2>
+                )}
+
+
                 {taskData?.steps?.length > 0 ? (
                     <>
-                        <h2 className={"h2-task-steps"}>Task Steps</h2>
+
                         {taskData.stories?.length > 0 && (
                             <div
                                 onClick={() => setShowStories(true)}
@@ -606,7 +725,7 @@ const SuperTasks = () => {
             <Spacing size={64} />
             {openInviteModal && (
                 <InviteModal
-          iconLogo={iconLogo}
+                    iconLogo={iconLogo}
                     sendButtonText={t('modalSendButtonLabel')}
                     copyButtonText={t('modalCopyLinkButtonLabel')}
                     containerStyle={{
