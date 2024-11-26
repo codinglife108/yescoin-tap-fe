@@ -1,5 +1,5 @@
-import React, {FC, lazy, useCallback, useEffect} from "react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import React, { FC, lazy, useCallback, useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./panels/Home/Home";
 import Teams from "./panels/Teams/Teams";
 import {
@@ -32,7 +32,7 @@ import Team from "./panels/Team/Team";
 import Boosts from "./panels/Boosts/Boosts";
 import Statistics from "./panels/Statistics/Statistics";
 import FriendsBonus from "./panels/Friends/FriendsBonus";
-import {fetchData} from "./utils/api";
+import { fetchData } from "./utils/api";
 import {
     DefaultStateType,
     getDispatchObject,
@@ -49,7 +49,7 @@ import {
     SET_TICKET,
     SET_USDT,
 } from "./store/reducer";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BoostBuyConfirmModal from "./modals/BoostBuyConfirmModal";
 import TaskChannelModal from "./modals/TaskChannelModal";
 import ReferralLinkModal from "./modals/ReferralLinkModal";
@@ -86,7 +86,7 @@ const App: FC = () => {
     const [isInitialized, setIsInitialized] = React.useState(false);
     const [showBonusMalusModal, setShowBonusMalusModal] = React.useState(false);
     const [bonusMalusValue, setBonusMalusValue] = React.useState(0);
-    const [taskUrl, setTaskUrl] = React.useState<string|null>(null);
+    const [taskUrl, setTaskUrl] = React.useState<string | null>(null);
     const dispatch = useDispatch();
 
     const selector = useSelector((s: DefaultStateType) => s);
@@ -99,7 +99,7 @@ const App: FC = () => {
     const fetchUserInfo = useCallback(async () => {
         const response = await fetchData("/user/getInfo");
 
-        const {teamData, scoreData, taskId, isAmbassador} = response.result;
+        const { teamData, scoreData, taskId, isAmbassador } = response.result;
         setBonusMalusValue(scoreData.gold - scoreData.oldGold);
         dispatch(getDispatchObject(SET_LEVEL, scoreData?.level));
         dispatch(getDispatchObject(SET_GOLD, scoreData.gold));
@@ -116,13 +116,13 @@ const App: FC = () => {
                 scoreData.lastAutoClickActivityMs
             )
         );
-        if(taskId) {
+        if (taskId) {
             setTaskUrl(`${ROUTE_SUPERTASKS}/${taskId}`);
         }
         dispatch(getDispatchObject(SET_TEAM, teamData));
         dispatch(getDispatchObject(SET_AMBASSADOR_STATUS, isAmbassador));
     }, [dispatch])
-    
+
     const init = useCallback(async () => {
 
         const isInMaintainance = await getMaintainanceStatus();
@@ -166,7 +166,7 @@ const App: FC = () => {
 
         return false;
     };
-    
+
     useEffect(() => {
         if (!isInitialized) {
             return;
@@ -184,49 +184,49 @@ const App: FC = () => {
 
     return (
         <>
-            <ScreenLoader content={selector.screenPopup}/>
+            <ScreenLoader content={selector.screenPopup} />
 
             <BrowserRouter>
                 <Routes>
-                    <Route path={ROUTE_HOME} element={<Home isInitialized={isInitialized} fetchUserInfo={fetchUserInfo} taskUrl = {taskUrl}/>}/>
-                    <Route path={ROUTE_ADMIN} element={<Admin/>}/>
-                    <Route path={ROUTE_LOTTERY} element={<Lottery/>}/>
-                    <Route path={ROUTE_LOTTERY_TUTORIAL} element={<TutorialPage/>}/>
-                    <Route path={ROUTE_LOG_OF_LUCK} element={<LogsOfLuckList/>}/>
-                    <Route path={ROUTE_LOG_OF_LUCK_DETAIL} element={<LogsOfLuck/>}/>
-                    <Route path={ROUTE_WINNERS} element={<Winners/>}/>
-                    <Route path={ROUTE_TEAMS} element={<Teams/>}/>
-                    <Route path={ROUTE_WIN_LOTTERY} element={<WinnerPage/>}/>
-                    <Route path={`${ROUTE_TEAM}/:id?`} element={<Team/>}/>
-                    <Route path={ROUTE_CREATE_TEAM} element={<CreateTeam/>}/>
-                    <Route path={ROUTE_TEAM_SETTINGS} element={<TeamSettings/>}/>
-                    <Route path={ROUTE_GOLD_SWAP} element={<GoldSwap/>}/>
-                    <Route path={ROUTE_FRIENDS} element={<Friends/>}/>
-                    <Route path={ROUTE_FRIENDS_BONUS} element={<FriendsBonus/>}/>
-                    <Route path={ROUTE_TASKS} element={<CampaignsComponent/>}/>
-                    <Route path={`${ROUTE_SUPERTASKS}/:id`} element={<SuperTasks />}/>
-                    <Route path={ROUTE_BOOSTS} element={<Boosts/>}/>
-                    <Route path={ROUTE_STATISTICS} element={<Statistics/>}/>
-                    <Route path={ROUTE_BALANCE} element={<Balance/>}/>
-                    <Route path={ROUTE_LEAGUE} element={<League/>}/>
-                    <Route path={ROUTE_VIP_PAGE} element={<VipPage/>}/>
-                    <Route path={ROUTE_EXCHANGES} element={<Exchanges/>}/>
-                    <Route path={ROUTE_BLOCKGAME} element={<BlockGame/>}/>
+                    <Route path={ROUTE_HOME} element={<Home isInitialized={isInitialized} fetchUserInfo={fetchUserInfo} taskUrl={taskUrl} />} />
+                    <Route path={ROUTE_ADMIN} element={<Admin />} />
+                    <Route path={ROUTE_LOTTERY} element={<Lottery />} />
+                    {/* <Route path={ROUTE_LOTTERY_TUTORIAL} element={<TutorialPage/>}/> */}
+                    <Route path={ROUTE_LOG_OF_LUCK} element={<LogsOfLuckList />} />
+                    <Route path={ROUTE_LOG_OF_LUCK_DETAIL} element={<LogsOfLuck />} />
+                    {/* <Route path={ROUTE_WINNERS} element={<Winners/>}/> */}
+                    <Route path={ROUTE_TEAMS} element={<Teams />} />
+                    <Route path={ROUTE_WIN_LOTTERY} element={<WinnerPage />} />
+                    <Route path={`${ROUTE_TEAM}/:id?`} element={<Team />} />
+                    <Route path={ROUTE_CREATE_TEAM} element={<CreateTeam />} />
+                    <Route path={ROUTE_TEAM_SETTINGS} element={<TeamSettings />} />
+                    <Route path={ROUTE_GOLD_SWAP} element={<GoldSwap />} />
+                    <Route path={ROUTE_FRIENDS} element={<Friends />} />
+                    <Route path={ROUTE_FRIENDS_BONUS} element={<FriendsBonus />} />
+                    <Route path={ROUTE_TASKS} element={<CampaignsComponent />} />
+                    <Route path={`${ROUTE_SUPERTASKS}/:id`} element={<SuperTasks />} />
+                    <Route path={ROUTE_BOOSTS} element={<Boosts />} />
+                    <Route path={ROUTE_STATISTICS} element={<Statistics />} />
+                    <Route path={ROUTE_BALANCE} element={<Balance />} />
+                    <Route path={ROUTE_LEAGUE} element={<League />} />
+                    <Route path={ROUTE_VIP_PAGE} element={<VipPage />} />
+                    <Route path={ROUTE_EXCHANGES} element={<Exchanges />} />
+                    <Route path={ROUTE_BLOCKGAME} element={<BlockGame />} />
                     <Route path="*">panel not found</Route>
                 </Routes>
             </BrowserRouter>
 
             <>
-                <BoostEnergyModal/>
+                <BoostEnergyModal />
                 {/*todo cambiare il check da > a != e cambiare il be da 3 a 7 giorni */}
-                {showBonusMalusModal && bonusMalusValue > 0 && <BonusMalus bonusMalusValue={bonusMalusValue} onClose={() => setShowBonusMalusModal(false)}/>}
-                <BoostBuyConfirmModal/>
-                <TaskChannelModal/>
+                {showBonusMalusModal && bonusMalusValue > 0 && <BonusMalus bonusMalusValue={bonusMalusValue} onClose={() => setShowBonusMalusModal(false)} />}
+                <BoostBuyConfirmModal />
+                <TaskChannelModal />
                 <ReferralLinkModal />
-                <ModalInfo/>
-                <WalletConnectModal/>
-                <AdminTaskModal/>
-                <CustomToast/>
+                <ModalInfo />
+                <WalletConnectModal />
+                <AdminTaskModal />
+                <CustomToast />
             </>
         </>
     );
