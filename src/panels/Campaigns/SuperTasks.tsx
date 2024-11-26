@@ -478,18 +478,20 @@ const SuperTasks = () => {
                         {taskData.sections.map((section: any) => (
                             <div key={section.id} className='d-block'>
                                 <div className="banner-content ">
-                                    <div className="banner-card flex items-center gap-1">
-                                        <Img
+                                    <div className='banner-card flex items-center gap-1'>
+                                        {section.logourl && <Img
                                             radius={12}
                                             src={section.logourl}
                                             width={48}
                                             height={48}
-                                            className={"mr-3 aspect-square object-cover"}
+                                            className={
+                                                'mr-3 aspect-square object-cover'
+                                            }
                                             alt={section.title}
-                                        />
-                                        <h3 className="h3">{section.title}</h3>
+                                        />}
+                                        <h3 className='h3'>{section.title}</h3>
                                     </div>
-                                    <div className={"my-5"}>
+                                    <div className={'my-5'}>
                                         <p>{section.description}</p>
                                     </div>
                                 </div>
