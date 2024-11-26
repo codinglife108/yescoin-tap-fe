@@ -1,22 +1,21 @@
-
-const LEVELS:any = {
-    "Fudders league": {
+const LEVELS: any = {
+    'Fudders league': {
         name: 'Fudders',
         icon: '1',
     },
-    "Jeets league": {
+    'Jeets league': {
         name: 'Jeets',
         icon: '2',
     },
-    "Degens league": {
+    'Degens league': {
         name: 'Degens',
         icon: '3',
     },
-    "Hodlers league": {
+    'Hodlers league': {
         name: 'Holders',
         icon: '4',
     },
-    "Diamond hands league": {
+    'Diamond hands league': {
         name: 'Diamond',
         icon: '5',
     },
@@ -44,7 +43,7 @@ const LEVELS:any = {
         name: 'Mythic',
         icon: 'mythic',
     },*/
-};
+}
 export const convertLevelIdToLevel = (levelId: any) => {
-    return LEVELS[levelId];
+    return LEVELS[levelId]
 }

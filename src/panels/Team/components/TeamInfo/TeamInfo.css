@@ -12,7 +12,8 @@
     align-items: center;
 }
 
-.TeamInfo--info--left, .TeamInfo--info--right {
+.TeamInfo--info--left,
+.TeamInfo--info--right {
     width: 100%;
 }
 
@@ -49,7 +50,7 @@
 .TeamInfo--actions {
     margin-top: 10px;
 }
-.team-image-container{
+.team-image-container {
     padding: 4px;
     border-radius: 12px;
     background: var(--foreground_color);
@@ -57,11 +58,11 @@
     width: 60px;
     height: 60px;
 }
-.team-image-container.small{
+.team-image-container.small {
     width: 60px;
     height: 60px;
 }
-.team-image-container.large{
+.team-image-container.large {
     width: 80px;
     height: 77px;
 }

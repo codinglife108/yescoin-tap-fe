@@ -1,5 +1,5 @@
-import React, {FC, ReactNode} from 'react';
-import './LetterAvatar.css';
+import React, { FC, ReactNode } from 'react'
+import './LetterAvatar.css'
 
 interface LetterAvatarProps {
     width: number
@@ -9,7 +9,13 @@ interface LetterAvatarProps {
     small?: boolean
 }
 
-const LetterAvatar: FC<LetterAvatarProps> = ({ width, height, children, radius = 16, small }) => {
+const LetterAvatar: FC<LetterAvatarProps> = ({
+    width,
+    height,
+    children,
+    radius = 16,
+    small,
+}) => {
     return (
         <div
             style={{
@@ -18,11 +24,11 @@ const LetterAvatar: FC<LetterAvatarProps> = ({ width, height, children, radius =
                 borderRadius: radius,
                 fontSize: small ? 28 : 32,
             }}
-            className="LetterAvatar--container"
+            className='LetterAvatar--container'
         >
             {children}
         </div>
-    );
-};
+    )
+}
 
-export default LetterAvatar;
+export default LetterAvatar

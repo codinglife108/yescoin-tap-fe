@@ -1,39 +1,38 @@
-import React, {FC, useEffect, useState} from 'react';
-import Panel from "../../components/Panel/Panel";
-import TelegramBackButton from "../../components/TelegramBackButton/TelegramBackButton";
-import Placeholder from "../../components/Placeholder/Placeholder";
-import Img from "../../components/Img/Img";
-import Cell from "../../components/Cell/Cell";
-import EmojiRectangle from "../../components/EmojiRectangle/EmojiRectangle";
-import CellContainer from "../../components/CellContainer/CellContainer";
-import Spacing from "../../components/Spacing/Spacing";
-import {useTranslation} from "react-i18next";
-import {fetchData} from "../../utils/api";
-import {Skeleton} from "@nextui-org/react";
-import BackgroundGlow from "../../components/BackgroundGlow/BackgroundGlow";
+import React, { FC, useEffect, useState } from 'react'
+import Panel from '../../components/Panel/Panel'
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
+import Placeholder from '../../components/Placeholder/Placeholder'
+import Img from '../../components/Img/Img'
+import Cell from '../../components/Cell/Cell'
+import EmojiRectangle from '../../components/EmojiRectangle/EmojiRectangle'
+import CellContainer from '../../components/CellContainer/CellContainer'
+import Spacing from '../../components/Spacing/Spacing'
+import { useTranslation } from 'react-i18next'
+import { fetchData } from '../../utils/api'
+import { Skeleton } from '@nextui-org/react'
+import BackgroundGlow from '../../components/BackgroundGlow/BackgroundGlow'
 
 const Statistics: FC = () => {
+    const [fields, setFields] = useState<any>(null)
+    const [fieldsLoading, setFieldsLoading] = useState(false)
 
-    const [fields, setFields] = useState<any>(null);
-    const [fieldsLoading, setFieldsLoading] = useState(false);
-
-    const { t } = useTranslation();
+    const { t } = useTranslation()
 
     useEffect(() => {
-        fetch().then();
-    }, []);
+        fetch().then()
+    }, [])
 
     const fetch = async () => {
-        setFieldsLoading(true);
+        setFieldsLoading(true)
 
-        const response = await fetchData('/statistics/get');
+        const response = await fetchData('/statistics/get')
 
         if (response.error) {
-            return;
+            return
         }
 
-        setFields(response.result);
-        setFieldsLoading(false);
+        setFields(response.result)
+        setFieldsLoading(false)
     }
 
     return (
@@ -41,14 +40,12 @@ const Statistics: FC = () => {
             <TelegramBackButton />
 
             <BackgroundGlow
-                color1="rgba(8, 18, 29, 0)"
-                color2="rgba(0, 190, 163, .5)"
-                vertical="top"
+                color1='rgba(8, 18, 29, 0)'
+                color2='rgba(0, 190, 163, .5)'
+                vertical='top'
             />
 
-            <Placeholder
-                title={t('statisticsTitle')}
-            />
+            <Placeholder title={t('statisticsTitle')} />
 
             <Spacing size={32} />
 
@@ -59,7 +56,7 @@ const Statistics: FC = () => {
                             style={{
                                 width: '100%',
                                 height: 48,
-                                borderRadius: 16
+                                borderRadius: 16,
                             }}
                         />
                         <Skeleton
@@ -81,25 +78,29 @@ const Statistics: FC = () => {
                     </>
                 )}
 
-                {!fieldsLoading && fields !== null && fields.map((field: any, index: number) => (
-                    <Cell
-                        key={index}
-                        title={field.value}
-                        before={
-                            <EmojiRectangle>
-                                <Img
-                                    src={require(`../../assets/images/emoji/${field.emoji}.png`)}
-                                    radius={0}
-                                />
-                            </EmojiRectangle>
-                        }
-                    >
-                        {t(field.localeId)}
-                    </Cell>
-                ))}
+                {!fieldsLoading &&
+                    fields !== null &&
+                    fields.map((field: any, index: number) => (
+                        <Cell
+                            key={index}
+                            title={field.value}
+                            before={
+                                <EmojiRectangle>
+                                    <Img
+                                        src={require(
+                                            `../../assets/images/emoji/${field.emoji}.png`
+                                        )}
+                                        radius={0}
+                                    />
+                                </EmojiRectangle>
+                            }
+                        >
+                            {t(field.localeId)}
+                        </Cell>
+                    ))}
             </CellContainer>
         </Panel>
-    );
-};
+    )
+}
 
-export default Statistics;
+export default Statistics

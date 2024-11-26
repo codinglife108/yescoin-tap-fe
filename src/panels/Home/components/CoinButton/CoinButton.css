@@ -13,15 +13,15 @@
     max-width: min(calc(100% - 48px), 260px);
     max-height: 38vh;
     aspect-ratio: 1 / 1;
-    background-image: url("../../../../assets/images/coins/rocket_coin_front_400x400.png");
+    background-image: url('../../../../assets/images/coins/rocket_coin_front_400x400.png');
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
-    transition: transform .2s;
+    transition: transform 0.2s;
 }
 
 .CoinButton--content:active {
-    transform: scale(.90);
+    transform: scale(0.9);
 }
 
 .CoinButton--digits--container {

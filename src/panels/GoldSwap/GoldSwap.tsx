@@ -1,50 +1,54 @@
-import React, {FC, useEffect, useState} from 'react';
-import Panel from "../../components/Panel/Panel";
-import TelegramBackButton from "../../components/TelegramBackButton/TelegramBackButton";
-import IconText from "../../components/IconText/IconText";
-import Spacing from "../../components/Spacing/Spacing";
-import GoldRocketSwap from "./components/GoldRocketSwap/GoldRocketSwap";
-import Div from "../../components/Div/Div";
-import {Button} from "@nextui-org/react";
+import React, { FC, useEffect, useState } from 'react'
+import Panel from '../../components/Panel/Panel'
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
+import IconText from '../../components/IconText/IconText'
+import Spacing from '../../components/Spacing/Spacing'
+import GoldRocketSwap from './components/GoldRocketSwap/GoldRocketSwap'
+import Div from '../../components/Div/Div'
+import { Button } from '@nextui-org/react'
 
-import BottomLayout from "../../components/BottomLayout/BottomLayout";
-import {useDispatch, useSelector} from "react-redux";
-import {ADD_ROCKET, DefaultStateType, getDispatchObject, REDUCE_GOLD} from "../../store/reducer";
-import {useTranslation} from "react-i18next";
-import {fetchData} from "../../utils/api";
+import BottomLayout from '../../components/BottomLayout/BottomLayout'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    ADD_ROCKET,
+    DefaultStateType,
+    getDispatchObject,
+    REDUCE_GOLD,
+} from '../../store/reducer'
+import { useTranslation } from 'react-i18next'
+import { fetchData } from '../../utils/api'
 
 const GoldSwap: FC = () => {
-
-    const [exchangeRate, setExchangeRate] = useState<number | null>(null);
+    const [exchangeRate, setExchangeRate] = useState<number | null>(null)
     /* const [exchangeRateLoading, setExchangeRateLoading] = useState(false); */
 
-    const [rocketInput, setRocketInput] = useState("");
+    const [rocketInput, setRocketInput] = useState('')
 
-    const { t } = useTranslation();
+    const { t } = useTranslation()
 
-    const rocket = useSelector((selector: DefaultStateType) => selector.rocket);
-    const gold = useSelector((selector: DefaultStateType) => selector.gold);
-    const dispatch = useDispatch();
+    const rocket = useSelector((selector: DefaultStateType) => selector.rocket)
+    const gold = useSelector((selector: DefaultStateType) => selector.gold)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        fetchExchangeRate().then();
-    }, []);
+        fetchExchangeRate().then()
+    }, [])
 
     const changeRocketInput = (event: any) => {
-        const value = event.target.value;
+        const value = event.target.value
         if (String(value).includes('.') || String(value).includes(',')) {
-            return;
+            return
         }
 
         if (value.length > 5) {
-            return;
+            return
         }
 
         if (Number(value) < 0) {
-            return;
+            return
         }
 
-        setRocketInput(value !== '' ? String(Math.floor(Number(value))) : value);
+        setRocketInput(value !== '' ? String(Math.floor(Number(value))) : value)
     }
 
     const fetchExchangeRate = async () => {
@@ -52,60 +56,57 @@ const GoldSwap: FC = () => {
         setExchangeRate(500000);
         setExchangeRateLoading(false);*/
 
-        const response = await fetchData('/exchange/getRate');
+        const response = await fetchData('/exchange/getRate')
         if (response.error) {
-            return;
+            return
         }
 
-        setExchangeRate(response.result['goldPerROCKET']);
+        setExchangeRate(response.result['goldPerROCKET'])
     }
 
     const swap = async () => {
         // @ts-ignore
-        const tg = window['Telegram'].WebApp;
+        const tg = window['Telegram'].WebApp
 
         if (gold === null || exchangeRate === null) {
-            return;
+            return
         }
 
         const rocketCount = Number(rocketInput)
 
         if (rocketCount < 1) {
             // @ts-ignore
-tg.showAlert(t('swapMinimum1ROCKETError'));
-            return;
+            tg.showAlert(t('swapMinimum1ROCKETError'))
+            return
         }
 
         if (rocketCount > 99999) {
-            return;
+            return
         }
 
-        const needGold = Number(rocketCount * exchangeRate);
+        const needGold = Number(rocketCount * exchangeRate)
         if (needGold > gold) {
             // @ts-ignore
-tg.showAlert(t('swapNotEnoughGoldError'));
-            return;
+            tg.showAlert(t('swapNotEnoughGoldError'))
+            return
         }
 
-        const response = await fetchData(
-            '/exchange/swap',
-            { rocketCount }
-        );
+        const response = await fetchData('/exchange/swap', { rocketCount })
 
         if (response.error) {
             // @ts-ignore
-tg.showAlert('[Swap] Server return error');
-            return;
+            tg.showAlert('[Swap] Server return error')
+            return
         }
 
-        dispatch(getDispatchObject(ADD_ROCKET, rocketCount));
-        dispatch(getDispatchObject(REDUCE_GOLD, needGold));
-        setRocketInput("");
+        dispatch(getDispatchObject(ADD_ROCKET, rocketCount))
+        dispatch(getDispatchObject(REDUCE_GOLD, needGold))
+        setRocketInput('')
 
         // @ts-ignore
-tg.showPopup({ message: t('swapSuccessAlert') })
+        tg.showPopup({ message: t('swapSuccessAlert') })
         // @ts-ignore
-tg.showAlert(t('swapSuccessAlert'));
+        tg.showAlert(t('swapSuccessAlert'))
     }
 
     return (
@@ -114,7 +115,7 @@ tg.showAlert(t('swapSuccessAlert'));
 
             <Spacing size={24} />
             <IconText
-                size="large"
+                size='large'
                 imgPath={require('../../assets/images/emoji/rocket.png')}
                 text={`${rocket} ROCKET`}
                 stretched
@@ -130,9 +131,9 @@ tg.showAlert(t('swapSuccessAlert'));
             <BottomLayout>
                 <Div>
                     <Button
-                        size="lg"
+                        size='lg'
                         disabled={exchangeRate === null}
-                        color="primary"
+                        color='primary'
                         onClick={swap}
                         fullWidth
                     >
@@ -142,7 +143,7 @@ tg.showAlert(t('swapSuccessAlert'));
                 <Spacing />
             </BottomLayout>
         </Panel>
-    );
-};
+    )
+}
 
-export default GoldSwap;
+export default GoldSwap

@@ -1,5 +1,4 @@
 .EnergyInfo--container {
-
 }
 
 .EnergyInfo--score {
@@ -15,5 +14,5 @@
     width: max-content;
     margin: 0 auto;
     font-size: 14px;
-    color: var(--gray_light_color)
+    color: var(--gray_light_color);
 }
