@@ -1,16 +1,16 @@
-import {Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Input} from '@nextui-org/react';
-import React, {FC, useState, useEffect, useCallback} from 'react';
-import {MODAL_INFO, MODAL_TASK_CHANNEL, MODAL_TASK_CLAIM, MODAL_TASK_INPUT} from "../routes";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Input } from '@nextui-org/react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
+import { MODAL_INFO, MODAL_TASK_CHANNEL, MODAL_TASK_CLAIM, MODAL_TASK_INPUT } from "../routes";
 import useModal from "../hooks/useModal";
-import {useTranslation} from "react-i18next";
-import {fetchData} from "../utils/api";
-import {useDispatch} from "react-redux";
-import {ADD_GOLD, getDispatchObject, SET_TASKS, SET_TOAST} from "../store/reducer";
+import { useTranslation } from "react-i18next";
+import { fetchData } from "../utils/api";
+import { useDispatch } from "react-redux";
+import { ADD_GOLD, getDispatchObject, SET_TASKS, SET_TOAST } from "../store/reducer";
 import iconLogo from "../assets/images/coins/rocket_coin_back_100x100.png";
-import {formatNumberWithSpaces} from "../utils/mathUtils";
+import { formatNumberWithSpaces } from "../utils/mathUtils";
 
 import "./TaskChannelModal.css"
-import {copyText} from "../utils/utils";
+import { copyText } from "../utils/utils";
 
 // @ts-ignore
 const tg = window['Telegram'].WebApp;
@@ -20,9 +20,9 @@ const TaskChannelModal: FC = () => {
     const [taskInput, setTaskInput] = useState<string>("");
     const [checkTaskButtonIsLoading, setCheckTaskButtonIsLoading] = useState<boolean>(false);
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
-    const {activeModal, setActiveModal, activeModalParams} = useModal();
+    const { activeModal, setActiveModal, activeModalParams } = useModal();
     useEffect(() => {
         setTaskInput("")
     }, [])
@@ -32,7 +32,14 @@ const TaskChannelModal: FC = () => {
             const response = await fetchData("/tasks/get");
 
             const tasks = response.result.tasks;
+            let sections = response.result.sections;
             const superTasks = response.result.superTasks;
+
+            sections = sections.map((section: any) => ({
+                ...section,
+                steps: tasks.filter((task: any) => task.section_id === section.id)
+            }));
+
 
             // Filtra le task indipendenti (senza supertask_id)
             const independentTasks = tasks.filter((task: any) => !task.supertask_id);
@@ -42,13 +49,14 @@ const TaskChannelModal: FC = () => {
             const superTasksWithSteps = superTasks.map((superTask: any) => ({
                 ...superTask,
                 type: 'supertask',
-                steps: tasks.filter((task: any) => task.supertask_id === superTask.id)
-            }));
+                sections: sections.filter((section: any) => section.supertask_id === superTask.id),
+                steps: tasks.filter((task: any) => (task.supertask_id === superTask.id && (task?.section_id == null || task?.section_id == '' || task?.section_id == undefined)))
+            })).sort((a: any, b: any) => a.orderpriority - b.orderpriority);
 
             // Combina task indipendenti e supertask in un unico array
             const allCampaigns = [
                 ...superTasksWithSteps,
-                ...independentTasks.map((task: any) => ({...task, type: 'task'})),
+                ...independentTasks.map((task: any) => ({ ...task, type: 'task' })),
             ];
 
             dispatch(getDispatchObject(SET_TASKS, allCampaigns));
@@ -61,29 +69,29 @@ const TaskChannelModal: FC = () => {
         setActiveModal(MODAL_TASK_CLAIM, activeModalParams);
         if (activeModalParams['channeladdress']) {
             // @ts-ignore
-tg.openTelegramLink(`https://t.me/${activeModalParams['channeladdress'].replace('@', '')}`);
+            tg.openTelegramLink(`https://t.me/${activeModalParams['channeladdress'].replace('@', '')}`);
             return;
         }
 
         if (activeModalParams['botaddress']) {
             // @ts-ignore
-tg.openTelegramLink(`https://t.me/${activeModalParams['botaddress'].replace('@', '')}`);
+            tg.openTelegramLink(`https://t.me/${activeModalParams['botaddress'].replace('@', '')}`);
             return;
         }
 
         if (activeModalParams['link'].startsWith("https://t.me/")) {
             // @ts-ignore
-tg.openTelegramLink(activeModalParams['link']);
+            tg.openTelegramLink(activeModalParams['link']);
             return;
         }
         // @ts-ignore
-tg.openLink(activeModalParams['link']);
+        tg.openLink(activeModalParams['link']);
     }
 
     const check = async (onClose: () => void) => {
         const response = await fetchData(
             '/tasks/check',
-            {id: activeModalParams['id']}
+            { id: activeModalParams['id'] }
         );
 
         // TODO(legends-emergency): Clean this up
@@ -97,13 +105,13 @@ tg.openLink(activeModalParams['link']);
         }
 
         if (response.error) {
-            dispatch(getDispatchObject(SET_TOAST, {open: true, message: t("taskNotSubscribedError"), type: "error"}));
+            dispatch(getDispatchObject(SET_TOAST, { open: true, message: t("taskNotSubscribedError"), type: "error" }));
             return;
         }
 
         const result = response.result;
         if (result === 'not subscribed') {
-            dispatch(getDispatchObject(SET_TOAST, {open: true, message: t("taskNotSubscribedError"), type: "error"}));
+            dispatch(getDispatchObject(SET_TOAST, { open: true, message: t("taskNotSubscribedError"), type: "error" }));
             return;
         }
 
@@ -130,7 +138,7 @@ tg.openLink(activeModalParams['link']);
         await new Promise(r => setTimeout(r, 3000));
 
         if (taskInput === "") {
-            dispatch(getDispatchObject("SET_TOAST", {open: true, message: "Invalid code", type: "error"}));
+            dispatch(getDispatchObject("SET_TOAST", { open: true, message: "Invalid code", type: "error" }));
             setCheckTaskButtonIsLoading(false);
             return;
         }
@@ -144,7 +152,7 @@ tg.openLink(activeModalParams['link']);
         );
 
         if (response.error || response.result !== "ok") {
-            dispatch(getDispatchObject(SET_TOAST, {open: true, message: "Task not completed", type: "error"}));
+            dispatch(getDispatchObject(SET_TOAST, { open: true, message: "Task not completed", type: "error" }));
             setTaskInput("")
             setCheckTaskButtonIsLoading(false)
             return;
@@ -188,13 +196,13 @@ tg.openLink(activeModalParams['link']);
                                 )}
                             </ModalBody>
                             <ModalFooter>
-                                <div style={{display: 'block', width: '100%'}}>
+                                <div style={{ display: 'block', width: '100%' }}>
                                     {(activeModalParams['channeladdress'] || activeModalParams['link'] || activeModalParams['botaddress']) && (
                                         <Button
                                             size="lg"
                                             fullWidth
                                             color="primary"
-                                            style={{backgroundColor: "#3b82f6"}}
+                                            style={{ backgroundColor: "#3b82f6" }}
                                             onClick={goToChannel}
                                         >
                                             {activeModalParams['channeladdress'] ? "Open channel" : ""}
@@ -232,13 +240,13 @@ tg.openLink(activeModalParams['link']);
                                 )}
                             </ModalBody>
                             <ModalFooter>
-                                <div style={{display: 'block', width: '100%'}}>
+                                <div style={{ display: 'block', width: '100%' }}>
                                     {(activeModalParams['channeladdress'] || activeModalParams['link'] || activeModalParams['botaddress']) && (
                                         <Button
                                             size="lg"
                                             fullWidth
                                             color="primary"
-                                            style={{backgroundColor: "#3b82f6"}}
+                                            style={{ backgroundColor: "#3b82f6" }}
                                             onClick={() => check(onClose)}
                                         >
                                             {activeModalParams['channeladdress'] ? "Check subscribe" : "Check task"}
@@ -264,43 +272,43 @@ tg.openLink(activeModalParams['link']);
                             <ModalBody>
                                 {activeModalParams["additional_info"]?.description &&
                                     <p className="text-16-medium mb-0 mt-0"
-                                       dangerouslySetInnerHTML={{__html: activeModalParams["additional_info"] ? activeModalParams["additional_info"].description : ""}}>
+                                        dangerouslySetInnerHTML={{ __html: activeModalParams["additional_info"] ? activeModalParams["additional_info"].description : "" }}>
                                     </p>
                                 }
                                 {(activeModalParams["additional_info"]?.helpText) ? (
                                     <span
                                         className="text-md text-white text-center mt-0 mb-0"
 
-                                        dangerouslySetInnerHTML={{__html: activeModalParams["additional_info"]?.helpText || "Please paste the address I used to connect the wallet to check the tasks."}}>
+                                        dangerouslySetInnerHTML={{ __html: activeModalParams["additional_info"]?.helpText || "Please paste the address I used to connect the wallet to check the tasks." }}>
                                     </span>
                                 ) : null}
                                 {
-                                    activeModalParams["additional_info"]?.instructions_url&&
+                                    activeModalParams["additional_info"]?.instructions_url &&
                                     <Button
-                                        style={{marginTop: 8, color: "#3b82f6"}}
+                                        style={{ marginTop: 8, color: "#3b82f6" }}
                                         fullWidth
                                         // @ts-ignore
                                         color="extra_primary"
                                         variant="light"
                                         onClick={() => {
                                             // @ts-ignore
-tg.openLink(activeModalParams["additional_info"] ? activeModalParams["additional_info"].instructions_url : "")
+                                            tg.openLink(activeModalParams["additional_info"] ? activeModalParams["additional_info"].instructions_url : "")
                                         }}
                                     >
                                         Check Instructions
                                     </Button>
                                 }
 
-                                <input className={"bg-sky-900 min-h-input-channel px-3"} placeholder={"Input"}
-                                       style={{borderRadius: 16}}
-                                       value={taskInput} onChange={(e) => setTaskInput(e.target.value)}/>
+                                <input className={"bg-white min-h-input-channel px-3 "} placeholder={"Input"}
+                                    style={{ borderRadius: 16, background: 'white', color: 'black' }}
+                                    value={taskInput} onChange={(e) => setTaskInput(e.target.value)} />
                             </ModalBody>
                             <ModalFooter>
-                                <div style={{display: 'block', width: '100%'}}>
+                                <div style={{ display: 'block', width: '100%' }}>
                                     <Button
                                         size="lg"
                                         fullWidth
-                                        style={{backgroundColor: "#3b82f6"}}
+                                        style={{ backgroundColor: "#3b82f6" }}
                                         className={"text-white"}
                                         isLoading={checkTaskButtonIsLoading}
                                         onClick={() => checkTaskWithInput(onClose)}

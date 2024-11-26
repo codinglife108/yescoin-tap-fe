@@ -17,7 +17,7 @@ import {
 } from "../../store/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import Spacing from "../../components/Spacing/Spacing";
-import {useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Campaing.css"
 import CampaignListItem from "./components/CampaignListItem";
 import DailyReward from "./components/DailyReward";
@@ -82,7 +82,7 @@ const CampaignsComponent = () => {
     const dailyReward: any = selector?.dailyReward || {};
     const { setActiveModal } = useModal();
     const location = useLocation();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const fetchCampaigns = useCallback(async () => {
         try {
@@ -90,18 +90,25 @@ const CampaignsComponent = () => {
             const responseDailyReward = await fetchData("/tasks/getDailyReward");
 
             const tasks = response.result.tasks;
+            let sections = response.result.sections;
             const superTasks = response.result.superTasks;
 
+            sections = sections.map((section: any) => ({
+                ...section,
+                steps: tasks.filter((task: any) => task.section_id === section.id)
+            }));
+
             // Filtra le task indipendenti (senza supertask_id)
-            const independentTasks = tasks.filter((task: any) => (!task.supertask_id&&task.visible!==false));
+            const independentTasks = tasks.filter((task: any) => (!task.supertask_id && task.visible !== false));
 
 
             // Crea un oggetto per mappare le supertask con i loro step
             const superTasksWithSteps = superTasks.map((superTask: any) => ({
                 ...superTask,
                 type: 'supertask',
+                sections: sections.filter((section: any) => section.supertask_id === superTask.id),
                 steps: tasks.filter((task: any) => task.supertask_id === superTask.id)
-            })).sort((a:any, b:any) => a.orderpriority - b.orderpriority);
+            })).sort((a: any, b: any) => a.orderpriority - b.orderpriority);
 
             // Combina task indipendenti e supertask in un unico array
             const allCampaigns = [
@@ -127,7 +134,7 @@ const CampaignsComponent = () => {
     const check = async (task: any) => {
         const response = await fetchData(
             '/tasks/check',
-            {id: task['id']}
+            { id: task['id'] }
         );
 
         // TODO(legends-emergency): Clean this up
@@ -141,13 +148,13 @@ const CampaignsComponent = () => {
         }
 
         if (response.error) {
-            dispatch(getDispatchObject(SET_TOAST, {open: true, message: t("taskNotSubscribedError"), type: "error"}));
+            dispatch(getDispatchObject(SET_TOAST, { open: true, message: t("taskNotSubscribedError"), type: "error" }));
             return;
         }
 
         const result = response.result;
         if (result === 'not subscribed') {
-            dispatch(getDispatchObject(SET_TOAST, {open: true, message: t("taskNotSubscribedError"), type: "error"}));
+            dispatch(getDispatchObject(SET_TOAST, { open: true, message: t("taskNotSubscribedError"), type: "error" }));
             return;
         }
 
@@ -161,26 +168,26 @@ const CampaignsComponent = () => {
 
     const goToModal = (task: any) => {
         if (task["award"] === -1) {
-            if (task["botAddress"]) {
+            if (task["botaddress"]) {
                 // @ts-ignore
-tg.openTelegramLink(`https://t.me/${task['botAddress'].replace('@', '')}`);
+                tg.openTelegramLink(`https://t.me/${task['botaddress'].replace('@', '')}`);
                 return;
             } else if (task["link"]) {
                 if (task["link"].startsWith("https://t.me/")) {
                     // @ts-ignore
-tg.openTelegramLink(task["link"]);
+                    tg.openTelegramLink(task["link"]);
                     return;
                 }
                 // @ts-ignore
-tg.openLink(task['link']);
+                tg.openLink(task['link']);
                 return;
             } else if (task["channelAddress"]) {
                 // @ts-ignore
-tg.openTelegramLink(`https://t.me/${task['channelAddress'].replace('@', '')}`);
+                tg.openTelegramLink(`https://t.me/${task['channelAddress'].replace('@', '')}`);
                 return;
             } else if (task["channeladdress"]) {
                 // @ts-ignore
-tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
+                tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
                 return;
             }
             return;
@@ -190,40 +197,40 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
             setActiveModal(MODAL_TASK_INPUT, task);
         }
 
-        if (task["botAddress"]) {
+        if (task["botaddress"]) {
             // @ts-ignore
-            tg.openTelegramLink(`https://t.me/${task['botAddress'].replace('@', '')}`);
+            tg.openTelegramLink(`https://t.me/${task['botaddress'].replace('@', '')}`);
             return
         } else if (task["link"]) {
             if (task["link"].startsWith("https://t.me/")) {
                 // @ts-ignore
                 tg.openTelegramLink(task["link"]);
                 if (task["require_input"] === true || task["award"] == 0) return;
-                check( task);
+                check(task);
                 return
             }
             // @ts-ignore
             tg.openLink(task['link']);
-            if (task["require_input"] === true|| task["award"] == 0) return;
-            check( task);
+            if (task["require_input"] === true || task["award"] == 0) return;
+            check(task);
             return
         } else if (task["channelAddress"]) {
             // @ts-ignore
             tg.openTelegramLink(`https://t.me/${task['channelAddress'].replace('@', '')}`);
             if (task["require_input"] === true) return;
-            check( task);
+            check(task);
             return
         } else if (task["channeladdress"]) {
             // @ts-ignore
             tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
             if (task["require_input"] === true) return;
-            check( task);
+            check(task);
             return
         }
     };
     const categorizeCampaigns = (campaigns: any) => {
         return campaigns.reduce((acc: any, campaign: any) => {
-            if(campaign.visible == false) return acc;
+            if (campaign.visible == false) return acc;
             const isCompleted = campaign.award === -1 || (campaign.steps && campaign.total_reward === -1);
             const isDaily = (campaign.daily && !isCompleted) || (campaign.sectiontype == 'daily');
             const sections = ["yescoin", "accelerator"];
@@ -237,7 +244,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
                 acc.new.push(campaign);
             }
             return acc;
-        }, {new: [], yescoin: [], accelerator: [], daily: [], completed: []});
+        }, { new: [], yescoin: [], accelerator: [], daily: [], completed: [] });
     };
 
     useEffect(() => {
@@ -247,7 +254,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
     const userActivities = useSelector((state: DefaultStateType) => state.userActivities);
     const isWalletRewarded = userActivities?.hasOwnProperty('mantleWalletConnectAt');
 
-    const [isLimited, setLimited ] = useState(true);
+    const [isLimited, setLimited] = useState(true);
     const [adsViewCount, setAdsViewCount] = useState(0);
     const [lastViewedAt, setLastViewedAt] = useState(0);
 
@@ -256,7 +263,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
         let views = response?.result?.settings?.ads_watch?.watch_counter || 0;
         setLastViewedAt(response?.result?.settings?.ads_watch?.last_watch_view);
         setAdsViewCount(views);
-        setLimited(views>20);
+        setLimited(views > 20);
     }
 
     useEffect(() => {
@@ -271,13 +278,13 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
 
     const getMantleTransReward = async () => {
         const res = await okxContext.sendZeroTransaction();
-        if(res) {
+        if (res) {
             const response = await fetchData("/tasks/getReward", { reward: 50000 });
-    
+
             if (response.error) {
                 return;
             }
-    
+
             dispatch(getDispatchObject(ADD_GOLD, Number(50000)));
             dispatch(getDispatchObject(SET_TOAST, { open: true, message: "50,000 Yescoin Received", type: "success" }));
         }
@@ -285,17 +292,17 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
 
     const getDailyReward = async () => {
         const res = await okxContext.sendZeroTransaction();
-        if(res) {
+        if (res) {
             const response = await fetchData("/tasks/claimDailyReward");
-    
+
             if (response.error) {
                 return;
             }
-    
+
             dispatch(getDispatchObject(ADD_GOLD, Number(dailyReward["reward"])));
             dispatch(getDispatchObject(SET_DAYLY_REWARD, response.result));
             dispatch(getDispatchObject(SET_TOAST, { open: true, message: "Daily Reward Claimed", type: "success" }));
-    
+
             const event = new Event("TASKS_UPDATE");
             document.dispatchEvent(event);
         }
@@ -325,10 +332,10 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
 
         try {
             const now = new Date().getTime() / 1000;
-            if(now - lastViewedAt < 6 * 60) {
+            if (now - lastViewedAt < 6 * 60) {
                 dispatch(getDispatchObject(SET_TOAST, {
                     open: true,
-                    message: `You can watch the Ad ${6-Math.floor((now - lastViewedAt)/60)} minutes later`,
+                    message: `You can watch the Ad ${6 - Math.floor((now - lastViewedAt) / 60)} minutes later`,
                     type: "error"
                 }));
                 return;
@@ -443,7 +450,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
 
     const okxContext = useOkxWallet();
 
-    
+
 
     const _renderWalletConnect = () => {
         const handleConnectWallet = async () => {
@@ -483,7 +490,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
             </>
         );
     };
- 
+
     if (error) return <div>Error: {error}</div>;
     const categorizedCampaigns = categorizeCampaigns(campaigns || []);
     return (
@@ -506,24 +513,24 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
                     </div>
                     <div className="tab-container">
                         {CATEGORIES.map((tab) => (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className={`tab-button flex items-center ${activeTab === tab.id ? 'active' : ''}`}
-                                >
-                                    <div className={"tab-icon mr-2"}>
-                                        {tab.icon}
-                                    </div>
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`tab-button flex items-center ${activeTab === tab.id ? 'active' : ''}`}
+                            >
+                                <div className={"tab-icon mr-2"}>
+                                    {tab.icon}
+                                </div>
 
-                                    {tab.name}
-                                    <span className="task-count">
-                                    {categorizedCampaigns[tab.id]?.length||0 + (tab.id === "completed" && dailyReward["completed"] ? 0 : tab.id === "daily" && !dailyReward["completed"] ? 1 : 0)}
+                                {tab.name}
+                                <span className="task-count">
+                                    {categorizedCampaigns[tab.id]?.length || 0 + (tab.id === "completed" && dailyReward["completed"] ? 0 : tab.id === "daily" && !dailyReward["completed"] ? 1 : 0)}
                                 </span>
                             </button>
                         )
                         )}
                     </div>
-                    <Spacing size={12}/>
+                    <Spacing size={12} />
 
                     {loading ? (
                         <FriendsListSkeleton />
@@ -564,16 +571,16 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
                                         </>}
                                     </>
                                 )}
-                                {activeTab !== "completed"&&
-                                <>
-                                    <MantleTrasReward
-                                        dailyReward={50000}
-                                        getDailyReward={getMantleTransReward}
-                                    />
-                                    <div style={dividerStyle} className='mt-2'></div>
-                                    <DailyTutorial/>
-                                    <div style={dividerStyle} className='mt-2'></div>
-                                </>
+                                {activeTab !== "completed" &&
+                                    <>
+                                        <MantleTrasReward
+                                            dailyReward={50000}
+                                            getDailyReward={getMantleTransReward}
+                                        />
+                                        <div style={dividerStyle} className='mt-2'></div>
+                                        <DailyTutorial />
+                                        <div style={dividerStyle} className='mt-2'></div>
+                                    </>
                                 }
                                 {categorizedCampaigns[activeTab].filter((c: any) => !(c.steps?.length)).map((campaign: any) => (
                                     <>
@@ -587,7 +594,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
                                     </>
                                 )
                                 )}
-                                
+
                                 {/* {activeTab === "new" && (
                                     <Cell
                                         key="inviteFriends"
@@ -622,7 +629,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
                                     </>
                                 )} */}
                             </div>
-                            
+
                         </>
                     )}
 
@@ -633,7 +640,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
                         </div>
                     )}
 
-                    {(activeTab === "daily")&& !loading &&
+                    {(activeTab === "daily") && !loading &&
                         _renderWalletConnect()
                     }
                 </div>
