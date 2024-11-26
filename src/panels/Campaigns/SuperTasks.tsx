@@ -9,7 +9,7 @@ import TelegramBackButton from "../../components/TelegramBackButton/TelegramBack
 import EmojiRectangle from "../../components/EmojiRectangle/EmojiRectangle";
 import IconText from "../../components/IconText/IconText";
 import { fetchData } from "../../utils/api";
-import { MODAL_TASK_CLAIM, MODAL_TASK_INPUT } from "../../routes";
+import { MODAL_TASK_INPUT } from "../../routes";
 import useModal from '../../hooks/useModal';
 import { getDispatchObject, SET_TASKS, ADD_GOLD, SET_TOAST, SET_VIEWED_SUPERTASK } from "../../store/reducer";
 import { LockRounded } from "@mui/icons-material";
@@ -22,11 +22,9 @@ import { useOkxWallet } from '../../utils/OkxWalletProvider';
 import { useTranslation } from 'react-i18next';
 import ReferralItem from './components/ReferralItem';
 import { ROUTE_HOME } from '../../routes';
-import { useNavigate } from 'react-router-dom';
 import InviteModal from '../../modals/inviteModal';
 import { copyText } from '../../utils/utils';
 import { resetMainButton } from '../../utils/tgButtonUtils';
-import iconLogo from "../../assets/images/coins/rocket_coin_back_100x100.png";
 
 // @ts-ignore
 const tg = window['Telegram']['WebApp'];
@@ -414,7 +412,7 @@ const SuperTasks = () => {
                 >
                     <div className='flex items-center gap-2'>
                         <img
-                            src={"/rocket_coin_back_36x36.png"}
+                            src={'/rocket_coin_back_36x36.png'}
                             width={30}
                             height={30}
                             className={"mx-1"}
@@ -727,7 +725,7 @@ const SuperTasks = () => {
             <Spacing size={64} />
             {openInviteModal && (
                 <InviteModal
-                    iconLogo={iconLogo}
+                    iconLogo={'/rocket_coin_back_36x36.png'}
                     sendButtonText={t('modalSendButtonLabel')}
                     copyButtonText={t('modalCopyLinkButtonLabel')}
                     containerStyle={{
