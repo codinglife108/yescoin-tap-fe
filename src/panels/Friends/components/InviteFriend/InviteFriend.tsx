@@ -65,7 +65,12 @@ const InviteFriend: FC<InviteFriendProps> = () => {
 
   const linkSend = () => {
     // @ts-ignore
-    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=\n\n💰Join the Yescoin game to earn YES tokens and exciting rewards.\n\nIf you haven’t joined Yescoin yet, 15,000 $YES are waiting for you 🎁`);
+    tg.openTelegramLink(
+      `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(
+        '\n\n💰Join the Yescoin game to earn YES tokens and exciting rewards.\n\n\nIf you haven’t joined Yescoin yet, 15,000 $YES are waiting for you🎁'
+      )}`
+    );
+
     setOpenInviteModal(false);
   }
 

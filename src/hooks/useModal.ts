@@ -17,7 +17,7 @@ const useModal = () => {
     const modalType = selector['modalType'];
     // console.log('active modal ------>', activeModalParams)
     if (activeModalParams && activeModalParams.hasOwnProperty("additional_info") && activeModalParams["additional_info"] !== null && activeModalParams["additional_info"] !== "") {
-        if (typeof activeModalParams["additional_info"] === "string") {
+        if (activeModalParams["additional_info"] && typeof activeModalParams["additional_info"] === "string") {
             activeModalParams["additional_info"] = JSON.parse(activeModalParams["additional_info"])
         }
     }

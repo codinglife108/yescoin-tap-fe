@@ -217,6 +217,8 @@ const SuperTasks = () => {
                     check(task);
                 }
                 return
+            } else {
+                check(task);
             }
         }
     };
@@ -258,9 +260,24 @@ const SuperTasks = () => {
         return !previousStepsCompleted;
     };
 
-    const handleStepClick = async (index: number) => {
-        if (isStepDisabled(index)) return;
-        goToModal(taskData.steps[index])
+    const isSectionStepDisabled = (index: number, sIndex:number) => {
+        if (taskData.story_mandatory && !hasViewedStories) return true;
+        if (!taskData.mandatory) return false;
+        if (index === 0) return false;
+        const previousStepsCompleted = taskData.sections[sIndex].steps
+            .slice(0, index)
+            .every((step: any) => step.award === -1);
+        return !previousStepsCompleted;
+    };
+
+    const handleStepClick = async (index: number, sIndex = -1) => {
+        if (sIndex == -1) {
+            if (isStepDisabled(index)) return;
+            goToModal(taskData.steps[index])
+        } else {
+            if (isSectionStepDisabled(index, sIndex)) return;
+            goToModal(taskData.sections[sIndex].steps[index])
+        }
     }
     const handleInviteFriends = async () => {
         // @ts-ignore
@@ -475,7 +492,7 @@ const SuperTasks = () => {
 
                 {taskData?.sections?.length > 0 ? (
                     <>
-                        {taskData.sections.map((section: any) => (
+                        {taskData.sections.map((section: any , sindex:number) => (
                             <div key={section.id} className='d-block'>
                                 <div className="banner-content ">
                                     <div className='banner-card flex items-center gap-1'>
@@ -516,7 +533,7 @@ const SuperTasks = () => {
                                         <>
                                             <div
                                                 key={step.id}
-                                                onClick={() => handleStepClick(index)}
+                                                onClick={() => handleStepClick(index, sindex)}
                                                 id={(isStepDisabled(index) || step.award === -1) ? ("step-" + step.id) : "active-step"}
                                                 data-index={index}
                                                 className={`step-card `}

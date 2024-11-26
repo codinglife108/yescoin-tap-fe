@@ -192,9 +192,9 @@ const CampaignsComponent = () => {
             }
             return;
         }
-
         if (task["require_input"] === true) {
             setActiveModal(MODAL_TASK_INPUT, task);
+            return;
         }
 
         if (task["botaddress"]) {
@@ -250,7 +250,7 @@ const CampaignsComponent = () => {
     useEffect(() => {
         fetchCampaigns();
     }, [fetchCampaigns]);
-
+    
     const userActivities = useSelector((state: DefaultStateType) => state.userActivities);
     const isWalletRewarded = userActivities?.hasOwnProperty('mantleWalletConnectAt');
 
