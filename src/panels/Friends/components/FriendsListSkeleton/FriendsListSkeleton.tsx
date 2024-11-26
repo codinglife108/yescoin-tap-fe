@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
-import {Skeleton} from "@nextui-org/react";
+import React, { FC } from 'react'
+import { Skeleton } from '@nextui-org/react'
 
 /* interface FriendsListSkeletonProps {
 
@@ -32,7 +32,7 @@ const FriendsListSkeleton: FC = () => {
                 }}
             />
         </>
-    );
-};
+    )
+}
 
-export default FriendsListSkeleton;
+export default FriendsListSkeleton

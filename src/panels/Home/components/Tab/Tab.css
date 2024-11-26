@@ -6,11 +6,11 @@
     box-sizing: border-box;
     border-radius: 24px;
 
-    transition: background .2s;
+    transition: background 0.2s;
 }
 
 .Tab--container:hover {
-    background: rgba(256, 256, 256, .035);
+    background: rgba(256, 256, 256, 0.035);
 }
 
 .Tab--container img {

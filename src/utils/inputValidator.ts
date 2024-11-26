@@ -1,21 +1,25 @@
-import React from "react";
+import React from 'react'
 
-export const teamFormChange = (input: string, event: any, setter: React.Dispatch<React.SetStateAction<any>>) => {
-    const value = event.target.value;
+export const teamFormChange = (
+    input: string,
+    event: any,
+    setter: React.Dispatch<React.SetStateAction<any>>
+) => {
+    const value = event.target.value
 
     switch (input) {
         case 'name': {
-            const regex = /^[a-zA-Zа-яА-Я0-9\s\-_]+$/;
+            const regex = /^[a-zA-Zа-яА-Я0-9\s\-_]+$/
             if (!regex.test(value) && value.length > 1) {
-                return;
+                return
             }
 
             if (value.length > 25) {
-                return;
+                return
             }
 
-            setter(value);
-            break;
+            setter(value)
+            break
         }
 
         case 'link': {
@@ -25,11 +29,11 @@ export const teamFormChange = (input: string, event: any, setter: React.Dispatch
             }*/
 
             if (value.length > 150) {
-                return;
+                return
             }
 
-            setter(value);
-            break;
+            setter(value)
+            break
         }
     }
 }

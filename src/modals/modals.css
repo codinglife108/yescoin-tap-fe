@@ -1,126 +1,126 @@
 .boost-confirmation--container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .boost-confirmation--container.floating-center {
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .boost-confirmation--panel {
-  background: linear-gradient(180deg, #333333 0%, #444444 100%);
-  width: 100%;
-  position: relative;
-  height: max(90vh, 500px);
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  padding: 64px 16px 24px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  transform: translateY(100%);
-  transition: transform 0.2s ease-out;
+    background: linear-gradient(180deg, #333333 0%, #444444 100%);
+    width: 100%;
+    position: relative;
+    height: max(90vh, 500px);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    padding: 64px 16px 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(100%);
+    transition: transform 0.2s ease-out;
 }
 
 .boost-confirmation--panel {
-  background: linear-gradient(180deg, #333333 0%, #444444 100%);
-  width: 100%;
-  position: relative;
-  height: max(90vh, 500px);
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  padding: 64px 16px 24px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  transform: translateY(100%);
-  transition: transform 0.2s ease-out;
+    background: linear-gradient(180deg, #333333 0%, #444444 100%);
+    width: 100%;
+    position: relative;
+    height: max(90vh, 500px);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    padding: 64px 16px 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(100%);
+    transition: transform 0.2s ease-out;
 }
 
 .boost-confirmation--panel.visible {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 .boost-confirmation-copy--panel {
-  background: linear-gradient(180deg, #333333 0%, #444444 100%);
-  width: 100%;
-  position: relative;
-  height: 150px;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  padding: 15px 10px 20px 10px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  transform: translateY(100%);
-  transition: transform 0.2s ease-out;
+    background: linear-gradient(180deg, #333333 0%, #444444 100%);
+    width: 100%;
+    position: relative;
+    height: 150px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    padding: 15px 10px 20px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(100%);
+    transition: transform 0.2s ease-out;
 }
 
 .boost-confirmation-copy--panel.visible {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 .floating-center .boost-confirmation--panel {
-  border-radius: 24px;
-  min-height: max-content;
-  height: max(60vh, 460px);
-  padding: 16px;
-  width: 90vw;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  transform: none;
+    border-radius: 24px;
+    min-height: max-content;
+    height: max(60vh, 460px);
+    padding: 16px;
+    width: 90vw;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+    transform: none;
 }
 .floating-center .boost-confirmation--panel.visible {
-  opacity: 1;
+    opacity: 1;
 }
 .boost-confirmation--close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
 }
 .floating-center .boost-confirmation--close {
-  width: 30px;
-  height: 30px;
+    width: 30px;
+    height: 30px;
 }
 .boost-confirmation--icon {
-  width: 60vw;
-  height: 60vw;
-  object-fit: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 60vw;
+    height: 60vw;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .floating-center .boost-confirmation--icon {
-  width: 40vw;
-  height: 40vw;
-  aspect-ratio: 1/1;
+    width: 40vw;
+    height: 40vw;
+    aspect-ratio: 1/1;
 }
 
 .boost-confirmation--icon img {
-  width: 60vw;
-  height: 60vw;
+    width: 60vw;
+    height: 60vw;
 }
 
 .floating-center .boost-confirmation--icon img {
-  width: 40vw;
-  height: 40vw;
+    width: 40vw;
+    height: 40vw;
 }

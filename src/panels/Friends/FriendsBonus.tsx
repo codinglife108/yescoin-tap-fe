@@ -1,13 +1,20 @@
-import React, {FC} from 'react';
-import Panel from "../../components/Panel/Panel";
-import TelegramBackButton from "../../components/TelegramBackButton/TelegramBackButton";
-import InviteInfo from "./components/InviteInfo/InviteInfo";
-import Spacing from "../../components/Spacing/Spacing";
-import {Table, TableBody, TableCell, TableColumn, TableHeader, TableRow} from '@nextui-org/react';
-import IconText from "../../components/IconText/IconText";
-import {formatNumberWithSpaces} from "../../utils/mathUtils";
-import InviteFriend from "./components/InviteFriend/InviteFriend";
-import {useTranslation} from "react-i18next";
+import React, { FC } from 'react'
+import Panel from '../../components/Panel/Panel'
+import TelegramBackButton from '../../components/TelegramBackButton/TelegramBackButton'
+import InviteInfo from './components/InviteInfo/InviteInfo'
+import Spacing from '../../components/Spacing/Spacing'
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableColumn,
+    TableHeader,
+    TableRow,
+} from '@nextui-org/react'
+import IconText from '../../components/IconText/IconText'
+import { formatNumberWithSpaces } from '../../utils/mathUtils'
+import InviteFriend from './components/InviteFriend/InviteFriend'
+import { useTranslation } from 'react-i18next'
 
 const BONUSES: any = [
     { id: 'bronze', name: 'User', gold: 1000 },
@@ -15,11 +22,10 @@ const BONUSES: any = [
     { id: 'gold', name: 'Grandmaster', gold: 5000 },
     { id: 'diamond', name: 'Elite', gold: 7000 },
     { id: 'platinum', name: 'Legends', gold: 10000 },
-];
+]
 
 const FriendsBonus: FC = () => {
-
-    const { t } = useTranslation();
+    const { t } = useTranslation()
 
     return (
         <Panel>
@@ -28,7 +34,7 @@ const FriendsBonus: FC = () => {
             <>
                 <h1>{t('friendsBonusTitle')}</h1>
                 <Spacing size={32} />
-                <InviteInfo/>
+                <InviteInfo />
             </>
 
             <Spacing size={56} />
@@ -37,18 +43,24 @@ const FriendsBonus: FC = () => {
                 <h1>{t('friendsBonusNewLevelTitle')}</h1>
                 <Spacing size={32} />
 
-                <Table hideHeader removeWrapper aria-label="Example static collection table">
+                <Table
+                    hideHeader
+                    removeWrapper
+                    aria-label='Example static collection table'
+                >
                     <TableHeader>
                         <TableColumn>Уровень</TableColumn>
                         <TableColumn>Бонус</TableColumn>
                     </TableHeader>
 
                     <TableBody>
-                        <TableRow key="-1">
-                            <TableCell className="text-gray">{t('friendsBonusesNewLevelTableLevel')}</TableCell>
+                        <TableRow key='-1'>
+                            <TableCell className='text-gray'>
+                                {t('friendsBonusesNewLevelTableLevel')}
+                            </TableCell>
                             <TableCell
                                 style={{ textAlign: 'right' }}
-                                className="text-gray"
+                                className='text-gray'
                             >
                                 {t('friendsBonusesNewLevelTableAmount')}
                             </TableCell>
@@ -59,7 +71,9 @@ const FriendsBonus: FC = () => {
                                 <TableCell>
                                     <IconText
                                         size='small'
-                                        imgPath={require(`../../assets/images/levels/${item.id}.png`)}
+                                        imgPath={require(
+                                            `../../assets/images/levels/${item.id}.png`
+                                        )}
                                         text={item.name}
                                     />
                                 </TableCell>
@@ -79,7 +93,7 @@ const FriendsBonus: FC = () => {
 
             <InviteFriend />
         </Panel>
-    );
-};
+    )
+}
 
-export default FriendsBonus;
+export default FriendsBonus

@@ -8,23 +8,22 @@ const FIELDS = [
         id: 'allClicksCount',
         emoji: 'finger_up',
         localeId: 'statisticsAllClicksCountField',
-
     },
     {
         id: 'allUsersCount',
         emoji: 'users',
-        localeId: 'statisticsAllUsersCountField'
+        localeId: 'statisticsAllUsersCountField',
     },
     {
         id: 'todayUsersCount',
         emoji: 'watch',
-        localeId: 'statisticsTodayUsersCountField'
+        localeId: 'statisticsTodayUsersCountField',
     },
     {
         id: 'usersOnlineCount',
         emoji: 'red_doth',
-        localeId: 'statisticsUsersOnlineCountField'
+        localeId: 'statisticsUsersOnlineCountField',
     },
-];
+]
 
-export default FIELDS;
+export default FIELDS

@@ -1,5 +1,5 @@
-import React, {FC, ReactNode} from 'react';
-import './EmojiRectangle.css';
+import React, { FC, ReactNode } from 'react'
+import './EmojiRectangle.css'
 
 interface EmojiRectangleProps {
     children: ReactNode
@@ -7,12 +7,15 @@ interface EmojiRectangleProps {
     style?: React.CSSProperties
 }
 
-const EmojiRectangle: FC<EmojiRectangleProps> = ({ children, big,style }) => {
+const EmojiRectangle: FC<EmojiRectangleProps> = ({ children, big, style }) => {
     return (
-        <div style={style||{}} className={`EmojiRectangle--container ${big ? 'big' : ''}` }>
+        <div
+            style={style || {}}
+            className={`EmojiRectangle--container ${big ? 'big' : ''}`}
+        >
             {children}
         </div>
-    );
-};
+    )
+}
 
-export default EmojiRectangle;
+export default EmojiRectangle

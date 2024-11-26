@@ -1,13 +1,15 @@
-import React, {useRef} from 'react';
-import Lottie, {Options} from 'react-lottie';
+import React, { useRef } from 'react'
+import Lottie, { Options } from 'react-lottie'
 // @ts-ignore
-import animationData from '../../assets/lottery/SPIN.json';
-import {AnimationComponent} from "./InterfacesAndConstants";
+import animationData from '../../assets/lottery/SPIN.json'
+import { AnimationComponent } from './InterfacesAndConstants'
 
-
-
-const SpinAnimation = ({framesPlayedRate, loop = true, canPlay = true}: AnimationComponent) => {
-    const lottieRef = useRef<any>(null);
+const SpinAnimation = ({
+    framesPlayedRate,
+    loop = true,
+    canPlay = true,
+}: AnimationComponent) => {
+    const lottieRef = useRef<any>(null)
 
     const defaultOptions: Options = {
         loop,
@@ -15,9 +17,9 @@ const SpinAnimation = ({framesPlayedRate, loop = true, canPlay = true}: Animatio
 
         animationData: animationData,
         rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
-        }
-    };
+            preserveAspectRatio: 'xMidYMid slice',
+        },
+    }
 
     // useEffect(() => {
     //     if (!canPlay) return;
@@ -39,17 +41,21 @@ const SpinAnimation = ({framesPlayedRate, loop = true, canPlay = true}: Animatio
     return (
         <Lottie
             options={defaultOptions}
-            eventListeners={[{
-                eventName: 'complete',
-                callback: () => console.log('complete')
-            },
-                {eventName: 'loopComplete', callback: () => console.log('loopComplete')},
+            eventListeners={[
+                {
+                    eventName: 'complete',
+                    callback: () => console.log('complete'),
+                },
+                {
+                    eventName: 'loopComplete',
+                    callback: () => console.log('loopComplete'),
+                },
             ]}
             height={200}
             width={340}
             ref={lottieRef}
         />
-    );
-};
+    )
+}
 
-export default SpinAnimation;
+export default SpinAnimation

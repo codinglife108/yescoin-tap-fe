@@ -6,7 +6,8 @@
     background: var(--foreground_color);
 }
 
-.SwapCard--header, .SwapCard--body {
+.SwapCard--header,
+.SwapCard--body {
     width: 100%;
     display: flex;
 }

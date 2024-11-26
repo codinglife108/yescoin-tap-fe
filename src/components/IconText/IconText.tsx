@@ -1,6 +1,6 @@
-import React, {FC, ReactNode} from 'react';
-import './IconText.css';
-import Img from "../Img/Img";
+import React, { FC, ReactNode } from 'react'
+import './IconText.css'
+import Img from '../Img/Img'
 
 const SIZES = {
     xl: {
@@ -53,11 +53,19 @@ const SIZES = {
         fontSize: 18,
         fontWeight: 500, // medium
         distance: 6,
-    }
-};
+    },
+}
 
 interface IconTextProps {
-    size: 'large' | 'medium' | 'small' | 'special' | 'specialTeam' | 'mediumLevels' | 'xl'|'mediumTasks'
+    size:
+        | 'large'
+        | 'medium'
+        | 'small'
+        | 'special'
+        | 'specialTeam'
+        | 'mediumLevels'
+        | 'xl'
+        | 'mediumTasks'
     imgPath: string
     text: string | ReactNode
     textColor?: string
@@ -69,14 +77,34 @@ interface IconTextProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
-const IconText: FC<IconTextProps> = ({ containerStyle, size, imgPath,style,centered, text, after, onClick, textColor = 'var(--white_color)', stretched = false }) => {
-    const centeredStyle = centered ? { marginBottom: 3 } : {};
+const IconText: FC<IconTextProps> = ({
+    containerStyle,
+    size,
+    imgPath,
+    style,
+    centered,
+    text,
+    after,
+    onClick,
+    textColor = 'var(--white_color)',
+    stretched = false,
+}) => {
+    const centeredStyle = centered ? { marginBottom: 3 } : {}
     return (
-        <div style={{ width: stretched ? '100%' : 'max-content',...(style||{}) }}>
+        <div
+            style={{
+                width: stretched ? '100%' : 'max-content',
+                ...(style || {}),
+            }}
+        >
             <div
-                className="IconText--content"
+                className='IconText--content'
                 onClick={onClick}
-                style={{ cursor: onClick ? 'pointer' : 'auto' ,...centeredStyle,...containerStyle}}
+                style={{
+                    cursor: onClick ? 'pointer' : 'auto',
+                    ...centeredStyle,
+                    ...containerStyle,
+                }}
             >
                 <Img
                     src={imgPath}
@@ -103,7 +131,7 @@ const IconText: FC<IconTextProps> = ({ containerStyle, size, imgPath,style,cente
                 )}
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default IconText;
+export default IconText

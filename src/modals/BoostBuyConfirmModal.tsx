@@ -1,18 +1,22 @@
-import {Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader} from '@nextui-org/react';
-import React, {FC} from 'react';
-import {MODAL_BOOST_BUY_CONFIRM} from "../routes";
-import useModal from "../hooks/useModal";
-import {useTranslation} from "react-i18next";
+import {
+    Button,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+} from '@nextui-org/react'
+import React, { FC } from 'react'
+import { MODAL_BOOST_BUY_CONFIRM } from '../routes'
+import useModal from '../hooks/useModal'
+import { useTranslation } from 'react-i18next'
 
-interface BoostBuyConfirmModalProps {
-
-}
+interface BoostBuyConfirmModalProps {}
 
 const BoostBuyConfirmModal: FC<BoostBuyConfirmModalProps> = () => {
+    const { t } = useTranslation()
 
-    const { t } = useTranslation();
-
-    const {activeModal, setActiveModal} = useModal();
+    const { activeModal, setActiveModal } = useModal()
 
     return (
         <Modal
@@ -23,23 +27,24 @@ const BoostBuyConfirmModal: FC<BoostBuyConfirmModalProps> = () => {
             <ModalContent>
                 {(onClose) => (
                     <>
-                        <ModalHeader className="flex flex-col gap-1">{t('boostsConfirmTitle')}</ModalHeader>
+                        <ModalHeader className='flex flex-col gap-1'>
+                            {t('boostsConfirmTitle')}
+                        </ModalHeader>
                         <ModalBody>
-                            <p className="text-16-medium">{t('boostsConfirmText')}</p>
+                            <p className='text-16-medium'>
+                                {t('boostsConfirmText')}
+                            </p>
                         </ModalBody>
                         <ModalFooter>
                             <Button
                                 fullWidth
-                                color="danger"
-                                variant="light"
+                                color='danger'
+                                variant='light'
                                 onPress={onClose}
                             >
                                 {t('boostsConfirmCancelButton')}
                             </Button>
-                            <Button
-                                fullWidth
-                                color="primary"
-                            >
+                            <Button fullWidth color='primary'>
                                 {t('boostsConfirmButton')}
                             </Button>
                         </ModalFooter>
@@ -47,7 +52,7 @@ const BoostBuyConfirmModal: FC<BoostBuyConfirmModalProps> = () => {
                 )}
             </ModalContent>
         </Modal>
-    );
-};
+    )
+}
 
-export default BoostBuyConfirmModal;
+export default BoostBuyConfirmModal

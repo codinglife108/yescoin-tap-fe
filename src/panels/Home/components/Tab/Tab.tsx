@@ -1,5 +1,5 @@
-import React, {FC, ReactNode} from 'react';
-import './Tab.css';
+import React, { FC, ReactNode } from 'react'
+import './Tab.css'
 
 interface TabProps {
     icon: ReactNode
@@ -9,11 +9,11 @@ interface TabProps {
 
 const Tab: FC<TabProps> = ({ icon, name, onClick }) => {
     return (
-        <div className="Tab--container" onClick={onClick}>
+        <div className='Tab--container' onClick={onClick}>
             {icon}
             <p>{name}</p>
         </div>
-    );
-};
+    )
+}
 
-export default Tab;
+export default Tab

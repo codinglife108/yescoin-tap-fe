@@ -3,51 +3,51 @@
 @tailwind utilities;
 
 * {
-  /*--font-name: 'Inter';*/
-  --font-name: "Montserrat";
+    /*--font-name: 'Inter';*/
+    --font-name: 'Montserrat';
 
-  font-style: normal;
-  font-family: var(--font-name), system-ui !important;
+    font-style: normal;
+    font-family: var(--font-name), system-ui !important;
 
-  --background_color: #130921;
-  --button_color: #1f1f1f;
-  --foreground_color: rgba(0, 0, 0, 0.4);
-  --foreground_color2: rgba(0, 0, 0, 0.4);
-  --white_color: #ffffff;
-  --blue_color: #1f1f1f;
-  --yellow_color: var(--blue_color);
-  --gray_light_color: rgba(255, 255, 255, 0.61);
-  --gray_color: #30283c;
-  --red_color: #ff2b4d;
-  --blue_color: linear-gradient(90deg, #0094FF 0%, #0085FF 100%);
+    --background_color: #130921;
+    --button_color: #1f1f1f;
+    --foreground_color: rgba(0, 0, 0, 0.4);
+    --foreground_color2: rgba(0, 0, 0, 0.4);
+    --white_color: #ffffff;
+    --blue_color: #1f1f1f;
+    --yellow_color: var(--blue_color);
+    --gray_light_color: rgba(255, 255, 255, 0.61);
+    --gray_color: #30283c;
+    --red_color: #ff2b4d;
+    --blue_color: linear-gradient(90deg, #0094ff 0%, #0085ff 100%);
 }
 
 html,
 body {
-  -webkit-user-select: none;
-  user-select: none;
-  text-size-adjust: none;
-  -webkit-text-size-adjust: none !important;
+    -webkit-user-select: none;
+    user-select: none;
+    text-size-adjust: none;
+    -webkit-text-size-adjust: none !important;
 }
 
 :host,
 html {
-  -webkit-text-size-adjust: none !important;
+    -webkit-text-size-adjust: none !important;
 }
 
 html {
-  line-height: normal;
+    line-height: normal;
 }
 
 body {
-  margin: 0;
-  background: var(--background_color);
-  color: var(--white_color);
+    margin: 0;
+    background: var(--background_color);
+    color: var(--white_color);
 
-  scroll-behavior: smooth !important;
-  overflow: hidden;
-  -webkit-overflow-scrolling: touch !important;
-  touch-action: none !important;
+    scroll-behavior: smooth !important;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: none !important;
 }
 
 h1,
@@ -58,54 +58,54 @@ h5,
 p,
 a,
 span {
-  margin: 0;
+    margin: 0;
 }
 
 h1 {
-  font-size: 32px;
-  font-weight: 700;
+    font-size: 32px;
+    font-weight: 700;
 }
 
 h3 {
-  font-size: 20px;
-  font-weight: 500;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 button {
-  border: none;
+    border: none;
 }
 
 .text-14-medium {
-  font-weight: 400;
-  font-size: 14px;
+    font-weight: 400;
+    font-size: 14px;
 }
 
 .text-16-medium {
-  font-weight: 400;
-  font-size: 16px;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .text-gray {
-  color: var(--gray_light_color);
+    color: var(--gray_light_color);
 }
 .text-blue {
-  color: var(--blue_color);
+    color: var(--blue_color);
 }
-.bg-blue{
-  background: var(--blue_color);
+.bg-blue {
+    background: var(--blue_color);
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+    -webkit-appearance: none;
 }
-input[type="number"] {
-  -moz-appearance: textfield;
+input[type='number'] {
+    -moz-appearance: textfield;
 }
 .btn-gradient {
-  background: linear-gradient(to right, #fe2b3a 0%, #b01908 100%);
+    background: linear-gradient(to right, #fe2b3a 0%, #b01908 100%);
 }
 
 .main-input {
-  background: #000a !important;
-  border-radius: 100px;
+    background: #000a !important;
+    border-radius: 100px;
 }

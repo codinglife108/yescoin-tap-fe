@@ -1,1 +1,1 @@
-export const BLOCKGAME_TITLE = "BlockGame";
+export const BLOCKGAME_TITLE = 'BlockGame'

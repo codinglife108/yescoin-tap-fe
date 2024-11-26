@@ -9,9 +9,9 @@
     margin-bottom: 40px;
     font-weight: 500;
     font-size: 52px;
-    font-family: "Ubuntu" !important;
+    font-family: 'Ubuntu' !important;
 
-    background: linear-gradient(90deg, #B01908, #FE2B3A, #FF9416);
+    background: linear-gradient(90deg, #b01908, #fe2b3a, #ff9416);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -64,5 +64,5 @@
 }
 
 .CountdownToDate--progress-bar {
-    background: linear-gradient(90deg, #B01908, #FE2B3A, #FF9416) !important;
+    background: linear-gradient(90deg, #b01908, #fe2b3a, #ff9416) !important;
 }

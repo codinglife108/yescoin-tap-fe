@@ -3,18 +3,18 @@
     height: 56px;
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
-    background: rgba(256, 256, 256, .2);
+    background: rgba(256, 256, 256, 0.2);
     position: absolute;
     top: 35vh;
     left: 0;
-    transition: background-color .2s;
+    transition: background-color 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .AutoclickButton--container:hover {
-    background: rgba(256, 256, 256, .4);
+    background: rgba(256, 256, 256, 0.4);
 }
 
 .AutoclickButton--container img {

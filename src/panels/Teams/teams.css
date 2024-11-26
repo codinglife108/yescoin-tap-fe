@@ -1,13 +1,14 @@
-.teamAvatar--container{
+.teamAvatar--container {
     padding: 6px;
     border-radius: 12px;
     background: var(--foreground_color);
 }
-.teamAvatar--container img,.teamAvatar--container .LetterAvatar--container{
+.teamAvatar--container img,
+.teamAvatar--container .LetterAvatar--container {
     aspect-ratio: 1;
     object-fit: cover;
 }
-.search-container{
+.search-container {
     background: #0005;
     margin: 0 24px;
     border-radius: 100px;
