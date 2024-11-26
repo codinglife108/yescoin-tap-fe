@@ -30,6 +30,7 @@ export type LevelType = "wood" | "bronze" | "silver" | "gold" | "platinum"; /*|
 
 export interface DefaultStateType {
     screenPopup: null | 'connection' | 'unSupportPlatform' | 'manyConnections'
+    isAmbassador: boolean
     activeModal: null | string
     modalType: ModalTypes
     activeModalParams: null | string | number | object;
@@ -55,6 +56,7 @@ export interface DefaultStateType {
 
 const defaultState: DefaultStateType = {
     screenPopup: 'connection',
+    isAmbassador: false,
     activeModal: null,
     modalType: ModalTypes.INFORM_USER,
     activeModalParams: null,
@@ -88,6 +90,7 @@ export const SET_ACTIVE_MODAL_PARAMS = "SET_ACTIVE_MODAL_PARAMS";
 export const SET_MODAL_TYPE = "SET_MODAL_TYPE";
 
 export const SET_TEAM = "SET_TEAM";
+export const SET_AMBASSADOR_STATUS = "SET_AMBASSADOR_STATUS";
 
 export const SET_LEVEL = "SET_LEVEL";
 export const SET_GOLD = "SET_GOLD";
@@ -130,6 +133,9 @@ export const reducer = (state = defaultState, action: ActionType) => {
 
     case SET_TEAM:
       return { ...state, team: payload };
+
+    case SET_AMBASSADOR_STATUS:
+      return { ...state, isAmbassador: payload };
 
     case SET_LEVEL:
       return { ...state, level: payload };

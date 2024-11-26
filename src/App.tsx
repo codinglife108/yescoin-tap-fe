@@ -36,6 +36,7 @@ import {fetchData} from "./utils/api";
 import {
     DefaultStateType,
     getDispatchObject,
+    SET_AMBASSADOR_STATUS,
     SET_AUTOCLICK_LAST_ACTIVITY_MS,
     SET_DAILY_ENERGY,
     SET_ENERGY_LEFT,
@@ -51,6 +52,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import BoostBuyConfirmModal from "./modals/BoostBuyConfirmModal";
 import TaskChannelModal from "./modals/TaskChannelModal";
+import ReferralLinkModal from "./modals/ReferralLinkModal";
 import TeamSettings from "./panels/TeamSettings/TeamSettings";
 import ScreenLoader from "./components/ScreenLoader/ScreenLoader";
 import Admin from "./panels/Admin/Admin";
@@ -97,7 +99,7 @@ const App: FC = () => {
     const fetchUserInfo = useCallback(async () => {
         const response = await fetchData("/user/getInfo");
 
-        const {teamData, scoreData, taskId} = response.result;
+        const {teamData, scoreData, taskId, isAmbassador} = response.result;
         setBonusMalusValue(scoreData.gold - scoreData.oldGold);
         dispatch(getDispatchObject(SET_LEVEL, scoreData?.level));
         dispatch(getDispatchObject(SET_GOLD, scoreData.gold));
@@ -118,6 +120,7 @@ const App: FC = () => {
             setTaskUrl(`${ROUTE_SUPERTASKS}/${taskId}`);
         }
         dispatch(getDispatchObject(SET_TEAM, teamData));
+        dispatch(getDispatchObject(SET_AMBASSADOR_STATUS, isAmbassador));
     }, [dispatch])
     
     const init = useCallback(async () => {
@@ -188,10 +191,10 @@ const App: FC = () => {
                     <Route path={ROUTE_HOME} element={<Home isInitialized={isInitialized} fetchUserInfo={fetchUserInfo} taskUrl = {taskUrl}/>}/>
                     <Route path={ROUTE_ADMIN} element={<Admin/>}/>
                     <Route path={ROUTE_LOTTERY} element={<Lottery/>}/>
-                    {/* <Route path={ROUTE_LOTTERY_TUTORIAL} element={<TutorialPage/>}/> */}
+                    <Route path={ROUTE_LOTTERY_TUTORIAL} element={<TutorialPage/>}/>
                     <Route path={ROUTE_LOG_OF_LUCK} element={<LogsOfLuckList/>}/>
                     <Route path={ROUTE_LOG_OF_LUCK_DETAIL} element={<LogsOfLuck/>}/>
-                    {/* <Route path={ROUTE_WINNERS} element={<Winners/>}/> */}
+                    <Route path={ROUTE_WINNERS} element={<Winners/>}/>
                     <Route path={ROUTE_TEAMS} element={<Teams/>}/>
                     <Route path={ROUTE_WIN_LOTTERY} element={<WinnerPage/>}/>
                     <Route path={`${ROUTE_TEAM}/:id?`} element={<Team/>}/>
@@ -219,6 +222,7 @@ const App: FC = () => {
                 {showBonusMalusModal && bonusMalusValue > 0 && <BonusMalus bonusMalusValue={bonusMalusValue} onClose={() => setShowBonusMalusModal(false)}/>}
                 <BoostBuyConfirmModal/>
                 <TaskChannelModal/>
+                <ReferralLinkModal />
                 <ModalInfo/>
                 <WalletConnectModal/>
                 <AdminTaskModal/>

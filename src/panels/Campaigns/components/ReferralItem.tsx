@@ -18,10 +18,10 @@ const ReferralItem = ({ data }: IProps) => {
 
   const ReferralHeader = () => {
     let subtitle = ''
-    if (typeof data.additional_info === 'string') {
+    if (data?.additional_info && typeof data.additional_info === 'string') {
       subtitle = JSON.parse(data.additional_info)?.subtitle;
     } else {
-      subtitle = data.additional_info?.subtitle;
+      subtitle = data?.additional_info?.subtitle;
     }
 
     return (
