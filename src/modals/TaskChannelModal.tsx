@@ -168,6 +168,8 @@ const TaskChannelModal: FC = () => {
         document.dispatchEvent(event2);
         setActiveModal(null);
         dispatch(getDispatchObject(SET_TOAST, { open: true, message: `${formatNumberWithSpaces(activeModalParams.award)} Yescoin Received`, type: "success" }));
+        
+        fetchCampaigns();
 
 
         // setActiveModal(MODAL_INFO, {
@@ -298,10 +300,16 @@ const TaskChannelModal: FC = () => {
                                         Check Instructions
                                     </Button>
                                 }
-
-                                <input className={"bg-white min-h-input-channel px-3 "} placeholder={"Input"}
-                                    style={{ borderRadius: 16, background: 'white', color: 'black' }}
-                                    value={taskInput} onChange={(e) => setTaskInput(e.target.value)} />
+                                <Input
+                                    classNames={{
+                                        inputWrapper: "main-input",
+                                    }}
+                                    size="md"
+                                    value={taskInput}
+                                    placeholder="Input"
+                                    type="text"
+                                    onChange={(event: any) => setTaskInput(event.target.value)}
+                                />
                             </ModalBody>
                             <ModalFooter>
                                 <div style={{ display: 'block', width: '100%' }}>
