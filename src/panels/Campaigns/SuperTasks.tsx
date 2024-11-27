@@ -188,7 +188,7 @@ const SuperTasks = () => {
 
             if (task["require_input"] === true) {
                 setActiveModal(MODAL_TASK_INPUT, task);
-                return;
+                // return;
             }
 
             if (task["botaddress"]) {
