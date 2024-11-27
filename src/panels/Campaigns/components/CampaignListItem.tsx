@@ -6,7 +6,7 @@ import { formatNumberWithSpaces } from "../../../utils/mathUtils";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import TaskConnectWallet from "../../../components/TaskConnectWallet/TaskConnectWallet";
-import {Pencils} from "../HardCodedSuperTaskData";
+import { Pencils } from "../HardCodedSuperTaskData";
 import { BLOCKGAME_TITLE } from "../../../utils/constant";
 export default function CampaignListItem({ campaign, onCampaignClick }: any) {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function CampaignListItem({ campaign, onCampaignClick }: any) {
     const superTask = campaign.steps?.length > 0;
     const isPencil = campaign.id === Pencils.id
     const handleClick = async () => {
-        if(campaign["title"] == BLOCKGAME_TITLE) navigate(ROUTE_BLOCKGAME);
+        if (campaign["title"] == BLOCKGAME_TITLE) navigate(ROUTE_BLOCKGAME);
         else {
             if (superTask) {
                 navigate(`${ROUTE_SUPERTASKS}/${campaign.id}`);
@@ -30,7 +30,7 @@ export default function CampaignListItem({ campaign, onCampaignClick }: any) {
 
     if (!superTask) {
         return (
-            <div className="campaign-content mb-2" onClick={handleClick}>
+            <div className="campaign-content mb-2 cursor-pointer" onClick={handleClick}>
                 {campaign.media_url ? (
                     <Img radius={16} width={56} height={56} style={{ objectFit: 'cover', aspectRatio: '1/1' }} src={campaign.media_url} />
                 ) : (
@@ -78,15 +78,15 @@ export default function CampaignListItem({ campaign, onCampaignClick }: any) {
                             loop
                             muted
                             playsInline
-                            style={{ objectFit: 'cover', width:"100%" }}
+                            style={{ objectFit: 'cover', width: "100%" }}
                         >
-                        <source src={campaign.media_url} type="video/mp4" />
-                        Your browser does not support the video tag.
+                            <source src={campaign.media_url} type="video/mp4" />
+                            Your browser does not support the video tag.
                         </video>
                     ) : (
                         <div
-                        className="campaign-image"
-                        style={{ backgroundImage: `url(${campaign.media_url})` }}
+                            className="campaign-image"
+                            style={{ backgroundImage: `url(${campaign.media_url})` }}
                         />
                     )}
                     <div className="campaign-image-overlay">
@@ -112,11 +112,11 @@ export default function CampaignListItem({ campaign, onCampaignClick }: any) {
                     )}
                     {isPencil && Pencils.extraCoinValue && Pencils.extraCoinLogo &&
                         <div className="flex justify-center items-center gap-1">
-                            <div className={"reward-text"} style={{gap:0}}>
+                            <div className={"reward-text"} style={{ gap: 0 }}>
                                 <>
                                     Prize pool:
                                     <IconText
-                                        containerStyle={{flexDirection:"row-reverse",gap:6}}
+                                        containerStyle={{ flexDirection: "row-reverse", gap: 6 }}
                                         size="mediumTasks"
                                         imgPath={Pencils.extraCoinLogo}
                                         text={Pencils.extraCoinValue}

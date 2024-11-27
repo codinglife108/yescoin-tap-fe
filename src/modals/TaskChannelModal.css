@@ -1,3 +1,15 @@
 .text-16-medium a {
-    color: #7000FF;
+  color: #7000ff;
+}
+
+.faild_input_task {
+  border: 2px solid white !important;
+}
+
+.faild_input_message {
+  padding-left: 10px;
+  font-size: 14px;
+  color: #ff0000;
+  font-weight: 400;
+  margin-top: -12px;
 }

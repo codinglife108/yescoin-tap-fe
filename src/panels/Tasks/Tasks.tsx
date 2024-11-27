@@ -95,24 +95,24 @@ const Tasks: FC = () => {
 
     if (task["require_input"] === true) {
       setActiveModal(MODAL_TASK_INPUT, task);
-      // return
+      return
     }
 
     if (task["botaddress"]) {
       // @ts-ignore
-tg.openTelegramLink(`https://t.me/${task['botaddress'].replace('@', '')}`);
+      tg.openTelegramLink(`https://t.me/${task['botaddress'].replace('@', '')}`);
     } else if (task["link"]) {
-      let link = task['link']      
+      let link = task['link']
       if (link.startsWith("https://t.me/")) {
         // @ts-ignore
-tg.openTelegramLink(link);
+        tg.openTelegramLink(link);
       } else {
         // @ts-ignore
-tg.openLink(link);
+        tg.openLink(link);
       }
     } else if (task["channeladdress"]) {
       // @ts-ignore
-tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
+      tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
     }
     setActiveModal(MODAL_TASK_CHANNEL, task);
   };
@@ -162,7 +162,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
     }
 
     console.log("Adsgram Ad available?", isAvailable);
-    
+
     setAdsgramAdStatus(isAvailable ? AdsgramAdStatus.AVAILABLE : AdsgramAdStatus.NOT_AVAILABLE)
     return isAvailable
   }
@@ -190,25 +190,25 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
     try {
       // @ts-ignore
       let watchStatus = await window.AdController.show()
-      
+
       if (!watchStatus.done || watchStatus.done !== true) {
         // Ad not watched till the end
         window.alert("You must watch the Ad till the end to collect your reward.");
       } else {
         console.log("🟢 SUCCESS");
         console.log(watchStatus);
-        
+
         await claimAdsgramAdReward();
       }
 
     } catch (e) {
-        console.log("🔴 ERROR");
-        console.log(e);
-        window.alert("You must watch the Ad till the end to collect your reward.");
+      console.log("🔴 ERROR");
+      console.log(e);
+      window.alert("You must watch the Ad till the end to collect your reward.");
     }
   };
 
-  const claimAdsgramAdReward = async () => {    
+  const claimAdsgramAdReward = async () => {
     const response = await fetchDataAxios("/tasks/claimAdsgramAdReward", {
       viewCompletedAt: new Date().getTime(),
       reference: process.env.REACT_APP_ADSGRAM_BLOACK_ID
@@ -220,7 +220,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
 
     if (!response.result.success) {
       window.alert("Sorry, we failed giving you a reward.");
-      return 
+      return
     }
 
     setAdsgramAdStatus(AdsgramAdStatus.REWARDED)
@@ -252,7 +252,7 @@ tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
           "not available yet"
         ) : (adsgramAdStatus === AdsgramAdStatus.REWARDED ? (
           "rewarded"
-        ) : ( 
+        ) : (
           <IconText
             size="small"
             imgPath={require("../../assets/images/coins/rocket_coin_back_36x36.png")}

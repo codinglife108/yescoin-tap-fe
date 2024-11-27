@@ -188,7 +188,7 @@ const SuperTasks = () => {
 
             if (task["require_input"] === true) {
                 setActiveModal(MODAL_TASK_INPUT, task);
-                // return;
+                return;
             }
 
             if (task["botaddress"]) {
@@ -260,7 +260,7 @@ const SuperTasks = () => {
         return !previousStepsCompleted;
     };
 
-    const isSectionStepDisabled = (index: number, sIndex:number) => {
+    const isSectionStepDisabled = (index: number, sIndex: number) => {
         if (taskData.story_mandatory && !hasViewedStories) return true;
         if (!taskData.mandatory) return false;
         if (index === 0) return false;
@@ -492,7 +492,7 @@ const SuperTasks = () => {
 
                 {taskData?.sections?.length > 0 ? (
                     <>
-                        {taskData.sections.map((section: any , sindex:number) => (
+                        {taskData.sections.map((section: any, sindex: number) => (
                             <div key={section.id} className='d-block'>
                                 <div className="banner-content ">
                                     <div className='banner-card flex items-center gap-1'>
