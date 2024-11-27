@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { ADD_GOLD, getDispatchObject, SET_TASKS, SET_TOAST } from "../store/reducer";
 import iconLogo from "../assets/images/coins/rocket_coin_back_100x100.png";
 import { formatNumberWithSpaces } from "../utils/mathUtils";
+import OpenInNew from '@mui/icons-material/OpenInNew';
 
 import "./TaskChannelModal.css"
 import { copyText } from "../utils/utils";
@@ -19,13 +20,17 @@ const TaskChannelModal: FC = () => {
 
     const [taskInput, setTaskInput] = useState<string>("");
     const [checkTaskButtonIsLoading, setCheckTaskButtonIsLoading] = useState<boolean>(false);
+    const [isFaildInput, setIsFaildInput] = useState<boolean>(false);
+    const [faildMessage, setFaildMessage] = useState<string>('');
 
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { activeModal, setActiveModal, activeModalParams } = useModal();
+
     useEffect(() => {
         setTaskInput("")
-    }, [])
+        setIsFaildInput(false)
+    }, [activeModal])
 
     const fetchCampaigns = useCallback(async () => {
         try {
@@ -130,6 +135,37 @@ const TaskChannelModal: FC = () => {
         fetchCampaigns();
     }
 
+    const handleOpenNew = () => {
+        if (activeModalParams["botaddress"]) {
+            // @ts-ignore
+            tg.openTelegramLink(`https://t.me/${activeModalParams['botaddress'].replace('@', '')}`);
+            return
+        } else if (activeModalParams["link"]) {
+            if (activeModalParams["link"].startsWith("https://t.me/")) {
+                // @ts-ignore
+                tg.openTelegramLink(activeModalParams["link"]);
+                if (activeModalParams["require_input"] === true || activeModalParams["award"] == 0) return;
+                return
+            }
+            // @ts-ignore
+            tg.openLink(activeModalParams['link']);
+            if (activeModalParams["require_input"] === true || activeModalParams["award"] == 0) return;
+            return
+        } else if (activeModalParams["channeladdress"]) {
+            // @ts-ignore
+            tg.openTelegramLink(`https://t.me/${activeModalParams['channeladdress'].replace('@', '')}`);
+            if (activeModalParams["require_input"] === true) return;
+            return
+        }
+    }
+
+    const setFaild = (message: string) => {
+        setTaskInput("")
+        setIsFaildInput(true);
+        setFaildMessage(message);
+        setCheckTaskButtonIsLoading(false);
+    }
+
     const checkTaskWithInput = async (onClose: () => void) => {
 
         setCheckTaskButtonIsLoading(true)
@@ -138,8 +174,8 @@ const TaskChannelModal: FC = () => {
         await new Promise(r => setTimeout(r, 3000));
 
         if (taskInput === "") {
-            dispatch(getDispatchObject("SET_TOAST", { open: true, message: "Invalid code", type: "error" }));
-            setCheckTaskButtonIsLoading(false);
+            // dispatch(getDispatchObject("SET_TOAST", { open: true, message: "Invalid code", type: "error" }));
+            setFaild('Invalid code');
             return;
         }
 
@@ -152,9 +188,8 @@ const TaskChannelModal: FC = () => {
         );
 
         if (response.error || response.result !== "ok") {
-            dispatch(getDispatchObject(SET_TOAST, { open: true, message: "Task not completed", type: "error" }));
-            setTaskInput("")
-            setCheckTaskButtonIsLoading(false)
+            // dispatch(getDispatchObject(SET_TOAST, { open: true, message: "Task not completed", type: "error" }));
+            setFaild("Task not completed");
             return;
         }
 
@@ -168,7 +203,7 @@ const TaskChannelModal: FC = () => {
         document.dispatchEvent(event2);
         setActiveModal(null);
         dispatch(getDispatchObject(SET_TOAST, { open: true, message: `${formatNumberWithSpaces(activeModalParams.award)} Yescoin Received`, type: "success" }));
-        
+
         fetchCampaigns();
 
 
@@ -267,10 +302,22 @@ const TaskChannelModal: FC = () => {
 
                 onClose={() => setActiveModal(null)}
             >
-                <ModalContent className={"bg-gray-800"}>
+                <ModalContent className={"bg-gray-800"} style={{ width: '100%', height: '98%' }}>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Validate task</ModalHeader>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <ModalHeader className="flex gap-1" style={{
+                                alignItems: 'center', justifyContent: 'space-between', fontSize: 24
+                            }}>
+                                <div>
+                                    {activeModalParams.title}
+                                </div>
+                                <div className='cursor-pointer' style={{ position: 'relative', padding: 8, borderRadius: '50%', background: '#9b9b9b94', width: 32, height: 30 }} onClick={handleOpenNew} >
+                                    <OpenInNew className='absolute top-[-10px] right-0 ' style={{ width: "16px", position: 'relative' }} />
+                                </div>
+                            </ModalHeader>
                             <ModalBody>
                                 {activeModalParams["additional_info"]?.description &&
                                     <p className="text-16-medium mb-0 mt-0"
@@ -300,16 +347,19 @@ const TaskChannelModal: FC = () => {
                                         Check Instructions
                                     </Button>
                                 }
+                                <p style={{ paddingLeft: 10, fontSize: 20 }}>Verification</p>
                                 <Input
                                     classNames={{
-                                        inputWrapper: "main-input",
+                                        inputWrapper: isFaildInput ? "main-input faild_input_task" : "main-input",
                                     }}
                                     size="md"
                                     value={taskInput}
-                                    placeholder="Input"
+                                    placeholder="Keyword"
                                     type="text"
                                     onChange={(event: any) => setTaskInput(event.target.value)}
                                 />
+                                {isFaildInput && <p className='faild_input_message'>{faildMessage}</p>}
+                                {activeModalParams['additional_info']?.reward_help_text && <p style={{ paddingLeft: 10, fontSize: 14 }}>{activeModalParams['additional_info']?.reward_help_text}</p>}
                             </ModalBody>
                             <ModalFooter>
                                 <div style={{ display: 'block', width: '100%' }}>

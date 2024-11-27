@@ -194,7 +194,7 @@ const CampaignsComponent = () => {
         }
         if (task["require_input"] === true) {
             setActiveModal(MODAL_TASK_INPUT, task);
-            // return;
+            return;
         }
 
         if (task["botaddress"]) {
@@ -214,18 +214,14 @@ const CampaignsComponent = () => {
             if (task["require_input"] === true || task["award"] == 0) return;
             check(task);
             return
-        } else if (task["channelAddress"]) {
-            // @ts-ignore
-            tg.openTelegramLink(`https://t.me/${task['channelAddress'].replace('@', '')}`);
-            if (task["require_input"] === true) return;
-            check(task);
-            return
         } else if (task["channeladdress"]) {
             // @ts-ignore
             tg.openTelegramLink(`https://t.me/${task['channeladdress'].replace('@', '')}`);
             if (task["require_input"] === true) return;
             check(task);
             return
+        } else if (task["require_input"] === false) {
+            check(task);
         }
     };
     const categorizeCampaigns = (campaigns: any) => {
@@ -250,7 +246,7 @@ const CampaignsComponent = () => {
     useEffect(() => {
         fetchCampaigns();
     }, [fetchCampaigns]);
-    
+
     const userActivities = useSelector((state: DefaultStateType) => state.userActivities);
     const isWalletRewarded = userActivities?.hasOwnProperty('mantleWalletConnectAt');
 
