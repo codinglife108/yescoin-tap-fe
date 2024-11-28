@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Panel from "../../components/Panel/Panel";
 import TelegramBackButton from "../../components/TelegramBackButton/TelegramBackButton";
 import Placeholder from "../../components/Placeholder/Placeholder";
@@ -15,7 +16,7 @@ import EmojiRectangle from "../../components/EmojiRectangle/EmojiRectangle";
 import { fetchData, fetchDataAxios } from "../../utils/api";
 import { Skeleton } from "@nextui-org/react";
 import { formatNumberWithSpaces } from "../../utils/mathUtils";
-import { MODAL_TASK_CHANNEL, MODAL_TASK_INPUT } from "../../routes";
+import { MODAL_TASK_CHANNEL, MODAL_TASK_INPUT, ROUTE_REQUIRE_INPUT } from "../../routes";
 import useModal from "../../hooks/useModal";
 import BackgroundGlow from "../../components/BackgroundGlow/BackgroundGlow";
 import { useDispatch } from "react-redux";
@@ -36,6 +37,7 @@ const tg = window['Telegram'].WebApp;
 
 const Tasks: FC = () => {
 
+  const navigate = useNavigate();
   const ADSGRAM_AD_REWARD = 5000;
 
   const [tasks, setTasks] = useState<any>(null);
@@ -94,7 +96,8 @@ const Tasks: FC = () => {
     }
 
     if (task["require_input"] === true) {
-      setActiveModal(MODAL_TASK_INPUT, task);
+      // setActiveModal(MODAL_TASK_INPUT, task);
+      navigate(`${ROUTE_REQUIRE_INPUT}/${task.id}`);
       return
     }
 

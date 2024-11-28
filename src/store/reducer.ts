@@ -1,4 +1,4 @@
-import { ModalTypes } from "../hooks/useModal"
+import { ModalTypes } from "../hooks/useModal";
 
 export interface TeamUserType {
   image: string;
@@ -29,53 +29,53 @@ export type LevelType = "wood" | "bronze" | "silver" | "gold" | "platinum"; /*|
     'mythic'*/
 
 export interface DefaultStateType {
-    screenPopup: null | 'connection' | 'unSupportPlatform' | 'manyConnections'
-    isAmbassador: boolean
-    activeModal: null | string
-    modalType: ModalTypes
-    activeModalParams: null | string | number | object;
-    tasks: null | object[];
-    toast: { open: boolean; message: string; type: string };
-    lotteryPrice: null | number;
-    // null - не загружено, no - не состоит в команде
-    team: null | "no" | TeamType;
+  screenPopup: null | "connection" | "unSupportPlatform" | "manyConnections";
+  isAmbassador: boolean;
+  activeModal: null | string;
+  modalType: ModalTypes;
+  activeModalParams: null | string | number | object;
+  tasks: null | object[];
+  toast: { open: boolean; message: string; type: string };
+  lotteryPrice: null | number;
+  // null - не загружено, no - не состоит в команде
+  team: null | "no" | TeamType;
 
-    level: null | LevelType;
-    gold: null | number;
-    usdt: null | number;
-    lastAutoClickActivityMs: null | number;
-    rocket: null | number;
-    energyLeft: null | number;
-    ticket: null | number;
-    dailyEnergy: null | number;
-    dailyReward: null | object;
-    goldPerClick: null | number;
-    userActivities: null | object;
-    viewedSuperTask: null | string;
+  level: null | LevelType;
+  gold: null | number;
+  usdt: null | number;
+  lastAutoClickActivityMs: null | number;
+  rocket: null | number;
+  energyLeft: null | number;
+  ticket: null | number;
+  dailyEnergy: null | number;
+  dailyReward: null | object;
+  goldPerClick: null | number;
+  userActivities: null | object;
+  viewedSuperTask: null | string;
 }
 
 const defaultState: DefaultStateType = {
-    screenPopup: 'connection',
-    isAmbassador: false,
-    activeModal: null,
-    modalType: ModalTypes.INFORM_USER,
-    activeModalParams: null,
-    tasks: [],
-    team: null,
-    dailyReward: {},
-    level: null,
-    toast: { open: false, message: "", type: "success" },
-    gold: null,
-    usdt: null,
-    lotteryPrice: null,
-    lastAutoClickActivityMs: null,
-    rocket: null,
-    energyLeft: null,
-    dailyEnergy: null,
-    ticket: null,
-    goldPerClick: null,
-    userActivities: null,
-    viewedSuperTask: null
+  screenPopup: "connection",
+  isAmbassador: false,
+  activeModal: null,
+  modalType: ModalTypes.INFORM_USER,
+  activeModalParams: null,
+  tasks: [],
+  team: null,
+  dailyReward: {},
+  level: null,
+  toast: { open: false, message: "", type: "success" },
+  gold: null,
+  usdt: null,
+  lotteryPrice: null,
+  lastAutoClickActivityMs: null,
+  rocket: null,
+  energyLeft: null,
+  dailyEnergy: null,
+  ticket: null,
+  goldPerClick: null,
+  userActivities: null,
+  viewedSuperTask: null,
 };
 
 export type ActionType = {
@@ -120,13 +120,13 @@ export const reducer = (state = defaultState, action: ActionType) => {
       return { ...state, screenPopup: payload };
 
     case SET_ACTIVE_MODAL:
-        return {...state, activeModal: payload};
-    
+      return { ...state, activeModal: payload };
+
     case SET_MODAL_TYPE:
-        return {...state, modalType: payload};
+      return { ...state, modalType: payload };
 
     case SET_VIEWED_SUPERTASK:
-      return {...state, viewedSuperTask: payload};
+      return { ...state, viewedSuperTask: payload };
 
     case SET_ACTIVE_MODAL_PARAMS:
       return { ...state, activeModalParams: payload };
@@ -211,7 +211,6 @@ export const reducer = (state = defaultState, action: ActionType) => {
     case SET_USER_ACTIVTY: {
       return { ...state, userActivities: payload };
     }
-
 
     default:
       return state;

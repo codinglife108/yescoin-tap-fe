@@ -4,17 +4,16 @@ import './Panel.css'
 interface PanelProps {
   children: ReactNode
   style?: React.CSSProperties
+  contentStyle?: React.CSSProperties
   overflowToContent?: boolean
 }
 
-const Panel: FC<PanelProps> = ({ children, style, overflowToContent }) => {
+const Panel: FC<PanelProps> = ({ children, style, contentStyle = { height: '100%', overflowY: 'auto' }, overflowToContent }) => {
   return (
     <div id='Panel' className='Panel--container' style={style || {}}>
       <div
         className='Panel--content'
-        style={{
-          ...(overflowToContent ? { height: '100%', overflowY: 'auto' } : {})
-        }}
+        style={overflowToContent ? contentStyle || {} : contentStyle}
       >
         {children}
       </div>
