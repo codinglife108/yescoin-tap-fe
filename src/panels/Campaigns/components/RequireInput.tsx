@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Panel from "../../../components/Panel/Panel";
 import BackgroundGlow from "../../../components/BackgroundGlow/BackgroundGlow";
 import { formatNumberWithSpaces } from "../../../utils/mathUtils";
@@ -10,7 +10,7 @@ import useModal from '../../../hooks/useModal';
 import { getDispatchObject, SET_TASKS, ADD_GOLD, SET_TOAST } from "../../../store/reducer";
 import { Button, Input } from "@nextui-org/react";
 import { useTranslation } from 'react-i18next';
-import { ROUTE_HOME } from '../../../routes';
+import { ROUTE_HOME, ROUTE_SUPERTASKS, ROUTE_TASKS } from '../../../routes';
 import { OpenInNew } from '@mui/icons-material';
 import "./RequireInput.css"
 
@@ -19,7 +19,8 @@ const tg = window['Telegram']['WebApp'];
 
 const RequireInput = () => {
 
-    const { id } = useParams()
+    const { id, supertask_id } = useParams()
+    const navigate = useNavigate();
     const tasks = useSelector((state: any) => state.tasks);
     const dispatch = useDispatch();
     const { t } = useTranslation();
@@ -78,13 +79,31 @@ const RequireInput = () => {
 
     const checkTaskWithInput = async () => {
 
-        setCheckTaskButtonIsLoading(true)
-        await new Promise(r => setTimeout(r, 3000));
-
         if (taskInput === "") {
             setFaild('Invalid code');
             return;
         }
+
+        const confirm_value = stepData.additional_info.input_value;
+        const number_range = stepData.additional_info.number_range;
+        if (!((taskInput == confirm_value && confirm_value != undefined) || isValidInput(taskInput, number_range))) {
+            setFaild("Task not completed");
+            return;
+        }
+
+        setCheckTaskButtonIsLoading(false)
+        dispatch(getDispatchObject(ADD_GOLD, stepData.additional_info?.number_range != undefined ? taskInput : stepData['award']));
+
+        const event = new Event("TASKS_UPDATE");
+        const event2 = new Event("SUPERTASK_UPDATE");
+        document.dispatchEvent(event);
+        document.dispatchEvent(event2);
+        setActiveModal(null);
+        dispatch(getDispatchObject(SET_TOAST, { open: true, message: `${formatNumberWithSpaces(stepData.additional_info?.number_range != undefined ? taskInput : stepData.award)} Yescoin Received`, type: "success" }));
+        if (supertask_id == 'not_supertask')
+            navigate(ROUTE_TASKS);
+        else
+            navigate(`${ROUTE_SUPERTASKS}/${supertask_id}`);
 
         const response = await fetchData(
             '/tasks/check',
@@ -99,15 +118,6 @@ const RequireInput = () => {
             return;
         }
 
-        setCheckTaskButtonIsLoading(false)
-        dispatch(getDispatchObject(ADD_GOLD, stepData.additional_info?.number_range != undefined ? taskInput : stepData['award']));
-
-        const event = new Event("TASKS_UPDATE");
-        const event2 = new Event("SUPERTASK_UPDATE");
-        document.dispatchEvent(event);
-        document.dispatchEvent(event2);
-        setActiveModal(null);
-        dispatch(getDispatchObject(SET_TOAST, { open: true, message: `${formatNumberWithSpaces(stepData.additional_info?.number_range != undefined ? taskInput : stepData.award)} Yescoin Received`, type: "success" }));
         setIsFaildInput(false);
         setFaildMessage('');
         fetchCampaigns();
@@ -191,6 +201,16 @@ const RequireInput = () => {
     const removeEventListeners = useCallback(() => {
         document.removeEventListener("TASKS_UPDATE", fetchCampaigns);
     }, [fetchCampaigns]);
+
+    const isValidInput = (inputValue: string, number_range: string) => {
+        if (number_range && number_range.toString().length > 2) {
+            const [minDigits, maxDigits] = number_range.split(',').map(Number);
+            const numDigits = inputValue.toString().length;
+            return numDigits >= minDigits && numDigits <= maxDigits;
+        } else {
+            return false;
+        }
+    }
 
     useEffect(() => {
         createEventListeners();

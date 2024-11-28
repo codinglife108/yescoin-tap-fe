@@ -207,7 +207,7 @@ const App: FC = () => {
                     <Route path={ROUTE_FRIENDS_BONUS} element={<FriendsBonus />} />
                     <Route path={ROUTE_TASKS} element={<CampaignsComponent />} />
                     <Route path={`${ROUTE_SUPERTASKS}/:id`} element={<SuperTasks />} />
-                    <Route path={`${ROUTE_REQUIRE_INPUT}/:id`} element={<RequireInput />} />
+                    <Route path={`${ROUTE_REQUIRE_INPUT}/:id/:supertask_id`} element={<RequireInput />} />
                     <Route path={ROUTE_BOOSTS} element={<Boosts />} />
                     <Route path={ROUTE_STATISTICS} element={<Statistics />} />
                     <Route path={ROUTE_BALANCE} element={<Balance />} />

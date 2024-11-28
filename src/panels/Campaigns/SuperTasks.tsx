@@ -185,7 +185,7 @@ const SuperTasks = () => {
 
             if (task["require_input"] === true) {
                 // setActiveModal(MODAL_TASK_INPUT, task);
-                navigate(`${ROUTE_REQUIRE_INPUT}/${task.id}`);
+                navigate(`${ROUTE_REQUIRE_INPUT}/${task.id}/${taskData.id}`);
                 return;
             }
 
