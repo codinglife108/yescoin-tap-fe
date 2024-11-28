@@ -8,7 +8,7 @@ interface PanelProps {
   overflowToContent?: boolean
 }
 
-const Panel: FC<PanelProps> = ({ children, style, contentStyle = { height: '100%', overflowY: 'auto' }, overflowToContent }) => {
+const Panel: FC<PanelProps> = ({ children, style, contentStyle = { height: '100%' }, overflowToContent }) => {
   return (
     <div id='Panel' className='Panel--container' style={style || {}}>
       <div

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Panel from "../../components/Panel/Panel";
 import BackgroundGlow from "../../components/BackgroundGlow/BackgroundGlow";
 import Img from "../../components/Img/Img";

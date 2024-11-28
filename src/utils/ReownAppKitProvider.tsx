@@ -10,7 +10,7 @@ import { getDispatchObject, SET_TOAST } from "../store/reducer";
 
 const queryClient = new QueryClient();
 
-const projectId = "0718c1d045683273e34bcf3bdc487a8c";
+const projectId = process.env.REACT_APP_REOWN_PROJECT_ID || "";
 
 const wagmiAdapter = new WagmiAdapter({
   networks: [mantle],
