@@ -9,7 +9,7 @@ import TelegramBackButton from "../../components/TelegramBackButton/TelegramBack
 import EmojiRectangle from "../../components/EmojiRectangle/EmojiRectangle";
 import IconText from "../../components/IconText/IconText";
 import { fetchData } from "../../utils/api";
-import { MODAL_TASK_INPUT } from "../../routes";
+import { MODAL_TASK_CLAIM, MODAL_TASK_INPUT, ROUTE_REQUIRE_INPUT } from "../../routes";
 import useModal from '../../hooks/useModal';
 import { getDispatchObject, SET_TASKS, ADD_GOLD, SET_TOAST, SET_VIEWED_SUPERTASK } from "../../store/reducer";
 import { LockRounded } from "@mui/icons-material";
@@ -30,6 +30,7 @@ import { resetMainButton } from '../../utils/tgButtonUtils';
 const tg = window['Telegram']['WebApp'];
 
 const SuperTasks = () => {
+    const navigate = useNavigate();
     const [showStories, setShowStories] = useState(false);
     const tasks = useSelector((state: any) => state.tasks);
     const { id } = useParams()
@@ -185,7 +186,8 @@ const SuperTasks = () => {
             }
 
             if (task["require_input"] === true) {
-                setActiveModal(MODAL_TASK_INPUT, task);
+                // setActiveModal(MODAL_TASK_INPUT, task);
+                navigate(`${ROUTE_REQUIRE_INPUT}/${task.id}`);
                 return;
             }
 
@@ -565,7 +567,7 @@ const SuperTasks = () => {
                                                     {okxContext.isConfirming ? (
                                                         <p className={"text-success"}>Confirming...</p>
                                                     ) :
-                                                        step.award === -1 || (step.type == "walllet-connect" && okxContext.isWalletConnected) || (step.type == "claim_free_mnt" && okxContext.isClaimed) ? (
+                                                        step.award === -1 || (step.type == "wallet-connect" && okxContext.isWalletConnected) || (step.type == "claim_free_mnt" && okxContext.isClaimed) ? (
                                                             <p className={"text-success"}>Completed!</p>
                                                         ) : (
                                                             <IconText
@@ -699,7 +701,7 @@ const SuperTasks = () => {
                                             {okxContext.isConfirming ? (
                                                 <p className={"text-success"}>Confirming...</p>
                                             ) :
-                                                step.award === -1 || (step.type == "walllet-connect" && okxContext.isWalletConnected) || (step.type == "claim_free_mnt" && okxContext.isClaimed) ? (
+                                                step.award === -1 || (step.type == "wallet-connect" && okxContext.isWalletConnected) || (step.type == "claim_free_mnt" && okxContext.isClaimed) ? (
                                                     <p className={"text-success"}>Completed!</p>
                                                 ) : (
                                                     <IconText

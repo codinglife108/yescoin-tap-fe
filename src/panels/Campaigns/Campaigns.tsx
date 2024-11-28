@@ -22,7 +22,7 @@ import "./Campaing.css"
 import CampaignListItem from "./components/CampaignListItem";
 import DailyReward from "./components/DailyReward";
 import MantleTrasReward from './components/MantleTrasReward';
-import { MODAL_TASK_CHANNEL, MODAL_TASK_CLAIM, MODAL_TASK_INPUT, ROUTE_FRIENDS } from "../../routes";
+import { MODAL_TASK_CHANNEL, MODAL_TASK_CLAIM, MODAL_TASK_INPUT, ROUTE_FRIENDS, ROUTE_REQUIRE_INPUT } from "../../routes";
 import useModal from "../../hooks/useModal";
 import FriendsListSkeleton from "../Friends/components/FriendsListSkeleton/FriendsListSkeleton";
 import { useOkxWallet } from '../../utils/OkxWalletProvider';
@@ -72,6 +72,7 @@ const dividerStyle = { background: "#fff2", height: 1, width: "calc(100% - 64px)
 // @ts-ignore
 const tg = window['Telegram']['WebApp'];
 const CampaignsComponent = () => {
+    const navigate = useNavigate();
     const [adsgramAdStatus, setAdsgramAdStatus] = useState(AdsgramAdStatus.SEARCHING);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -193,7 +194,8 @@ const CampaignsComponent = () => {
             return;
         }
         if (task["require_input"] === true) {
-            setActiveModal(MODAL_TASK_INPUT, task);
+            navigate(`${ROUTE_REQUIRE_INPUT}/${task.id}`);
+            // setActiveModal(MODAL_TASK_INPUT, task);
             return;
         }
 
