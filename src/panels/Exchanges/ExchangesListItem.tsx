@@ -5,7 +5,6 @@ import IconText from "../../components/IconText/IconText";
 import { formatNumberWithSpaces } from "../../utils/mathUtils";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import TaskConnectWallet from "../../components/TaskConnectWallet/TaskConnectWallet";
 import Cell from "../../components/Cell/Cell";
 import CellContainer from "../../components/CellContainer/CellContainer";
 export default function ExchangesListItem({ task, onTaskClick }: any) {

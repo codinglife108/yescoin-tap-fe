@@ -14,17 +14,17 @@ import useModal from '../../hooks/useModal';
 import { getDispatchObject, SET_TASKS, ADD_GOLD, SET_TOAST, SET_VIEWED_SUPERTASK } from "../../store/reducer";
 import { LockRounded } from "@mui/icons-material";
 import Spacing from "../../components/Spacing/Spacing";
-import TaskConnectWallet from '../../components/TaskConnectWallet/TaskConnectWallet';
 import ModalStories from "./ModalStories";
 import { Pencils, Mantle } from "./HardCodedSuperTaskData";
 import { Button } from "@nextui-org/react";
-import { useOkxWallet } from '../../utils/OkxWalletProvider';
+// import { useOkxWallet } from '../../utils/OkxWalletProvider';
 import { useTranslation } from 'react-i18next';
 import ReferralItem from './components/ReferralItem';
 import { ROUTE_HOME } from '../../routes';
 import InviteModal from '../../modals/inviteModal';
 import { copyText } from '../../utils/utils';
 import { resetMainButton } from '../../utils/tgButtonUtils';
+import { useWallet } from '../../utils/ReownAppKitProvider';
 
 // @ts-ignore
 const tg = window['Telegram']['WebApp'];
@@ -42,6 +42,7 @@ const SuperTasks = () => {
     const dispatch = useDispatch();
     const story_meta = taskData?.story_meta?.length > 2 ? JSON.parse(taskData?.story_meta) : null;
     const { t } = useTranslation();
+    const wallet = useWallet();
 
     const isPencil = taskData.id === Pencils.id
     const isMantle = taskData.title === Mantle.title
@@ -50,21 +51,18 @@ const SuperTasks = () => {
         await fetchData("/supertasks/check", { id: id });
     }
 
-
-    const okxContext = useOkxWallet();
-
     const getMantleTransReward = async () => {
-        const res = await okxContext.sendZeroTransaction();
-        if (res) {
-            const response = await fetchData("/tasks/getReward", { reward: 50000 });
+        // const res = await okxContext.sendZeroTransaction();
+        // if (res) {
+        //     const response = await fetchData("/tasks/getReward", { reward: 50000 });
 
-            if (response.error) {
-                return;
-            }
+        //     if (response.error) {
+        //         return;
+        //     }
 
-            dispatch(getDispatchObject(ADD_GOLD, Number(50000)));
-            dispatch(getDispatchObject(SET_TOAST, { open: true, message: "50,000 Yescoin Received", type: "success" }));
-        }
+        //     dispatch(getDispatchObject(ADD_GOLD, Number(50000)));
+        //     dispatch(getDispatchObject(SET_TOAST, { open: true, message: "50,000 Yescoin Received", type: "success" }));
+        // }
     };
 
     const fetchCampaigns = useCallback(async () => {
@@ -137,26 +135,26 @@ const SuperTasks = () => {
 
     const goToModal = async (task: any, isModalChannelOpened = false) => {
         if (task["type"] == "claim_free_mnt") {
-            okxContext.sendClaimTransaction();
+            // okxContext.sendClaimTransaction();
             return;
         } else if (task["type"] == "mantle_transaction") {
-            const res = await okxContext.sendZeroTransaction();
-            if (res) {
-                const response = await fetchData("/tasks/getReward", { reward: 50000 });
+            // const res = await okxContext.sendZeroTransaction();
+            // if (res) {
+            //     const response = await fetchData("/tasks/getReward", { reward: 50000 });
 
-                if (response.error) {
-                    return;
-                }
+            //     if (response.error) {
+            //         return;
+            //     }
 
-                dispatch(getDispatchObject(ADD_GOLD, Number(50000)));
-                dispatch(getDispatchObject(SET_TOAST, { open: true, message: "50,000 Yescoin Received", type: "success" }));
-            }
+            //     dispatch(getDispatchObject(ADD_GOLD, Number(50000)));
+            //     dispatch(getDispatchObject(SET_TOAST, { open: true, message: "50,000 Yescoin Received", type: "success" }));
+            // }
             return;
         }
         if (task["type"] == "mantle-transaction") {
             getMantleTransReward();
         } else if (task["type"] == "wallet-connect") {
-            okxContext.connectWallet();
+            // okxContext.connectWallet();
         } else {
 
             if (task["award"] === -1) {
@@ -513,16 +511,6 @@ const SuperTasks = () => {
                                     </div>
                                 </div>
                                 {section?.steps?.map((step: any, index: number) => {
-                                    if (step["type"] === "connect_bitget_wallet") {
-                                        return (
-                                            <TaskConnectWallet
-                                                icon={step.media_url}
-                                                taskId={step["id"]}
-                                                reward={step["award"]}
-                                                isCompleted={step["award"] === -1}
-                                            />
-                                        )
-                                    }
                                     if (step["type"] === "refer_link_add") {
                                         return (
                                             <ReferralItem data={step} />
@@ -564,7 +552,7 @@ const SuperTasks = () => {
                                                         {step.title}
                                                     </h4>
                                                     <Spacing size={8} />
-                                                    {okxContext.isConfirming ? (
+                                                    {/* {okxContext.isConfirming ? (
                                                         <p className={"text-success"}>Confirming...</p>
                                                     ) :
                                                         step.award === -1 || (step.type == "wallet-connect" && okxContext.isWalletConnected) || (step.type == "claim_free_mnt" && okxContext.isClaimed) ? (
@@ -578,7 +566,7 @@ const SuperTasks = () => {
                                                                 text={formatNumberWithSpaces(step.award)}
                                                             />
                                                         )
-                                                    }
+                                                    } */}
                                                 </div>
                                                 {step.award !== -1 ? (
                                                     <ChevronRight isStepDisabled={isStepDisabled(index)} />
@@ -647,16 +635,6 @@ const SuperTasks = () => {
                             </div>
                         )}
                         {taskData?.steps?.map((step: any, index: number) => {
-                            if (step["type"] === "connect_bitget_wallet") {
-                                return (
-                                    <TaskConnectWallet
-                                        icon={step.media_url}
-                                        taskId={step["id"]}
-                                        reward={step["award"]}
-                                        isCompleted={step["award"] === -1}
-                                    />
-                                )
-                            }
                             if (step["type"] === "refer_link_add") {
                                 return (
                                     <ReferralItem data={step} />
@@ -698,21 +676,17 @@ const SuperTasks = () => {
                                                 {step.title}
                                             </h4>
                                             <Spacing size={8} />
-                                            {okxContext.isConfirming ? (
-                                                <p className={"text-success"}>Confirming...</p>
-                                            ) :
-                                                step.award === -1 || (step.type == "wallet-connect" && okxContext.isWalletConnected) || (step.type == "claim_free_mnt" && okxContext.isClaimed) ? (
-                                                    <p className={"text-success"}>Completed!</p>
-                                                ) : (
-                                                    <IconText
-                                                        size="small"
-                                                        textColor={isStepDisabled(index) ? "#f7b719" : "white"}
-                                                        centered
-                                                        imgPath={'/rocket_coin_back_36x36.png'}
-                                                        text={formatNumberWithSpaces(step.award)}
-                                                    />
-                                                )
-                                            }
+                                            {step.award === -1 || (step.type == "wallet-connect" && wallet.isConnected) ? (
+                                                <p className={"text-success"}>Completed!</p>
+                                            ) : (
+                                                <IconText
+                                                    size="small"
+                                                    textColor={isStepDisabled(index) ? "#f7b719" : "white"}
+                                                    centered
+                                                    imgPath={'/rocket_coin_back_36x36.png'}
+                                                    text={formatNumberWithSpaces(step.award)}
+                                                />
+                                            )}
                                         </div>
                                         {step.award !== -1 ? (
                                             <ChevronRight isStepDisabled={isStepDisabled(index)} />

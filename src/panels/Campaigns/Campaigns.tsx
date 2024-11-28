@@ -25,11 +25,11 @@ import MantleTrasReward from './components/MantleTrasReward';
 import { MODAL_TASK_CHANNEL, MODAL_TASK_CLAIM, MODAL_TASK_INPUT, ROUTE_FRIENDS, ROUTE_REQUIRE_INPUT } from "../../routes";
 import useModal from "../../hooks/useModal";
 import FriendsListSkeleton from "../Friends/components/FriendsListSkeleton/FriendsListSkeleton";
-import { useOkxWallet } from '../../utils/OkxWalletProvider';
 import WalletConnect from '../../assets/images/other/preload-banner.png'
 import { SET_USER_ACTIVTY } from '../../store/reducer';
 import DailyTutorial from './components/DailyTutorial';
 import { useTranslation } from 'react-i18next';
+import { useWallet } from '../../utils/ReownAppKitProvider';
 
 enum AdsgramAdStatus {
     SEARCHING,
@@ -84,6 +84,7 @@ const CampaignsComponent = () => {
     const { setActiveModal } = useModal();
     const location = useLocation();
     const { t } = useTranslation();
+    const wallet = useWallet();
 
     const fetchCampaigns = useCallback(async () => {
         try {
@@ -249,9 +250,6 @@ const CampaignsComponent = () => {
         fetchCampaigns();
     }, [fetchCampaigns]);
 
-    const userActivities = useSelector((state: DefaultStateType) => state.userActivities);
-    const isWalletRewarded = userActivities?.hasOwnProperty('mantleWalletConnectAt');
-
     const [isLimited, setLimited] = useState(true);
     const [adsViewCount, setAdsViewCount] = useState(0);
     const [lastViewedAt, setLastViewedAt] = useState(0);
@@ -275,10 +273,9 @@ const CampaignsComponent = () => {
     }, [campaigns])
 
     const getMantleTransReward = async () => {
-        const res = await okxContext.sendZeroTransaction();
+        const res = await wallet.sendZeroTransaction();
         if (res) {
             const response = await fetchData("/tasks/getReward", { reward: 50000 });
-
             if (response.error) {
                 return;
             }
@@ -289,10 +286,9 @@ const CampaignsComponent = () => {
     };
 
     const getDailyReward = async () => {
-        const res = await okxContext.sendZeroTransaction();
+        const res = await wallet.sendZeroTransaction();
         if (res) {
             const response = await fetchData("/tasks/claimDailyReward");
-
             if (response.error) {
                 return;
             }
@@ -446,14 +442,10 @@ const CampaignsComponent = () => {
         );
     };
 
-    const okxContext = useOkxWallet();
-
-
-
     const _renderWalletConnect = () => {
         const handleConnectWallet = async () => {
-            if (!okxContext.walletAddress) {
-                await okxContext.connectWallet();
+            if (!wallet.isConnected) {
+                await wallet.open();
             }
         }
         return (
@@ -469,7 +461,7 @@ const CampaignsComponent = () => {
                     </div>
                     <div className="flex justify-center items-center gap-1 pb-2">
                         <div className={"reward-text"}>
-                            {(!isWalletRewarded) ? (
+                            {(!wallet.isConnected) ? (
                                 <>
                                     Earn:
                                     <IconText
@@ -547,7 +539,7 @@ const CampaignsComponent = () => {
                                 //@ts-ignore
                                 style={{ display: activeTab === "completed" && categorizedCampaigns[activeTab].filter((c: any) => !(c.steps?.length)).length === 0 && "none" }}
                             >
-                                {!loading && dailyReward !== null && (activeTab === "daily") && ({/*((!dailyReward["completed"]) && activeTab === "daily")*/ }) && (
+                                {/* {!loading && dailyReward !== null && (activeTab === "daily") && ({ }) && (
                                     <>
                                         <DailyReward
                                             dailyReward={dailyReward}
@@ -560,22 +552,20 @@ const CampaignsComponent = () => {
                                             } : getDailyReward}
                                         />
                                         <div style={dividerStyle} className='mt-2'></div>
-                                        {/* <DailyTutorial/> */}
                                         {((dailyReward["completed"])) ? (
                                             <Spacing size={2} />
                                         ) : <>
                                             <Spacing size={2} />
-                                            {/*<div style={dividerStyle}></div>*/}
                                         </>}
                                     </>
-                                )}
+                                )} */}
                                 {activeTab !== "completed" &&
                                     <>
-                                        <MantleTrasReward
+                                        {/* <MantleTrasReward
                                             dailyReward={50000}
                                             getDailyReward={getMantleTransReward}
                                         />
-                                        <div style={dividerStyle} className='mt-2'></div>
+                                        <div style={dividerStyle} className='mt-2'></div> */}
                                         <DailyTutorial />
                                         <div style={dividerStyle} className='mt-2'></div>
                                     </>

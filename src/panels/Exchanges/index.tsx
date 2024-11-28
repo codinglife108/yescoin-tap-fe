@@ -12,14 +12,11 @@ import { DefaultStateType } from '../../store/reducer';
 import { fetchData } from '../../utils/api';
 import { getDispatchObject } from '../../store/reducer';
 
-import { useOkxWallet } from '../../utils/OkxWalletProvider';
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
-
-
+import { useWallet } from '../../utils/ReownAppKitProvider';
 
 // @ts-ignore
 const tg = window['Telegram'].WebApp;
@@ -28,8 +25,8 @@ const Exhchanges: FC = () => {
     const [loading, setLoading] = useState(false);
     const [err, setError] = useState(false);
 
-    const okxContext = useOkxWallet();
     const dispatch = useDispatch();
+    const wallet = useWallet();
 
     const selector = useSelector((s: DefaultStateType) => s);
     const campaigns = selector?.tasks;
@@ -106,22 +103,6 @@ const Exhchanges: FC = () => {
         fetchCampaigns();
     }, [fetchCampaigns]);
 
-    const clickHandler = async () => {
-        if (okxContext.walletAddress) {
-            // @ts-ignore
-            tg.showConfirm("Would you like to disconnect your wallet?", async (response: boolean) => {
-                if (response) {
-                    await okxContext?.disconnect();
-                }
-            })
-        } else {
-            console.log('Wallet is already not connected!')
-        }
-    }
-
-    const userActivities = useSelector((state: DefaultStateType) => state.userActivities);
-    const isWalletRewarded = userActivities?.hasOwnProperty('mantleWalletConnectAt');
-
     const _renderHeader = () => {
         return (
             <div className="flex flex-col justify-center items-center mt-[20px] w-full ">
@@ -135,16 +116,11 @@ const Exhchanges: FC = () => {
     }
 
     const _renderWalletConnect = () => {
-        const handleConnectWallet = async () => {
-            // if (!okxContext.walletAddress) {
-            await okxContext.connectWallet();
-            // }
-        }
         return (
-            <div className='bg-[#FFFFFF1F] p-1 px-4 mt-4 rounded-[16px] flex items-center gap-4' onClick={(okxContext.walletAddress && isWalletRewarded) ? clickHandler : () => handleConnectWallet()}>
+            <div className='bg-[#FFFFFF1F] p-1 px-4 mt-4 rounded-[16px] flex items-center gap-4' onClick={() => wallet.open()}>
                 <img src={WalletIcon} width={43} />
-                {okxContext.walletAddress && isWalletRewarded ? (
-                    <div className='w-full flex justify-between items-end text-[20px]'>Wallet<p className='text-gray-400 text-[18px]'>{readableAddress(okxContext.walletAddress || "")}</p></div>
+                {wallet.isConnected ? (
+                    <div className='w-full flex justify-between items-end text-[20px]'>Wallet<p className='text-gray-400 text-[18px]'>{readableAddress(wallet.address || "")}</p></div>
                 ) : (
                     <>
                         <p className='text-[20px]'>Connect wallet</p>

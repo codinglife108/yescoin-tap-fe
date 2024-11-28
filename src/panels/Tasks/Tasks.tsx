@@ -21,8 +21,6 @@ import useModal from "../../hooks/useModal";
 import BackgroundGlow from "../../components/BackgroundGlow/BackgroundGlow";
 import { useDispatch } from "react-redux";
 import { ADD_GOLD, getDispatchObject } from "../../store/reducer";
-import TaskConnectWallet from "../../components/TaskConnectWallet/TaskConnectWallet";
-import TaskDailyReward from "../../components/TaskDailyReward/TaskDailyReward";
 
 
 enum AdsgramAdStatus {
@@ -121,10 +119,6 @@ const Tasks: FC = () => {
   };
 
   const renderTask = (task: any, index: number) => {
-    // if (task["type"] === "connect_bitget_wallet") {
-    //   return <TaskConnectWallet taskId={task["id"]} reward={task["award"]} isCompleted={task["award"] === -1} />
-    // }
-
     return (
       <Cell
         key={index}
@@ -300,10 +294,6 @@ const Tasks: FC = () => {
             }}
           />
         )}
-
-        {!tasksLoading &&
-          dailyReward !== null &&
-          <TaskDailyReward dailyReward={dailyReward} setDailyReward={setDailyReward} />}
 
         {!tasksLoading && renderAdsgramAdReward()}
 

@@ -8,10 +8,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import './i18n';
 import ErrorBoundary from "./components/ErrorBoundary";
 import './touch';
-import { TonConnectUIProvider } from '@tonconnect/ui-react';
-import { OkxWalletProvider } from "./utils/OkxWalletProvider";
-import { MetaMaskUIProvider } from "@metamask/sdk-react-ui"
-// import { Web3ModalProvider } from "./utils/Web3ModalProvider";
+import { ReownAppKitProvider } from "./utils/ReownAppKitProvider";
 
 // @ts-ignore
 const tg = window['Telegram'].WebApp;
@@ -49,20 +46,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
         <WebAppProvider options={{ smoothButtonsTransition: false }}>
-            <NextUIProvider>
-                <TonConnectUIProvider manifestUrl={`${process.env.REACT_APP_URL}/tonconnect-manifest.json`}>
-                    <OkxWalletProvider>
-                        {/* <Web3ModalProvider> */}
-                        <main className="dark text-foreground">
-                            <ErrorBoundary>
-                                <App />
-                            </ErrorBoundary>
-                        </main>
-
-                        {/* </Web3ModalProvider> */}
-                    </OkxWalletProvider>
-                </TonConnectUIProvider>
-            </NextUIProvider>
+            <ReownAppKitProvider>
+                <NextUIProvider>
+                    <main className="dark text-foreground">
+                        <ErrorBoundary>
+                            <App />
+                        </ErrorBoundary>
+                    </main>
+                </NextUIProvider>
+            </ReownAppKitProvider>
         </WebAppProvider>
     </Provider>
 );

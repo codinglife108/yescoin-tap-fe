@@ -5,7 +5,6 @@ import IconText from "../../../components/IconText/IconText";
 import { formatNumberWithSpaces } from "../../../utils/mathUtils";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import TaskConnectWallet from "../../../components/TaskConnectWallet/TaskConnectWallet";
 import { Pencils } from "../HardCodedSuperTaskData";
 import { BLOCKGAME_TITLE } from "../../../utils/constant";
 export default function CampaignListItem({ campaign, onCampaignClick }: any) {
@@ -23,10 +22,6 @@ export default function CampaignListItem({ campaign, onCampaignClick }: any) {
             }
         }
     };
-
-    if (campaign["type"] === "connect_bitget_wallet") {
-        return <TaskConnectWallet taskId={campaign["id"]} reward={campaign["award"]} isCompleted={campaign["award"] === -1} />
-    }
 
     if (!superTask) {
         return (

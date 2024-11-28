@@ -16,7 +16,7 @@ import { MODAL_INFO } from "../../../../routes";
 import iconLogo from "../../../../assets/images/coins/rocket_coin_back_100x100.png";
 import walletIcon from "../../../../assets/icons/wallet-icon.png";
 import bybitIcon from "../../../../assets/icons/bybit_icon.png";
-import { useOkxWallet } from "../../../../utils/OkxWalletProvider";
+import { useWallet } from "../../../../utils/ReownAppKitProvider";
 
 interface CoinButtonProps {}
 
@@ -36,7 +36,7 @@ const CoinButton: FC<CoinButtonProps> = () => {
   const [totalSessionClicks, setTotalSessionClicks] = useState(0);
   const [tapAt, setTapAt] = useState<number>(new Date().getTime()/1000);
   const [voteAt, setVoteAt] = useState<number>(new Date().getTime()/1000);
-  const okxContext = useOkxWallet();
+  const wallet = useWallet();
 
   // количество кликов. когда достигает 10 - отправляется пачкой на сервер и обнуляется
   const [, setClicksStack] = useState(0);
@@ -169,17 +169,17 @@ const CoinButton: FC<CoinButtonProps> = () => {
 
   const handleConnectWallet = async () => {
     setModalType(ModalTypes.CONNECT_WALLET);
-      await fetchData(
-        '/user/updateLastActivities',
-        {type: 'lastTapAt'}
-      );
-      setTapAt(new Date().getTime()/1000);
-      setActiveModal(MODAL_INFO, {
-        icon: walletIcon,
-        iconClass: "w-[160px] h-[160px]",
-        buttonText: "Connect Wallet",
-        description: () => <p className="font-bold text-[20px] text-center">Connect your wallet to earn<br/> 500,000 Yescoin</p>,
-      });
+    await fetchData(
+      '/user/updateLastActivities',
+      {type: 'lastTapAt'}
+    );
+    setTapAt(new Date().getTime()/1000);
+    setActiveModal(MODAL_INFO, {
+      icon: walletIcon,
+      iconClass: "w-[160px] h-[160px]",
+      buttonText: "Connect Wallet",
+      description: () => <p className="font-bold text-[20px] text-center">Connect your wallet to earn<br/> 500,000 Yescoin</p>,
+    });
   }
 
   const click = (event: any) => {
@@ -206,8 +206,8 @@ const CoinButton: FC<CoinButtonProps> = () => {
       return;
     }
 
-    if(((new Date().getTime()/1000) - tapAt)/(60*60*24)>1&&!okxContext.walletAddress) {// if tap more than 1 day ago
-    // if(true){
+    // if(((new Date().getTime()/1000) - tapAt)/(60*60*24)>1&&!wallet.isConnected) {// if tap more than 1 day ago
+    if(!wallet.isConnected) {
       handleConnectWallet();
     }
     clickAnimation(event);

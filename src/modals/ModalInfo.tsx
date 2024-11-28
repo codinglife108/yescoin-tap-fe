@@ -4,8 +4,8 @@ import useModal from "../hooks/useModal";
 import InformationModal from "./InformationModal";
 import logoBonus from "../assets/images/emoji/robot_big.png";
 import { ModalTypes } from '../hooks/useModal';
-import { useOkxWallet } from '../utils/OkxWalletProvider';
 import { useCallback } from 'react';
+import { useWallet } from '../utils/ReownAppKitProvider';
 
 
 // @ts-ignore
@@ -14,16 +14,16 @@ const tg = window['Telegram'].WebApp;
 const ModalInfo: FC = () => {
 
     const {activeModal, setActiveModal, activeModalParams, modalType} = useModal();
-    const okxContext = useOkxWallet();
+    const wallet = useWallet();
 
     const handleCallBack = useCallback(() => {
         switch (modalType) {
           case ModalTypes.CONNECT_WALLET:
-            okxContext.connectWallet();
+            wallet.open();
             break;
           case ModalTypes.VOTE_YESCOIN:
             // @ts-ignore
-tg.openLink("https://partner.bybit.com/b/yeswsot");
+            tg.openLink("https://partner.bybit.com/b/yeswsot");
             break;
           default:
             break;

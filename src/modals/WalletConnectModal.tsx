@@ -10,7 +10,6 @@ import { getDispatchObject } from '../store/reducer';
 import { SET_TOAST } from '../store/reducer';
 import { walletIcons, WalletType } from '../utils/wallet';
 import WalletIcon from '../components/WalletIcon';
-import { useSDK } from "@metamask/sdk-react";
 import CloseIcon from '@mui/icons-material/Close';
 
 // @ts-ignore
@@ -22,7 +21,6 @@ const WalletConnectModal: FC = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     const [account, setAccount] = useState<string>();
-    const { sdk, connected, connecting, provider, chainId } = useSDK();
 
 
     // if (activeModal !== MODAL_COPY) return null;
@@ -46,23 +44,9 @@ const WalletConnectModal: FC = () => {
         // }
     };
 
-    const handleConnectMetamask = async () => {
-        try {
-            const accounts:any = await sdk?.connect();
-            setAccount(accounts?.[0]);
-            handleClose();
-            console.log('connected wallet ----->', accounts?.[0])
-          } catch (error) {
-            console.error(error);
-          }
-    }
-
     const handleConnectWallet = async (type:WalletType) => {
-        // console.log('handle wallet connect ----->')
         switch (type) {
             case WalletType.METAMASK:
-                handleConnectMetamask();
-                break;
             case WalletType.BYBIT_WEB3:
             case WalletType.BITGET_WALLET:
             case WalletType.OKX_WALLET:
