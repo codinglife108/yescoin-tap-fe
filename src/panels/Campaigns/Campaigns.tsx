@@ -195,7 +195,7 @@ const CampaignsComponent = () => {
             return;
         }
         if (task["require_input"] === true) {
-            navigate(`${ROUTE_REQUIRE_INPUT}/${task.id}`);
+            navigate(`${ROUTE_REQUIRE_INPUT}/${task.id}/not_supertask`);
             // setActiveModal(MODAL_TASK_INPUT, task);
             return;
         }
