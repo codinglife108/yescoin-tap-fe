@@ -86,6 +86,7 @@
   "vipTitle": "YES Party Leaderboard",
   "vipSubTitle": "Get a share of 10B Yescoin",
   "vipInvitesLabel": "Invites",
+  "vipFriendsLabel": "frens",
   "vipInviteButton": "Invite a Fren",
   "vipLoadMore": "Load more",
   "leagueMinersLabel": "Miners",
@@ -94,5 +95,6 @@
   "modalSendButtonLabel": "Send",
   "modalCopyLinkButtonLabel": "Copy link",
   "inviteToEarn": "Invite to Earn",
-  "inviteToSquad": "Invite to Squad"
+  "inviteToSquad": "Invite to Squad",
+  "inviteAndEarn": "Invite & Earn"
 }

@@ -1,19 +1,19 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import Panel from "../../components/Panel/Panel";
 /* import {useTranslation} from "react-i18next"; */
 import TelegramBackButton from "../../components/TelegramBackButton/TelegramBackButton";
 import BackgroundGlow from "../../components/BackgroundGlow/BackgroundGlow";
 import IconText from "../../components/IconText/IconText";
-import {useSelector} from "react-redux";
-import {DefaultStateType} from "../../store/reducer";
+import { useSelector } from "react-redux";
+import { DefaultStateType } from "../../store/reducer";
 import Spacing from "../../components/Spacing/Spacing";
 import CellContainer from "../../components/CellContainer/CellContainer";
 import Cell from "../../components/Cell/Cell";
 import Icon16Chevron from "../../assets/icons/Icon16Chevron";
 import EmojiRectangle from "../../components/EmojiRectangle/EmojiRectangle";
 import Img from "../../components/Img/Img";
-import {useNavigate} from "react-router-dom";
-import {ROUTE_GOLD_SWAP} from "../../routes";
+import { useNavigate } from "react-router-dom";
+import { ROUTE_GOLD_SWAP } from "../../routes";
 
 const Balance: FC = () => {
 
@@ -65,7 +65,7 @@ const Balance: FC = () => {
                 />
 
                 <Cell
-                    onClick={() => {}}
+                    onClick={() => { }}
                     title="Top up USDT"
                     after={<Icon16Chevron />}
                     before={
@@ -76,7 +76,7 @@ const Balance: FC = () => {
                 />
 
                 <Cell
-                    onClick={() => {}}
+                    onClick={() => { }}
                     title="Withdrawal USDT"
                     after={<Icon16Chevron />}
                     before={
