@@ -92,14 +92,14 @@ const RequireInput = () => {
         }
 
         setCheckTaskButtonIsLoading(false)
-        dispatch(getDispatchObject(ADD_GOLD, stepData.additional_info?.number_range != undefined ? taskInput : stepData['award']));
+        dispatch(getDispatchObject(ADD_GOLD, stepData['award']));
 
         const event = new Event("TASKS_UPDATE");
         const event2 = new Event("SUPERTASK_UPDATE");
         document.dispatchEvent(event);
         document.dispatchEvent(event2);
         setActiveModal(null);
-        dispatch(getDispatchObject(SET_TOAST, { open: true, message: `${formatNumberWithSpaces(stepData.additional_info?.number_range != undefined ? taskInput : stepData.award)} Yescoin Received`, type: "success" }));
+        dispatch(getDispatchObject(SET_TOAST, { open: true, message: `${formatNumberWithSpaces(stepData.award)} Yescoin Received`, type: "success" }));
         if (supertask_id == 'not_supertask')
             navigate(ROUTE_TASKS);
         else

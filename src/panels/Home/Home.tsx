@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Panel from "../../components/Panel/Panel";
 import BottomLayout from "../../components/BottomLayout/BottomLayout";
 import Div from "../../components/Div/Div";
@@ -11,18 +11,20 @@ import Navigation from "./components/Navigation/Navigation";
 import BackgroundGlow from "../../components/BackgroundGlow/BackgroundGlow";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ROUTE_VIP_PAGE } from '../../routes';
+import TopInfo from '../Friends/components/Top100/TopInfo';
 //push
-const Home = ({fetchUserInfo,isInitialized, taskUrl}: { fetchUserInfo?: () => Promise<void>, isInitialized: boolean, taskUrl:string|null }) => {
+const Home = ({ fetchUserInfo, isInitialized, taskUrl }: { fetchUserInfo?: () => Promise<void>, isInitialized: boolean, taskUrl: string | null }) => {
     useEffect(() => {
-        if (fetchUserInfo&&isInitialized) {
+        if (fetchUserInfo && isInitialized) {
             fetchUserInfo();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchUserInfo]);
     const navigate = useNavigate();
     const viewedSuperTask = useSelector((state: any) => state.viewedSuperTask);
-    useEffect(()=> {
-        if (taskUrl&&(!viewedSuperTask||taskUrl.split("/")[2]!==viewedSuperTask)) {
+    useEffect(() => {
+        if (taskUrl && (!viewedSuperTask || taskUrl.split("/")[2] !== viewedSuperTask)) {
             navigate(taskUrl);
         }
     }, [taskUrl])
@@ -35,22 +37,23 @@ const Home = ({fetchUserInfo,isInitialized, taskUrl}: { fetchUserInfo?: () => Pr
                 vertical="bottom"
             />
 
-            <MyTeamButton/>
+            <TopInfo onClick={() => navigate(ROUTE_VIP_PAGE)} extraStyle={{ background: "#1f1f1f" }} />
+            {/* <MyTeamButton /> */}
 
-            <Spacing size={window.innerHeight / 800 * 6}/>
-            <ScoreBar/>
-            <Spacing size={18}/>
+            <Spacing size={window.innerHeight / 800 * 6} />
+            <ScoreBar />
+            <Spacing size={18} />
 
             <BottomLayout>
-                <CoinButton/>
+                <CoinButton />
 
                 <Div>
-                    <EnergyBar/>
-                    <Spacing/>
-                    <Navigation/>
+                    <EnergyBar />
+                    <Spacing />
+                    <Navigation />
                 </Div>
 
-                <Spacing/>
+                <Spacing />
             </BottomLayout>
         </Panel>
     );

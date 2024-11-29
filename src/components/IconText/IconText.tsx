@@ -1,4 +1,4 @@
-import React, {FC, ReactNode} from 'react';
+import React, { FC, ReactNode } from 'react';
 import './IconText.css';
 import Img from "../Img/Img";
 
@@ -57,7 +57,7 @@ const SIZES = {
 };
 
 interface IconTextProps {
-    size: 'large' | 'medium' | 'small' | 'special' | 'specialTeam' | 'mediumLevels' | 'xl'|'mediumTasks'
+    size: 'large' | 'medium' | 'small' | 'special' | 'specialTeam' | 'mediumLevels' | 'xl' | 'mediumTasks'
     imgPath: string
     text: string | ReactNode
     textColor?: string
@@ -69,14 +69,14 @@ interface IconTextProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
-const IconText: FC<IconTextProps> = ({ containerStyle, size, imgPath,style,centered, text, after, onClick, textColor = 'var(--white_color)', stretched = false }) => {
+const IconText: FC<IconTextProps> = ({ containerStyle, size, imgPath, style, centered, text, after, onClick, textColor = 'var(--white_color)', stretched = false }) => {
     const centeredStyle = centered ? { marginBottom: 3 } : {};
     return (
-        <div style={{ width: stretched ? '100%' : 'max-content',...(style||{}) }}>
+        <div style={{ width: stretched ? '100%' : 'max-content', ...(style || {}) }}>
             <div
                 className="IconText--content"
                 onClick={onClick}
-                style={{ cursor: onClick ? 'pointer' : 'auto' ,...centeredStyle,...containerStyle}}
+                style={{ cursor: onClick ? 'pointer' : 'auto', ...centeredStyle, ...containerStyle }}
             >
                 <Img
                     src={imgPath}

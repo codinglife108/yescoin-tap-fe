@@ -1,24 +1,24 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import IconText from "../../../../components/IconText/IconText";
 import Spacing from "../../../../components/Spacing/Spacing";
 
 /* import {useNavigate} from "react-router-dom"; */
 
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import {
     DefaultStateType
 } from "../../../../store/reducer";
-import {convertLevelIdToLevel} from "../../../../utils/levelsUtils";
-import {Skeleton} from "@nextui-org/react";
-import {formatNumberWithSpaces} from "../../../../utils/mathUtils";
-import {ROUTE_LEAGUE} from "../../../../routes";
-import {useNavigate} from "react-router-dom";
+import { convertLevelIdToLevel } from "../../../../utils/levelsUtils";
+import { Skeleton } from "@nextui-org/react";
+import { formatNumberWithSpaces } from "../../../../utils/mathUtils";
+import { ROUTE_LEAGUE } from "../../../../routes";
+import { useNavigate } from "react-router-dom";
 
 interface ScoreBarProps {
     noLeague?: boolean
 }
 
-const ScoreBar: FC<ScoreBarProps> = ({noLeague}: ScoreBarProps) => {
+const ScoreBar: FC<ScoreBarProps> = ({ noLeague }: ScoreBarProps) => {
 
     const navigate = useNavigate()
     const {
@@ -50,8 +50,8 @@ const ScoreBar: FC<ScoreBarProps> = ({noLeague}: ScoreBarProps) => {
                 />
             )}
 
-            <Spacing size={0}/>
-            {!noLeague && <>
+            <Spacing size={0} />
+            {/* {!noLeague && <>
                 {level !== null ? (
                     <IconText
                         size="mediumLevels"
@@ -72,7 +72,7 @@ const ScoreBar: FC<ScoreBarProps> = ({noLeague}: ScoreBarProps) => {
                         }}
                     />
                 )}
-            </>}
+            </>} */}
         </>
     );
 };
