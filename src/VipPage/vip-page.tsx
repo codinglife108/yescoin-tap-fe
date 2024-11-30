@@ -56,7 +56,7 @@ const PlayerRow = ({ rank, username, invite_count, gold, range }: IPlayerProps) 
                         </div>
                         <div className={"flex flex-col justify-content-center pb-2"}>
                             <span className="VipPage--playerName">{username}</span>
-                            <div className='player-invite-content pt-1'>
+                            <div className='player-invite-content pt-1 justify-content-flex-start'>
                                 <div className='invite-user-div'>
                                     <Iconusers />
                                 </div>

@@ -101,7 +101,7 @@
 .VipPage--playerName {
   color: white;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .VipPage--miners {
@@ -151,18 +151,18 @@
 .avator-img {
   visibility: visible;
   border-radius: 16px;
-  width: 100px;
+  width: 90px;
 }
 
 .player-rank-number {
   padding: 5px;
   background: #1c1c1c;
-  width: 30px;
+  width: 25px;
   justify-content: center;
   display: flex;
   align-items: center;
   text-align: center;
-  height: 30px;
+  height: 25px;
   border-radius: 50%;
   font-size: 20px;
   font-weight: 600;
@@ -178,22 +178,23 @@
 
 .player-invite-content {
   display: flex;
+  justify-content: center;
   gap: 5px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
   padding-top: 14px;
 }
 .invite-user-div {
   background: linear-gradient(180deg, #ffcd00 0%, #ff9811 100%);
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   border-radius: 50%;
   padding: 6px;
 }
 .top-player {
   .avator-img {
-    width: 126px !important;
+    width: 115px !important;
   }
   .player-rank-number {
     background: #f6be05;
@@ -214,7 +215,7 @@
 }
 .player-coin {
   padding-top: 5px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .ad-content {
@@ -290,7 +291,7 @@
   font-weight: 700;
 }
 .list-avator-img {
-  width: 70px;
+  width: 65px;
 }
 
 .justify-content-center {
@@ -299,16 +300,20 @@
 .VipPage--playerRow {
   .player-rank-number {
     padding: 7px;
-    width: 27px;
-    height: 27px;
+    width: 23px;
+    height: 23px;
     padding-bottom: 8px;
     margin-top: -15px;
-    font-size: 17px;
+    font-size: 15px;
   }
   .range_2 {
-    font-size: 14px;
+    font-size: 10px;
   }
 }
 .p-0 {
   padding: 0px !important;
+}
+
+.justify-content-flex-start {
+  justify-content: flex-start;
 }
