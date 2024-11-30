@@ -317,3 +317,25 @@
 .justify-content-flex-start {
   justify-content: flex-start;
 }
+.Panel--container {
+  padding: 0px !important;
+}
+.infinite-scroll-component__outerdiv {
+  overflow: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.infinite-scroll-component__outerdiv::-webkit-scrollbar {
+  display: none !important;
+}
+
+.infinite-scroll-component {
+  overflow: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.infinite-scroll-component ::-webkit-scrollbar {
+  display: none !important;
+}
