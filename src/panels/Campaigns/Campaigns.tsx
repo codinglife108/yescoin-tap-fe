@@ -203,6 +203,7 @@ const CampaignsComponent = () => {
         if (task["botaddress"]) {
             // @ts-ignore
             tg.openTelegramLink(`https://t.me/${task['botaddress'].replace('@', '')}`);
+            check(task);
             return
         } else if (task["link"]) {
             if (task["link"].startsWith("https://t.me/")) {

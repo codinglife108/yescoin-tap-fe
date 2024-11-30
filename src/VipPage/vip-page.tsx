@@ -16,6 +16,10 @@ import { hideButton, setButtonLoader, setButtonText, showButton } from "../utils
 import { format } from 'date-fns-tz';
 import Img from '../components/Img/Img';
 import AdBackground from '../assets/images/vip/ad_background.png'
+import Iconusers from '../assets/icons/Iconuser';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import IconFiveStars from '../assets/icons/IconFiveStars';
+import IconthreeStars from '../assets/icons/IconThreeStars';
 
 const PartyTime = "2024-11-19T20:00:00";
 const TimeZone = "CET";
@@ -41,30 +45,33 @@ const PlayerRow = ({ rank, username, invite_count, gold, range }: IPlayerProps) 
 
     return (
         <>
-            <div className="VipPage--playerRow">
-                <div className="VipPage--playerInfo">
-                    <div className='player-avator'>
-                        <Img src={require("../assets/images/vip/Ellipse2.png")} className='list-avator-img' />
-                        <div className={`player-rank-number range_${Number(range) + 1}`}>
-                            {rank}
+            <div className="px-5">
+                <div className='VipPage--playerRow'>
+                    <div className="VipPage--playerInfo">
+                        <div className='player-avator'>
+                            <Img src={require("../assets/images/vip/Ellipse2.png")} className='list-avator-img' />
+                            <div className={`player-rank-number range_${Number(range) + 1}`}>
+                                {rank}
+                            </div>
+                        </div>
+                        <div className={"flex flex-col justify-content-center pb-2"}>
+                            <span className="VipPage--playerName">{username}</span>
+                            <div className='player-invite-content pt-1'>
+                                <div className='invite-user-div'>
+                                    <Iconusers />
+                                </div>
+                                <div>
+                                    {truncateNumber(parseInt(invite_count.toString(), 10))}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className={"flex flex-col justify-content-center pb-2"}>
-                        <span className="VipPage--playerName">{username}</span>
-                        <div className='player-invite-content pt-2'>
-                            <IconText
-                                size="special"
-                                imgPath={require("../assets/images/vip/friends.png")}
-                                text={truncateNumber(parseInt(invite_count.toString(), 10))}
-                            />
-                        </div>
+                    <div className='player-coin'>
+                        {truncateNumber(parseInt(gold, 10))}&nbsp;$
                     </div>
                 </div>
-                <div className='player-coin'>
-                    {truncateNumber(parseInt(gold, 10))}&nbsp;$
-                </div>
+                <hr style={{ borderColor: '#444447' }}></hr>
             </div>
-            <hr style={{ borderColor: '#444447' }}></hr>
         </>
     );
 };
@@ -85,11 +92,12 @@ const PlayerItem = ({ rank, username, invite_count, gold }: IPlayerProps) => {
                 {username}
             </div>
             <div className='player-invite-content'>
-                <IconText
-                    size="special"
-                    imgPath={require("../assets/images/vip/friends.png")}
-                    text={`${invite_count} ${t("vipFriendsLabel")}`}
-                />
+                <div className='invite-user-div'>
+                    <Iconusers />
+                </div>
+                <div>
+                    {truncateNumber(parseInt(invite_count.toString(), 10))}
+                </div>
             </div>
             <div className='player-coin'>
                 {truncateNumber(parseInt(gold, 10))} $
@@ -101,7 +109,7 @@ const PlayerItem = ({ rank, username, invite_count, gold }: IPlayerProps) => {
 
 export default function VipPage() {
     const navigate = useNavigate();
-    const [visiblePlayers, setVisiblePlayers] = useState(20);
+    const [visiblePlayers, setVisiblePlayers] = useState(50);
     const { t } = useTranslation();
     const [leaderboardData, setLeaderboardData] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
@@ -123,8 +131,9 @@ export default function VipPage() {
             })
         // setLeaderboardData(_leaderboardData)
     }, [])
+
     const loadMorePlayers = () => {
-        setVisiblePlayers(prevVisible => Math.min(prevVisible + 20, leaderboardData.length));
+        setVisiblePlayers(prevVisible => Math.min(prevVisible + 50 <= 300 ? prevVisible + 50 : 300, leaderboardData.length));
     };
 
     useEffect(() => {
@@ -183,24 +192,17 @@ export default function VipPage() {
 
         return () => clearInterval(timer);
     }, []);
-    const LeftTime = () => {
-
-        return (
-            <div className='flex items-center justify-center'>
-                <p className='text-[36px] font-bold'>{timeLeft.days}</p>
-                <p className='text-[20px] pt-2'>d</p>
-                <p className='text-[36px] font-bold px-2'>:</p>
-                <p className='text-[36px] font-bold'>{timeLeft.hours} </p>
-                <p className='text-[20px] pt-2'>h</p>
-                <p className='text-[36px] font-bold px-2'>:</p>
-                <p className='text-[36px] font-bold'>{timeLeft.minutes}</p>
-                <p className='text-[20px] pt-2'>m</p>
-            </div>
-        )
-    }
 
     return (
-        <Panel>
+        <InfiniteScroll
+            dataLength={leaderboardData.length}
+            next={loadMorePlayers}
+            hasMore={true}
+            height={'100vh'}
+            loader={''}
+            className='Panel--container p-0'
+        >
+            {/* <Panel> */}
             <BackgroundGlow
                 color1="#1c1c1c"
                 color2="#1c1c1c"
@@ -256,7 +258,9 @@ export default function VipPage() {
                 <div className='ad-content'>
                     <div className="ad-div" style={{ backgroundImage: `url(${AdBackground})` }} >
                         <div className='ad-header'>
-                            <Img src={require("../assets/images/vip/star5.png")} className='star5-img' />
+                            <div className='star5-img'>
+                                <IconFiveStars />
+                            </div>
                             <div className='text'>
                                 The Top 300 Leaders
                             </div>
@@ -264,7 +268,9 @@ export default function VipPage() {
                         <div className='ad-body'>will get a share of</div>
                         <div className='ad-footer'>
                             <Img src={require("../assets/images/vip/Awardamount.png")} className='award-img' />
-                            <Img src={require("../assets/images/vip/star3.png")} className='star3-img' />
+                            <div className='star3-img'>
+                                <IconthreeStars />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -288,7 +294,7 @@ export default function VipPage() {
                     ))
                     ))}
             </div>
-            <br></br>
+            {/* <br></br>
             {visiblePlayers < leaderboardData.length && (
                 <Button
                     size="lg"
@@ -299,8 +305,9 @@ export default function VipPage() {
                 >
                     {t("vipLoadMore")}
                 </Button>
-            )}
-        </Panel>
+            )} */}
+            {/* </Panel> */}
+        </InfiniteScroll>
     );
 }
 

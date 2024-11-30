@@ -152,7 +152,7 @@ const SuperTasks = () => {
             return;
         }
         if (task["type"] == "mantle-transaction") {
-            getMantleTransReward();
+            // getMantleTransReward();
         } else if (task["type"] == "wallet-connect") {
             // okxContext.connectWallet();
         } else {
@@ -192,6 +192,7 @@ const SuperTasks = () => {
             if (task["botaddress"]) {
                 // @ts-ignore
                 tg.openTelegramLink(`https://t.me/${task['botaddress'].replace('@', '')}`);
+                check(task);
                 return
             } else if (task["link"]) {
                 if (task["link"].startsWith("https://t.me/")) {
@@ -273,6 +274,7 @@ const SuperTasks = () => {
             if (isStepDisabled(index)) return;
             goToModal(taskData.steps[index])
         } else {
+            console.log(isSectionStepDisabled(index, sIndex));
             if (isSectionStepDisabled(index, sIndex)) return;
             goToModal(taskData.sections[sIndex].steps[index])
         }
