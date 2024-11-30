@@ -194,107 +194,105 @@ export default function VipPage() {
     }, []);
 
     return (
-        <InfiniteScroll
-            dataLength={leaderboardData.length}
-            next={loadMorePlayers}
-            hasMore={true}
-            height={'100vh'}
-            loader={''}
-            className='Panel--container p-0'
-        >
-            {/* <Panel> */}
-            <BackgroundGlow
-                color1="#1c1c1c"
-                color2="#1c1c1c"
-                color3="#1c1c1c"
-                vertical="bottom"
-                fromBottom
-            />
-
-            <br />
-            <br />
-            <TelegramBackButton />
-            {loading ? <FriendsListSkeleton /> : leaderboardData.length > 0 ? (
-                <div className='vip-top-players-content'>
-                    <div className='player-content pt-6 second-player'>
-                        {
-                            leaderboardData.length > 1 ?
+        <Panel>
+            <InfiniteScroll
+                dataLength={leaderboardData.length}
+                next={loadMorePlayers}
+                hasMore={true}
+                height={'100vh'}
+                loader={''}
+            >
+                <BackgroundGlow
+                    color1="#1c1c1c"
+                    color2="#1c1c1c"
+                    color3="#1c1c1c"
+                    vertical="bottom"
+                    fromBottom
+                />
+                <br />
+                <br />
+                <TelegramBackButton />
+                {loading ? <FriendsListSkeleton /> : leaderboardData.length > 0 ? (
+                    <div className='vip-top-players-content'>
+                        <div className='player-content pt-6 second-player'>
+                            {
+                                leaderboardData.length > 1 ?
+                                    <PlayerItem
+                                        key={leaderboardData[1].tgid}
+                                        rank={leaderboardData[1].rank}
+                                        username={leaderboardData[1].username}
+                                        invite_count={leaderboardData[1].invite_count}
+                                        gold={leaderboardData[1].gold}
+                                    /> : <></>
+                            }
+                        </div>
+                        <div className='player-content top-player'>
+                            {
                                 <PlayerItem
-                                    key={leaderboardData[1].tgid}
-                                    rank={leaderboardData[1].rank}
-                                    username={leaderboardData[1].username}
-                                    invite_count={leaderboardData[1].invite_count}
-                                    gold={leaderboardData[1].gold}
-                                /> : <></>
-                        }
+                                    key={leaderboardData[0].tgid}
+                                    rank={leaderboardData[0].rank}
+                                    username={leaderboardData[0].username}
+                                    invite_count={leaderboardData[0].invite_count}
+                                    gold={leaderboardData[0].gold}
+                                />
+                            }
+                        </div>
+                        <div className='player-content pt-6 third-player'>
+                            {
+                                leaderboardData.length > 2 ?
+                                    <PlayerItem
+                                        key={leaderboardData[2].tgid}
+                                        rank={leaderboardData[2].rank}
+                                        username={leaderboardData[2].username}
+                                        invite_count={leaderboardData[2].invite_count}
+                                        gold={leaderboardData[2].gold}
+                                    /> : <></>
+                            }
+                        </div>
                     </div>
-                    <div className='player-content top-player'>
-                        {
-                            <PlayerItem
-                                key={leaderboardData[0].tgid}
-                                rank={leaderboardData[0].rank}
-                                username={leaderboardData[0].username}
-                                invite_count={leaderboardData[0].invite_count}
-                                gold={leaderboardData[0].gold}
+                ) : <></>
+                }
+                {loading ? <></> : leaderboardData.length > 0 ? (
+                    <div className='ad-content'>
+                        <div className="ad-div" style={{ backgroundImage: `url(${AdBackground})` }} >
+                            <div className='ad-header'>
+                                <div className='star5-img'>
+                                    <IconFiveStars />
+                                </div>
+                                <div className='text'>
+                                    The Top 300 Leaders
+                                </div>
+                            </div>
+                            <div className='ad-body'>will get a share of</div>
+                            <div className='ad-footer'>
+                                <Img src={require("../assets/images/vip/Awardamount.png")} className='award-img' />
+                                <div className='star3-img'>
+                                    <IconthreeStars />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : <></>
+                }
+                <div className="VipPage--leaderboard-body mt-4">
+                    {loading ? <></> : <div className='leaders-header'>
+                        Top Leaders
+                        <hr style={{ borderColor: '#444447' }}></hr>
+                    </div>}
+                    {loading ? <FriendsListSkeleton /> : (
+                        (leaderboardData.length > 4 && leaderboardData.slice(3, visiblePlayers).map((player, i) => (
+                            <PlayerRow
+                                key={player.tgid}
+                                rank={player.rank}
+                                username={player.username}
+                                invite_count={player.invite_count}
+                                gold={player.gold}
+                                range={i - i % 100}
                             />
-                        }
-                    </div>
-                    <div className='player-content pt-6 third-player'>
-                        {
-                            leaderboardData.length > 2 ?
-                                <PlayerItem
-                                    key={leaderboardData[2].tgid}
-                                    rank={leaderboardData[2].rank}
-                                    username={leaderboardData[2].username}
-                                    invite_count={leaderboardData[2].invite_count}
-                                    gold={leaderboardData[2].gold}
-                                /> : <></>
-                        }
-                    </div>
+                        ))
+                        ))}
                 </div>
-            ) : <></>
-            }
-            {loading ? <></> : leaderboardData.length > 0 ? (
-                <div className='ad-content'>
-                    <div className="ad-div" style={{ backgroundImage: `url(${AdBackground})` }} >
-                        <div className='ad-header'>
-                            <div className='star5-img'>
-                                <IconFiveStars />
-                            </div>
-                            <div className='text'>
-                                The Top 300 Leaders
-                            </div>
-                        </div>
-                        <div className='ad-body'>will get a share of</div>
-                        <div className='ad-footer'>
-                            <Img src={require("../assets/images/vip/Awardamount.png")} className='award-img' />
-                            <div className='star3-img'>
-                                <IconthreeStars />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ) : <></>
-            }
-            <div className="VipPage--leaderboard-body mt-4">
-                {loading ? <></> : <div className='leaders-header'>
-                    Top Leaders
-                    <hr style={{ borderColor: '#444447' }}></hr>
-                </div>}
-                {loading ? <FriendsListSkeleton /> : (
-                    (leaderboardData.length > 4 && leaderboardData.slice(3, visiblePlayers).map((player, i) => (
-                        <PlayerRow
-                            key={player.tgid}
-                            rank={player.rank}
-                            username={player.username}
-                            invite_count={player.invite_count}
-                            gold={player.gold}
-                            range={i - i % 100}
-                        />
-                    ))
-                    ))}
-            </div>
-            {/* <br></br>
+                {/* <br></br>
             {visiblePlayers < leaderboardData.length && (
                 <Button
                     size="lg"
@@ -306,8 +304,8 @@ export default function VipPage() {
                     {t("vipLoadMore")}
                 </Button>
             )} */}
-            {/* </Panel> */}
-        </InfiniteScroll>
+            </InfiniteScroll>
+        </Panel>
     );
 }
 
