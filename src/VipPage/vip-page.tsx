@@ -194,7 +194,7 @@ export default function VipPage() {
     }, []);
 
     return (
-        <Panel>
+        <Panel style={{ padding: 0 }}>
             <InfiniteScroll
                 dataLength={leaderboardData.length}
                 next={loadMorePlayers}
