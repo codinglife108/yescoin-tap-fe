@@ -93,7 +93,7 @@ const InviteFriend: FC<InviteFriendProps> = () => {
         dispatch(
             getDispatchObject(SET_TOAST, {
                 open: true,
-                message: t('inviteAndEarn'),
+                message: t('friendsInviteButton1'),
                 type: 'success',
             })
         )
@@ -109,7 +109,7 @@ const InviteFriend: FC<InviteFriendProps> = () => {
         tg.MainButton.onClick(copyLink)
         hideButton()
         setTimeout(() => {
-            setButtonText(buttonTextState)
+            setButtonText(t('inviteAndEarn'))
             showButton()
         }, 50)
         return () => {
