@@ -8,7 +8,7 @@
   "scripts": {
     "startOld": "cross-env PORT=10888 HTTPS=true react-scripts start",
     "start": "react-scripts start",
-    "startWin": "cross-env PORT=10888 HTTPS=true DANGEROUSLY_DISABLE_HOST_CHECK=true react-scripts start",
+    "startWin": "cross-env PORT=10888 DANGEROUSLY_DISABLE_HOST_CHECK=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
