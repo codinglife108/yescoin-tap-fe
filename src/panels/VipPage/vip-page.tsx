@@ -171,7 +171,7 @@ export default function VipPage() {
                     <FriendsListSkeleton />
                 ) : leaderboardData.length > 0 ? (
                     <>
-                        <div className='flex justify-around'>
+                        <div className='flex justify-around relative'>
                             <div className='w-1/3 grid place-items-center text-center pt-6'>
                                 <PlayerItem
                                     key={leaderboardData[1].tgid}
@@ -212,7 +212,7 @@ export default function VipPage() {
                                 )}
                             </div>
                         </div>
-                        <div className='p-[1rem] pt-[3rem]'>
+                        <div className='p-[1rem] pt-[3rem] relative'>
                             <div
                                 className='bg-cover bg-center grid place-content-center place-items-center rounded-[10px] gap-[8px] p-[20px]'
                                 style={{
@@ -242,7 +242,7 @@ export default function VipPage() {
                                 </div>
                             </div>
                         </div>
-                        <div className='bg-[#2c2c2e] rounded-tl-[16px] rounded-tr-[16px] mt-4'>
+                        <div className='bg-[#2c2c2e] rounded-tl-[16px] rounded-tr-[16px] mt-4 relative'>
                             <div className='text-center py-[1.5rem] border-b-[1px] border-[#444447] grid text-[25px] font-bold'>
                                 Top Leaders
                             </div>
