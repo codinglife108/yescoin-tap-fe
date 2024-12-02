@@ -280,7 +280,7 @@ const SuperTasks = () => {
             if (storyViews?.length > 0) {
                 setHasViewedStories(storyViews.includes(id))
             }
-        } catch {}
+        } catch { }
     }, [])
 
     const fetchTask = useCallback(async () => {
@@ -323,7 +323,6 @@ const SuperTasks = () => {
             if (isStepDisabled(index)) return
             goToModal(taskData.steps[index])
         } else {
-            console.log(isSectionStepDisabled(index, sIndex))
             if (isSectionStepDisabled(index, sIndex)) return
             goToModal(taskData.sections[sIndex].steps[index])
         }
@@ -440,8 +439,8 @@ const SuperTasks = () => {
         const termConditionButtonLink = isPencil
             ? Pencils.termConditionButtonLink
             : isMantle
-            ? Mantle.termConditionButtonLink
-            : null
+                ? Mantle.termConditionButtonLink
+                : null
 
         return (
             <div className='flex gap-2'>
@@ -479,7 +478,7 @@ const SuperTasks = () => {
             <TelegramBackButton url={ROUTE_HOME} />
             <div className='banner my-3'>
                 {taskData?.media_url?.endsWith('.mp4') ||
-                taskData?.media_url?.endsWith('.mov') ? (
+                    taskData?.media_url?.endsWith('.mov') ? (
                     <video
                         className='banner-image'
                         autoPlay
@@ -549,7 +548,7 @@ const SuperTasks = () => {
                 <div className='banner-content mt-8'>
                     <div className='banner-card flex items-center gap-1'>
                         {taskData?.media_url?.endsWith('.mp4') ||
-                        taskData?.media_url?.endsWith('.mov') ? (
+                            taskData?.media_url?.endsWith('.mov') ? (
                             <video
                                 className='mr-3 aspect-square object-cover '
                                 autoPlay
@@ -644,9 +643,9 @@ const SuperTasks = () => {
                                                             isStepDisabled(
                                                                 index
                                                             ) ||
-                                                            step.award === -1
+                                                                step.award === -1
                                                                 ? 'step-' +
-                                                                  step.id
+                                                                step.id
                                                                 : 'active-step'
                                                         }
                                                         data-index={index}
@@ -661,8 +660,8 @@ const SuperTasks = () => {
                                                                 <CheckIcon />
                                                             </EmojiRectangle>
                                                         ) : isStepDisabled(
-                                                              index
-                                                          ) ? (
+                                                            index
+                                                        ) ? (
                                                             <EmojiRectangle
                                                                 style={
                                                                     emojyStyle
@@ -736,7 +735,7 @@ const SuperTasks = () => {
                                                     </div>
                                                     {isPencil &&
                                                         step.type ===
-                                                            Pencils.taskLearnMoreType && (
+                                                        Pencils.taskLearnMoreType && (
                                                             <span
                                                                 style={{
                                                                     color: '#3b82f6',
@@ -832,7 +831,7 @@ const SuperTasks = () => {
                                         onClick={() => handleStepClick(index)}
                                         id={
                                             isStepDisabled(index) ||
-                                            step.award === -1
+                                                step.award === -1
                                                 ? 'step-' + step.id
                                                 : 'active-step'
                                         }
@@ -876,8 +875,8 @@ const SuperTasks = () => {
                                             </h4>
                                             <Spacing size={8} />
                                             {step.award === -1 ||
-                                            (step.type == 'wallet-connect' &&
-                                                wallet.isConnected) ? (
+                                                (step.type == 'wallet-connect' &&
+                                                    wallet.isConnected) ? (
                                                 <p className={'text-success'}>
                                                     Completed!
                                                 </p>
@@ -909,7 +908,7 @@ const SuperTasks = () => {
                                     </div>
                                     {isPencil &&
                                         step.type ===
-                                            Pencils.taskLearnMoreType && (
+                                        Pencils.taskLearnMoreType && (
                                             <span
                                                 style={{ color: '#3b82f6' }}
                                                 className={

@@ -86,7 +86,7 @@ const ReferralLinkModal: FC = () => {
       buttonText: "Thank you 🥳",
       description: () => (
         <p>
-            referral link !
+          referral link !
         </p>
       ),
     });

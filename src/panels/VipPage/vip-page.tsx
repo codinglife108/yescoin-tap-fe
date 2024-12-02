@@ -10,6 +10,13 @@ import Img from '../../components/Img/Img'
 import { truncateNumber } from '../../utils/utils'
 import AdBackground from '../../assets/images/vip/ad_background.png'
 import InviteFriend from '../Friends/components/InviteFriend/InviteFriend'
+import rawRewardBalances from "./leaderboard_300.json";
+
+interface RewardBalances {
+    positions: {
+        [key: string]: string; // Maps rank (as a string) to a reward (also a string)
+    };
+}
 
 type IPlayerProps = {
     rank: number
@@ -18,16 +25,18 @@ type IPlayerProps = {
     gold: string
 }
 
+const RewardBalances: RewardBalances = rawRewardBalances;
+
 const getRankColor = (rank: number) => {
     return rank === 1
         ? 'bg-[#f6be05]'
         : rank === 2
-        ? 'bg-[#859eb1]'
-        : rank === 3
-        ? 'bg-[#f87500]'
-        : rank < 100
-        ? 'text-[12px] bg-[#1c1c1c]'
-        : 'text-[11px] bg-[#1c1c1c]'
+            ? 'bg-[#859eb1]'
+            : rank === 3
+                ? 'bg-[#f87500]'
+                : rank < 100
+                    ? 'text-[12px] bg-[#1c1c1c]'
+                    : 'text-[11px] bg-[#1c1c1c]'
 }
 
 const PlayerRow = ({ rank, username, invite_count, gold }: IPlayerProps) => {
@@ -37,12 +46,15 @@ const PlayerRow = ({ rank, username, invite_count, gold }: IPlayerProps) => {
                 <div className='flex justify-between items-center py-[8px]'>
                     <div className='flex w-full justify-start gap-[16px]'>
                         <div className='grid items-center justify-center justify-items-center'>
-                            <Img
-                                src={require('../../assets/images/vip/Ellipse.png')}
-                                className='w-[65px]'
-                            />
+                            <div className={
+                                rank === 1
+                                    ? 'visible rounded-50px w-[85px] h-[85px] bg-gray-600 rounded-full flex items-center justify-center'
+                                    : 'visible rounded-50px w-[64px] h-[64px] bg-gray-600 rounded-full flex items-center justify-center'
+                            }>
+                                <span className={"text-xl"}>{username.charAt(0).toUpperCase()}</span>
+                            </div>
                             <div
-                                className={`p-[5px] w-[25px] h-[25px] flex justify-center items-center text-center rounded-full font-semibold -mt-4 ${getRankColor(
+                                className={`p-[5px] w-[25px] h-[25px] flex justify-center items-center text-center rounded-full font-semibold -mt-[15px] ${getRankColor(
                                     rank
                                 )}`}
                             >
@@ -61,13 +73,13 @@ const PlayerRow = ({ rank, username, invite_count, gold }: IPlayerProps) => {
                                 <div>
                                     {truncateNumber(
                                         parseInt(invite_count.toString(), 10)
-                                    )}
+                                    )} frens
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className='pt-[5px] text-[16px]'>
-                        {truncateNumber(parseInt(gold, 10))}&nbsp;$
+                        {truncateNumber(parseInt(RewardBalances.positions[rank], 10))}&nbsp;$
                     </div>
                 </div>
                 <hr style={{ borderColor: '#444447' }}></hr>
@@ -80,16 +92,15 @@ const PlayerItem = ({ rank, username, invite_count, gold }: IPlayerProps) => {
     return (
         <div>
             <div className='grid place-items-center justify-center'>
-                <Img
-                    src={require('../../assets/images/vip/Ellipse.png')}
-                    className={
-                        rank === 1
-                            ? 'visible rounded-lg w-[115px]'
-                            : 'visible rounded-lg w-[90px]'
-                    }
-                />
+                <div className={
+                    rank === 1
+                        ? 'visible rounded-50px w-[85px] h-[85px] bg-gray-600 rounded-full flex items-center justify-center'
+                        : 'visible rounded-50px w-[64px] h-[64px] bg-gray-600 rounded-full flex items-center justify-center'
+                }>
+                    <span className={"text-xl"}>{username.charAt(0).toUpperCase()}</span>
+                </div>
                 <p
-                    className={`p-[5px] w-[25px] h-[25px] flex justify-center items-center text-center rounded-full font-semibold -mt-5 ${getRankColor(
+                    className={`p-[5px] w-[25px] h-[25px] flex justify-center items-center text-center rounded-full font-semibold -mt-[15px] ${getRankColor(
                         rank
                     )}`}
                 >
@@ -103,10 +114,10 @@ const PlayerItem = ({ rank, username, invite_count, gold }: IPlayerProps) => {
                     className='w-[25px] h-[25px]'
                 />
                 <div>
-                    {truncateNumber(parseInt(invite_count.toString(), 10))}
+                    {truncateNumber(parseInt(invite_count.toString(), 10))} frens
                 </div>
             </div>
-            <div>{truncateNumber(parseInt(gold, 10))} $</div>
+            <div>{truncateNumber(parseInt(RewardBalances.positions[rank], 10))} $</div>
         </div>
     )
 }
@@ -114,13 +125,13 @@ const PlayerItem = ({ rank, username, invite_count, gold }: IPlayerProps) => {
 export default function VipPage() {
     const [loading, setLoading] = useState(false)
 
-    const [visiblePlayers, setVisiblePlayers] = useState(300)
+    const [visiblePlayers, setVisiblePlayers] = useState(10)
     const [leaderboardData, setLeaderboardData] = useState<any[]>([])
 
     useEffect(() => {
         setLoading(true)
         fetch(
-            'https://yescoinleaderboardprod.blr1.cdn.digitaloceanspaces.com/Leaderboard/latest1.json',
+            'https://yescoinleaderboardprod.blr1.cdn.digitaloceanspaces.com/Leaderboard/latest.json',
             {
                 method: 'GET',
                 headers: {
@@ -141,7 +152,7 @@ export default function VipPage() {
     const loadMorePlayers = () => {
         setVisiblePlayers((prevVisible) =>
             Math.min(
-                prevVisible + 50 <= 300 ? prevVisible + 50 : 300,
+                prevVisible + 10 <= 300 ? prevVisible + 10 : 300,
                 leaderboardData.length
             )
         )
@@ -150,12 +161,12 @@ export default function VipPage() {
     return (
         <Panel style={{ padding: 0 }}>
             <InfiniteScroll
-                dataLength={leaderboardData.length}
+                dataLength={visiblePlayers}
                 next={loadMorePlayers}
                 hasMore={leaderboardData.length > visiblePlayers}
                 height={'100vh'}
                 loader={<></>}
-                scrollableTarget='Panel'
+                scrollableTarget='panel'
             >
                 <BackgroundGlow
                     color1='#1c1c1c'
@@ -220,7 +231,7 @@ export default function VipPage() {
                                 }}
                             >
                                 <div className='relative'>
-                                    <Img
+                                    <Img radius={0}
                                         src={require('../../assets/images/vip/star5.png')}
                                         className='absolute w-[30px] left-[-45px] rounded-none'
                                     />
@@ -235,7 +246,7 @@ export default function VipPage() {
                                     <Img
                                         src={require('../../assets/images/vip/amount.png')}
                                     />
-                                    <Img
+                                    <Img radius={0}
                                         src={require('../../assets/images/vip/star3.png')}
                                         className='absolute right-0 bottom-[30%] w-[22px] rounded-none'
                                     />
@@ -263,7 +274,7 @@ export default function VipPage() {
                     <></>
                 )}
             </InfiniteScroll>
-            <InviteFriend />            
+            <InviteFriend />
         </Panel>
     )
 }

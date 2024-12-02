@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Panel from "../../components/Panel/Panel";
 import TelegramBackButton from "../../components/TelegramBackButton/TelegramBackButton";
 import Spacing from "../../components/Spacing/Spacing";
@@ -8,21 +8,20 @@ import Img from "../../components/Img/Img";
 import InviteFriend from "./components/InviteFriend/InviteFriend";
 import InviteFriendLevel2 from "./components/InviteInfoLevel2/InviteInfoLevel2";
 import InviteInfo from "./components/InviteInfo/InviteInfo";
-import {useNavigate} from "react-router-dom";
-import {ROUTE_VIP_PAGE} from "../../routes";
+import { useNavigate } from "react-router-dom";
+import { ROUTE_VIP_PAGE } from "../../routes";
 import FriendsListSkeleton from "./components/FriendsListSkeleton/FriendsListSkeleton";
-import {useTranslation} from "react-i18next";
-import {fetchData, getTelegramImageUrlPlaceholder} from "../../utils/api";
+import { useTranslation } from "react-i18next";
+import { fetchData, getTelegramImageUrlPlaceholder } from "../../utils/api";
 import EmojiRectangle from "../../components/EmojiRectangle/EmojiRectangle";
 import BackgroundGlow from "../../components/BackgroundGlow/BackgroundGlow";
 // import FriendIcon from "../../assets/icons/hands.svg";
 import DiscoIcon from "../../assets/images/other/disco.png"
 import HandshakeIcon from "../../assets/icons/handshake.png"
 import SmileEmoji from "../../assets/images/other/smile_emoji.png"
-import {parseStringWithNewLine} from "../../utils/utils";
-import TopInfo from "./components/Top100/TopInfo";
+import { parseStringWithNewLine } from "../../utils/utils";
 import IconText from "../../components/IconText/IconText";
-import {formatNumberWithSpaces} from "../../utils/mathUtils";
+import { formatNumberWithSpaces } from "../../utils/mathUtils";
 import Collapse from '../../components/Collapse';
 import { format } from 'date-fns-tz';
 
@@ -42,7 +41,7 @@ const Friends: FC = () => {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     useEffect(() => {
         fetchFriends().then()
     }, [])
@@ -50,13 +49,13 @@ const Friends: FC = () => {
     const fetchFriends = async () => {
         setLoading(true);
 
-        const response = await fetchData('/friends/get', {isNew: true});
+        const response = await fetchData('/friends/get', { isNew: true });
         if (response.error) {
             return;
         }
         setFriendsList(response.result);
 
-        const response2 = await fetchData('/friends/get-level2', {isNew: true});
+        const response2 = await fetchData('/friends/get-level2', { isNew: true });
         if (response2.error) {
             return;
         }
@@ -69,11 +68,11 @@ const Friends: FC = () => {
 
     const calculateTimeDifference = (eventDate: Date): TimeLeft => {
         const totalMilliseconds = eventDate.getTime() - new Date().getTime();
-        
+
         const days = Math.floor(totalMilliseconds / (1000 * 60 * 60 * 24));
         const hours = Math.floor((totalMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
-    
+
         return { days, hours, minutes };
     };
 
@@ -111,7 +110,7 @@ const Friends: FC = () => {
 
     return (
         <Panel>
-            <TelegramBackButton/>
+            <TelegramBackButton />
 
             <BackgroundGlow
                 color1="#FE2B3A"
@@ -121,7 +120,7 @@ const Friends: FC = () => {
                 fromBottom
             />
             <div className={"flex justify-center"}>
-                <img src={HandshakeIcon} alt={"friend"} width={"100px"}/>
+                <img src={HandshakeIcon} alt={"friend"} width={"100px"} />
             </div>
             {/* <div className='flex flex-col items-center'>
                 <p className={"text-center font-bold text-[32px]"}>Welcome to the</p>
@@ -139,28 +138,28 @@ const Friends: FC = () => {
                 <br />
                 <p className={"text-center text-[18px]"}>Just share it</p>
             </div>
-            <Spacing size={34}/>
-        
+            <Spacing size={34} />
+
             {/* <p className={"text-center font-bold text-[32px]"}>{parseStringWithNewLine(t("friendsSubTitle"))}</p> */}
             {/* <p className={"text-center"}>{(t("friendsSubTitle2"))}</p> */}
             {/* <Spacing size={18}/> */}
             {/* <LeftTime/> */}
 
-            <InviteInfo/>
-            <Spacing size={8}/>
-            <InviteFriendLevel2/>
-            <Spacing size={8}/>
-            <TopInfo onClick={() => navigate(ROUTE_VIP_PAGE)}/>
-            <Spacing size={24}/>
+            <InviteInfo />
+            <Spacing size={8} />
+            <InviteFriendLevel2 />
+            {/* <Spacing size={8}/>
+            <TopInfo onClick={() => navigate(ROUTE_VIP_PAGE)}/> */}
+            <Spacing size={24} />
             <Collapse title={t('friendsList')}>
                 {/* <p className={"text-lg text-white mb-2"}>{t('friendsList')}</p> */}
-                {loading && <FriendsListSkeleton/>}
+                {loading && <FriendsListSkeleton />}
                 {!loading && friendsList !== null && friendsList.friends && friendsList.friends?.length > 0 && (
                     <>
                         {friendsList?.friends?.map((friend: any, index: number) => (
                             friend && <Cell
                                 key={index}
-                                before={<Img src={getTelegramImageUrlPlaceholder(friend.username)}/>}
+                                before={<Img src={getTelegramImageUrlPlaceholder(friend.username)} />}
                                 titleColumn
                                 title={friend.username ?? friend.name}
                                 titleAfter={<IconText
@@ -187,22 +186,22 @@ const Friends: FC = () => {
                     </>
                 )}
                 {!loading && ((friendsList !== null && friendsList.friends?.length < 1) || !(friendsList?.friends)) && (
-                    <div style={{textAlign: 'center',fontSize:"64px"}}>
+                    <div style={{ textAlign: 'center', fontSize: "64px" }}>
                         😢
                         <p className="text-14-medium text-gray">{t('friendsYourFriendsListEmpty')}</p>
                     </div>
                 )}
             </Collapse>
-            <Spacing size={8}/>
+            <Spacing size={8} />
             <Collapse title={t('friendsList2')}>
                 {/* <p className={"text-lg text-white mb-2"}>{t('friendsList2')}</p> */}
-                {loading && <FriendsListSkeleton/>}
+                {loading && <FriendsListSkeleton />}
                 {!loading && friendsList2 !== null && friendsList2.friends && friendsList2.friends?.length > 0 && (
                     <>
                         {friendsList2?.friends?.map((friend: any, index: number) => (
                             friend && <Cell
                                 key={index}
-                                before={<Img src={getTelegramImageUrlPlaceholder(friend.username)}/>}
+                                before={<Img src={getTelegramImageUrlPlaceholder(friend.username)} />}
                                 titleColumn
                                 title={friend.username ?? friend.name}
                                 titleAfter={<IconText
@@ -229,16 +228,16 @@ const Friends: FC = () => {
                     </>
                 )}
                 {!loading && ((friendsList2 !== null && friendsList2.friends?.length < 1) || !(friendsList2?.friends)) && (
-                    <div style={{textAlign: 'center',fontSize:"64px"}}>
+                    <div style={{ textAlign: 'center', fontSize: "64px" }}>
                         😢
                         <p className="text-14-medium text-gray">{t('friendsYourFriendsListEmpty')}</p>
                     </div>
                 )}
             </Collapse>
 
-            <Spacing size={80}/>
+            <Spacing size={80} />
 
-            <InviteFriend/>
+            <InviteFriend />
         </Panel>
     );
 };
