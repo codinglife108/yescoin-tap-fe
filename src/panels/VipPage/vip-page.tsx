@@ -79,7 +79,7 @@ const PlayerRow = ({ rank, username, invite_count, gold }: IPlayerProps) => {
                         </div>
                     </div>
                     <div className='pt-[5px] text-[16px]'>
-                        {truncateNumber(parseInt(RewardBalances.positions[rank], 10))}&nbsp;$
+                        {RewardBalances.positions[rank]}
                     </div>
                 </div>
                 <hr style={{ borderColor: '#444447' }}></hr>
@@ -117,7 +117,7 @@ const PlayerItem = ({ rank, username, invite_count, gold }: IPlayerProps) => {
                     {truncateNumber(parseInt(invite_count.toString(), 10))} frens
                 </div>
             </div>
-            <div>{truncateNumber(parseInt(RewardBalances.positions[rank], 10))} $</div>
+            <div>{RewardBalances.positions[rank]}</div>
         </div>
     )
 }
