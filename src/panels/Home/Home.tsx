@@ -37,7 +37,7 @@ const Home = ({ fetchUserInfo, isInitialized, taskUrl }: { fetchUserInfo?: () =>
                 vertical="bottom"
             />
 
-            <TopInfo onClick={() => navigate(ROUTE_VIP_PAGE)} extraStyle={{ background: "#1f1f1f" }} />
+            <TopInfo onClick={() => navigate(ROUTE_VIP_PAGE)} extraStyle={{ background: "#1f1f1f", padding: 16, display: 'flex', fontSize: 18, fontWeight: 600, cursor: 'pointer', paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center' }} />
             {/* <MyTeamButton /> */}
 
             <Spacing size={window.innerHeight / 800 * 6} />

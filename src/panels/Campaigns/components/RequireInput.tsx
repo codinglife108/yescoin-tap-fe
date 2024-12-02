@@ -156,7 +156,7 @@ const RequireInput = () => {
             const checkStep = propsStep || stepData
             if (checkStep['award'] === -1) {
                 if (checkStep['botaddress']) {
-                    checkWithOpenModal(
+                    checkWithOpenModal(false,
                         onlyCheck,
                         `https://t.me/${checkStep['botaddress'].replace(
                             '@',
@@ -166,13 +166,13 @@ const RequireInput = () => {
                     return
                 } else if (checkStep['link']) {
                     if (checkStep['link'].startsWith('https://t.me/')) {
-                        checkWithOpenModal(onlyCheck, checkStep['link'])
+                        checkWithOpenModal(false, onlyCheck, checkStep['link'])
                         return
                     }
-                    checkWithOpenModal(onlyCheck, checkStep['link'])
+                    checkWithOpenModal(true, onlyCheck, checkStep['link'])
                     return
                 } else if (checkStep['channeladdress']) {
-                    checkWithOpenModal(
+                    checkWithOpenModal(false,
                         onlyCheck,
                         `https://t.me/${checkStep['channeladdress'].replace(
                             '@',
@@ -185,18 +185,18 @@ const RequireInput = () => {
             }
 
             if (checkStep['botaddress']) {
-                checkWithOpenModal(
+                checkWithOpenModal(false,
                     onlyCheck,
                     `https://t.me/${checkStep['botaddress'].replace('@', '')}`
                 )
             } else if (checkStep['link']) {
                 if (checkStep['link'].startsWith('https://t.me/')) {
-                    checkWithOpenModal(onlyCheck, checkStep['link'])
+                    checkWithOpenModal(false, onlyCheck, checkStep['link'])
                     return
                 }
-                checkWithOpenModal(onlyCheck, checkStep['link'])
+                checkWithOpenModal(true, onlyCheck, checkStep['link'])
             } else if (checkStep['channeladdress']) {
-                checkWithOpenModal(
+                checkWithOpenModal(false,
                     onlyCheck,
                     `https://t.me/${checkStep['channeladdress'].replace(
                         '@',
@@ -207,12 +207,17 @@ const RequireInput = () => {
         },
         [stepData]
     )
-    const checkWithOpenModal = (onlyCheck: boolean = true, link: string) => {
+    const checkWithOpenModal = (openLink: boolean = true, onlyCheck: boolean = true, link: string) => {
         if (onlyCheck) {
             setIsOpenNewTab(true)
         } else {
-            // @ts-ignore
-            tg.openTelegramLink(link)
+            if (openLink) {
+                // @ts-ignore
+                tg.openLink(link)
+            } else {
+                // @ts-ignore
+                tg.openTelegramLink(link)
+            }
         }
     }
 
@@ -335,7 +340,7 @@ const RequireInput = () => {
                                 dangerouslySetInnerHTML={{
                                     __html: stepData['additional_info']
                                         ? stepData['additional_info']
-                                              .description
+                                            .description
                                         : '',
                                 }}
                             ></p>
@@ -362,7 +367,7 @@ const RequireInput = () => {
                                     tg.openLink(
                                         stepData['additional_info']
                                             ? stepData['additional_info']
-                                                  .instructions_url
+                                                .instructions_url
                                             : ''
                                     )
                                 }}

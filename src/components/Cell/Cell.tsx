@@ -16,7 +16,7 @@ interface CellProps {
 
 const Cell: FC<CellProps> = (props) => {
     return (
-        <div className="Cell--container" onClick={props.onClick} style={props.style||{}}>
+        <div className="Cell--container" onClick={props.onClick} style={props.style || {}}>
             {props.before && (
                 <div
                     className={`${props?.superTask ? 'Cell--before--bitget' : 'Cell--before'}`}

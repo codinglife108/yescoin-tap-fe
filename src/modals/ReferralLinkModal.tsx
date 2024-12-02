@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useCallback } from "react";
 import {
   Button,
   Input,
@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { MODAL_REFERRAL, MODAL_INFO } from "../routes";
-import { getDispatchObject, SET_TOAST } from "../store/reducer";
+import { getDispatchObject, SET_TASKS, SET_TOAST } from "../store/reducer";
 import useModal from "../hooks/useModal";
 import { fetchData } from "../utils/api";
 import iconLogo from "../assets/images/coins/normal.png";
@@ -86,11 +86,62 @@ const ReferralLinkModal: FC = () => {
       buttonText: "Thank you 🥳",
       description: () => (
         <p>
-            referral link !
+          referral link !
         </p>
       ),
     });
+    fetchCampaigns();
   };
+
+  const fetchCampaigns = useCallback(async () => {
+    try {
+      const response = await fetchData('/tasks/get')
+
+      const tasks = response.result.tasks
+      let sections = response.result.sections
+      const superTasks = response.result.superTasks
+
+      sections = sections.map((section: any) => ({
+        ...section,
+        steps: tasks.filter(
+          (task: any) => task.section_id === section.id
+        ),
+      }))
+
+      const independentTasks = tasks.filter(
+        (task: any) => !task.supertask_id
+      )
+
+      const superTasksWithSteps = superTasks
+        .map((superTask: any) => ({
+          ...superTask,
+          type: 'supertask',
+          sections: sections.filter(
+            (section: any) => section.supertask_id === superTask.id
+          ),
+          steps: tasks.filter(
+            (task: any) =>
+              task.supertask_id === superTask.id &&
+              (task?.section_id == null ||
+                task?.section_id == '' ||
+                task?.section_id == undefined)
+          ),
+        }))
+        .sort((a: any, b: any) => a.orderpriority - b.orderpriority)
+
+      const allCampaigns = [
+        ...superTasksWithSteps,
+        ...independentTasks.map((task: any) => ({
+          ...task,
+          type: 'task',
+        })),
+      ]
+
+      dispatch(getDispatchObject(SET_TASKS, allCampaigns))
+    } catch (e: any) {
+      console.log(e)
+    }
+  }, [dispatch])
 
   return (
     <>
@@ -115,7 +166,7 @@ const ReferralLinkModal: FC = () => {
                   }}
                   size="md"
                   value={taskInput}
-                  placeholder="Link (format: https://bingx.com/invite?id=[])"
+                  placeholder={`Link (format: ${activeModalParams?.additional_info?.refer_link_type || 'https://bingx.com/invite?id=[]'})`}
                   type="text"
                   onChange={(event: any) => setTaskInput(event.target.value)}
                 />
