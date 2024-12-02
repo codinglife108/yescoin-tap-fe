@@ -1,19 +1,23 @@
-import { ROUTE_BLOCKGAME, ROUTE_SUPERTASKS } from "../../../routes";
+import { useNavigate } from "react-router-dom";
+
 import EmojiRectangle from "../../../components/EmojiRectangle/EmojiRectangle";
 import Img from "../../../components/Img/Img";
 import IconText from "../../../components/IconText/IconText";
+
+import { ROUTE_BLOCKGAME, ROUTE_SUPERTASKS } from "../../../routes";
+
 import { formatNumberWithSpaces } from "../../../utils/mathUtils";
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Pencils } from "../HardCodedSuperTaskData";
 import { BLOCKGAME_TITLE } from "../../../utils/constant";
+
+import { Pencils } from "../HardCodedSuperTaskData";
+
 export default function CampaignListItem({ campaign, onCampaignClick }: any) {
     const navigate = useNavigate();
     const isLarge = campaign.media_url != null;
     const superTask = campaign.steps?.length > 0;
     const isPencil = campaign.id === Pencils.id
     const handleClick = async () => {
-        if (campaign["title"] == BLOCKGAME_TITLE) navigate(ROUTE_BLOCKGAME);
+        if (campaign["title"] === BLOCKGAME_TITLE) navigate(ROUTE_BLOCKGAME);
         else {
             if (superTask) {
                 navigate(`${ROUTE_SUPERTASKS}/${campaign.id}`);
@@ -58,6 +62,7 @@ export default function CampaignListItem({ campaign, onCampaignClick }: any) {
             </div>
         );
     }
+
     return (
         <div
             key={campaign.id}

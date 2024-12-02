@@ -11,7 +11,7 @@
   font-size: 14px;
   color: #ff0000;
   font-weight: 400;
-  margin-top: -1px;
+  margin-top: -1px !important;
 }
 
 .verifycode-input {

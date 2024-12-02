@@ -17,16 +17,12 @@ import {
 } from "../../store/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import Spacing from "../../components/Spacing/Spacing";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Campaing.css"
 import CampaignListItem from "./components/CampaignListItem";
-import DailyReward from "./components/DailyReward";
-import MantleTrasReward from './components/MantleTrasReward';
-import { MODAL_TASK_CHANNEL, MODAL_TASK_CLAIM, MODAL_TASK_INPUT, ROUTE_FRIENDS, ROUTE_REQUIRE_INPUT } from "../../routes";
-import useModal from "../../hooks/useModal";
+import { ROUTE_REQUIRE_INPUT } from "../../routes";
 import FriendsListSkeleton from "../Friends/components/FriendsListSkeleton/FriendsListSkeleton";
 import WalletConnect from '../../assets/images/other/preload-banner.png'
-import { SET_USER_ACTIVTY } from '../../store/reducer';
 import DailyTutorial from './components/DailyTutorial';
 import { useTranslation } from 'react-i18next';
 import { useWallet } from '../../utils/ReownAppKitProvider';
@@ -67,7 +63,6 @@ const CATEGORIES = [
     }
 ]
 const ADSGRAM_AD_REWARD = 20000;
-const CONNECT_WALLET_REWARD = 500000;
 const dividerStyle = { background: "#fff2", height: 1, width: "calc(100% - 64px)", marginLeft: "auto" }
 // @ts-ignore
 const tg = window['Telegram']['WebApp'];
@@ -81,8 +76,6 @@ const CampaignsComponent = () => {
     const selector = useSelector((s: DefaultStateType) => s);
     const campaigns = selector?.tasks;
     const dailyReward: any = selector?.dailyReward || {};
-    const { setActiveModal } = useModal();
-    const location = useLocation();
     const { t } = useTranslation();
     const wallet = useWallet();
 
@@ -252,7 +245,7 @@ const CampaignsComponent = () => {
     }, [fetchCampaigns]);
 
     const [isLimited, setLimited] = useState(true);
-    const [adsViewCount, setAdsViewCount] = useState(0);
+    const [_, setAdsViewCount] = useState(0);
     const [lastViewedAt, setLastViewedAt] = useState(0);
 
     const getAdsViewCount = async () => {
@@ -540,33 +533,8 @@ const CampaignsComponent = () => {
                                 //@ts-ignore
                                 style={{ display: activeTab === "completed" && categorizedCampaigns[activeTab].filter((c: any) => !(c.steps?.length)).length === 0 && "none" }}
                             >
-                                {/* {!loading && dailyReward !== null && (activeTab === "daily") && ({ }) && (
-                                    <>
-                                        <DailyReward
-                                            dailyReward={dailyReward}
-                                            getDailyReward={dailyReward["completed"] ? () => {
-                                                dispatch(getDispatchObject(SET_TOAST, {
-                                                    open: true,
-                                                    message: "Daily reward already claimed",
-                                                    type: "error"
-                                                }));
-                                            } : getDailyReward}
-                                        />
-                                        <div style={dividerStyle} className='mt-2'></div>
-                                        {((dailyReward["completed"])) ? (
-                                            <Spacing size={2} />
-                                        ) : <>
-                                            <Spacing size={2} />
-                                        </>}
-                                    </>
-                                )} */}
                                 {activeTab !== "completed" &&
                                     <>
-                                        {/* <MantleTrasReward
-                                            dailyReward={50000}
-                                            getDailyReward={getMantleTransReward}
-                                        />
-                                        <div style={dividerStyle} className='mt-2'></div> */}
                                         <DailyTutorial />
                                         <div style={dividerStyle} className='mt-2'></div>
                                     </>
@@ -583,40 +551,6 @@ const CampaignsComponent = () => {
                                     </>
                                 )
                                 )}
-
-                                {/* {activeTab === "new" && (
-                                    <Cell
-                                        key="inviteFriends"
-                                        title={`Invite Bonus`}
-                                        onClick={() => navigate(ROUTE_FRIENDS)}
-                                        before={
-                                            <EmojiRectangle big>
-                                                <Img
-                                                    radius={0}
-                                                    src={require("../../assets/images/emoji/money_fly.png")}
-                                                />
-                                            </EmojiRectangle>
-                                        }
-                                    >
-                                        <div className={"reward-text small "}>
-                                            <>
-                                                Up to:
-                                                <IconText
-                                                    size="small"
-                                                    imgPath={"/rocket_coin_back_36x36.png"}
-                                                    text={formatNumberWithSpaces(FRENS_REWARD)}
-                                                />
-                                            </>
-                                        </div>
-                                    </Cell>
-                                )} */}
-                                {/* {activeTab === "new" && !loading && (
-                                    <>
-                                        <Spacing size={1} />
-                                        <div style={dividerStyle}></div>
-                                        {renderAdsgramAdReward()}
-                                    </>
-                                )} */}
                             </div>
 
                         </>
