@@ -19,7 +19,7 @@ import iconLogo from '../../../../assets/images/coins/rocket_coin_back_100x100.p
 // @ts-ignore
 const tg = window['Telegram']['WebApp']
 
-interface InviteFriendProps {}
+interface InviteFriendProps { }
 
 const InviteFriend: FC<InviteFriendProps> = () => {
     const dispatch = useDispatch()

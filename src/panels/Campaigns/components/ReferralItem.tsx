@@ -2,18 +2,19 @@ import { useTranslation } from "react-i18next";
 
 import Spacing from "../../../components/Spacing/Spacing";
 
-import { MODAL_REFERRAL } from "../../../routes";
-import useModal from "../../../hooks/useModal";
+import { ROUTE_REFERRAL_LINK_INPUT } from "../../../routes";
+import { useNavigate } from "react-router-dom";
 
 type IProps = {
   data: any;
 };
 const ReferralItem = ({ data }: IProps) => {
   const { t } = useTranslation();
-  const { setActiveModal } = useModal();
+  const navigate = useNavigate()
 
   const handleStepClick = () => {
-    setActiveModal(MODAL_REFERRAL, data);
+    navigate(`${ROUTE_REFERRAL_LINK_INPUT}/${data.id}/${data.supertask_id}`)
+    // setActiveModal(MODAL_REFERRAL, data);
   };
 
   const ReferralHeader = () => {

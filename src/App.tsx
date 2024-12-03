@@ -27,6 +27,7 @@ import {
     ROUTE_WIN_LOTTERY,
     ROUTE_LOG_OF_LUCK_DETAIL,
     ROUTE_BLOCKGAME,
+    ROUTE_REFERRAL_LINK_INPUT,
 } from './routes'
 
 import Home from './panels/Home/Home'
@@ -48,6 +49,7 @@ import VipPage from './panels/VipPage/vip-page'
 import CampaignsComponent from './panels/Campaigns/Campaigns'
 import SuperTasks from './panels/Campaigns/SuperTasks'
 import RequireInput from './panels/Campaigns/components/RequireInput'
+import ReferralLinkInput from './panels/Campaigns/components/ReferralLinkInput'
 
 import { fetchData } from './utils/api'
 
@@ -248,6 +250,10 @@ const App: FC = () => {
                     <Route
                         path={`${ROUTE_REQUIRE_INPUT}/:id/:supertask_id`}
                         element={<RequireInput />}
+                    />
+                    <Route
+                        path={`${ROUTE_REFERRAL_LINK_INPUT}/:id/:supertask_id`}
+                        element={<ReferralLinkInput />}
                     />
                     <Route path={ROUTE_BOOSTS} element={<Boosts />} />
                     <Route path={ROUTE_STATISTICS} element={<Statistics />} />
