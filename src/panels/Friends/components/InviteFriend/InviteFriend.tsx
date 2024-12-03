@@ -76,6 +76,7 @@ const InviteFriend: FC<InviteFriendProps> = () => {
     }
 
     const linkSend = () => {
+        tgMainButtonShow();
         // @ts-ignore
         tg.openTelegramLink(
             `https://t.me/share/url?url=${encodeURIComponent(
@@ -99,11 +100,7 @@ const InviteFriend: FC<InviteFriendProps> = () => {
         )
     }
 
-    useEffect(() => {
-        setCopyLink()
-    }, [])
-
-    useEffect(() => {
+    const tgMainButtonShow = () => {
         resetMainButton()
         // @ts-ignore
         tg.MainButton.onClick(copyLink)
@@ -117,6 +114,14 @@ const InviteFriend: FC<InviteFriendProps> = () => {
             tg.MainButton.offClick(copyLink)
             hideButton()
         }
+    }
+
+    useEffect(() => {
+        setCopyLink()
+    }, [])
+
+    useEffect(() => {
+        tgMainButtonShow();
     }, [])
 
     return (

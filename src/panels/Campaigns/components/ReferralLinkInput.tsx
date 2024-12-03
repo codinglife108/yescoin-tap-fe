@@ -205,18 +205,7 @@ const ReferralLinkInput = () => {
         document.removeEventListener('TASKS_UPDATE', fetchCampaigns)
     }, [fetchCampaigns])
 
-    useEffect(() => {
-        createEventListeners()
-        return () => {
-            removeEventListeners()
-        }
-    }, [fetchTask, createEventListeners, removeEventListeners])
-
-    useEffect(() => {
-        fetchTask()
-    }, [tasks, dispatch])
-
-    useEffect(() => {
+    const tgMainButtonShow = () => {
         resetMainButton()
         // @ts-ignore
         tg.MainButton.onClick(checkTaskWithInput)
@@ -230,6 +219,21 @@ const ReferralLinkInput = () => {
             tg.MainButton.offClick(checkTaskWithInput)
             hideButton()
         }
+    }
+
+    useEffect(() => {
+        createEventListeners()
+        return () => {
+            removeEventListeners()
+        }
+    }, [fetchTask, createEventListeners, removeEventListeners])
+
+    useEffect(() => {
+        fetchTask()
+    }, [tasks, dispatch])
+
+    useEffect(() => {
+        tgMainButtonShow();
     }, [])
 
     return (
@@ -292,24 +296,6 @@ const ReferralLinkInput = () => {
                             </p>
                         )}
                     </div>
-                </div>
-                <div
-                    style={{
-                        display: 'block',
-                        width: '100%',
-                        paddingBottom: '3rem',
-                    }}
-                >
-                    <Button
-                        size='lg'
-                        fullWidth
-                        style={{ backgroundColor: '#3b82f6' }}
-                        className={'text-white'}
-                        isLoading={checkTaskButtonIsLoading}
-                        onClick={() => checkTaskWithInput()}
-                    >
-                        Update
-                    </Button>
                 </div>
             </div>
         </Panel>
