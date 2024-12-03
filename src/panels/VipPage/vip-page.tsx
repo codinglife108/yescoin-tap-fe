@@ -99,13 +99,10 @@ const PlayerItem = ({ rank, username, invite_count, gold }: IPlayerProps) => {
                 }>
                     <span className={"text-xl"}>{username.charAt(0).toUpperCase()}</span>
                 </div>
-                <p
-                    className={`w-[20px] h-[20px] text-xs flex justify-center items-center text-center rounded-full font-medium -mt-[15px] ${getRankColor(
-                        rank
-                    )}`}
-                >
-                    {rank}
-                </p>
+                <Img
+                    src={require(`../../assets/images/vip/${rank}_rank.webp`)}
+                    className={`w-[35px] h-[35px] text-xs flex justify-center items-center text-center rounded-full font-medium -mt-[15px]`}
+                />
             </div>
             <div className='pt-1 text-[13px] leading-[15.73px] font-bold'>{username}</div>
             <div className='flex justify-center items-center gap-[5px] text-[10px] font-medium text-xs pt-1 leading-[12.1px]'>
