@@ -328,6 +328,7 @@ const SuperTasks = () => {
         }
     }
     const handleInviteFriends = async () => {
+        tgMainButtonShow();
         // @ts-ignore
         tg.MainButton.setText('Inviting ...')
         try {
@@ -379,6 +380,23 @@ const SuperTasks = () => {
         )
     }
 
+    const tgMainButtonShow = () => {
+        resetMainButton()
+        // @ts-ignore
+        tg.MainButton.setText('Share & Earn')
+        // @ts-ignore
+        tg.MainButton.show()
+        // @ts-ignore
+        tg.MainButton.onClick(telegramButtonClick)
+        return () => {
+            // @ts-ignore
+            tg.MainButton.offClick(telegramButtonClick)
+            // @ts-ignore
+            tg.MainButton.hide()
+        }
+    }
+
+
     useEffect(() => {
         const initInviteLink = async () => {
             // @ts-ignore
@@ -403,19 +421,7 @@ const SuperTasks = () => {
     }, [])
 
     useEffect(() => {
-        resetMainButton()
-        // @ts-ignore
-        tg.MainButton.setText('Share & Earn')
-        // @ts-ignore
-        tg.MainButton.show()
-        // @ts-ignore
-        tg.MainButton.onClick(telegramButtonClick)
-        return () => {
-            // @ts-ignore
-            tg.MainButton.offClick(telegramButtonClick)
-            // @ts-ignore
-            tg.MainButton.hide()
-        }
+        tgMainButtonShow();
     }, [])
 
     useEffect(() => {
