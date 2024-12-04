@@ -206,9 +206,9 @@ const CoinButton: FC<CoinButtonProps> = () => {
       return;
     }
 
-    if(((new Date().getTime()/1000) - tapAt)/(60*60*24)>1&&!wallet.isConnected) {// if tap more than 1 day ago
-      handleConnectWallet();
-    }
+    // if(((new Date().getTime()/1000) - tapAt)/(60*60*24)>1&&!wallet.isConnected) {// if tap more than 1 day ago
+    //   handleConnectWallet();
+    // }
     clickAnimation(event);
 
     dispatch(getDispatchObject(ADD_GOLD, goldPerClick));
