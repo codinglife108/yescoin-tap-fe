@@ -95,11 +95,11 @@ const RequireInput = () => {
         setTaskInput('')
         setIsFaildInput(true)
         setFaildMessage(message)
-        setButtonLoader(false);
+        // setButtonLoader(false);
     }
 
     const checkTaskWithInput = async () => {
-        setButtonLoader(true, false);
+        // setButtonLoader(true, false);
         if (taskInput === '') {
             setFaild('Invalid code')
             return
@@ -118,7 +118,7 @@ const RequireInput = () => {
             return
         }
 
-        setButtonLoader(false);
+        // setButtonLoader(false);
         dispatch(getDispatchObject(ADD_GOLD, stepData['award']))
 
         const event = new Event('TASKS_UPDATE')
