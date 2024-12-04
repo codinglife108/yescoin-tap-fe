@@ -15,7 +15,7 @@ import {
 import { Button, Input } from '@nextui-org/react'
 import { ROUTE_HOME, ROUTE_SUPERTASKS, ROUTE_TASKS } from '../../../routes'
 import './RequireInput.css'
-import { hideButton, resetMainButton, setButtonText, showButton } from '../../../utils/tgButtonUtils'
+import { hideButton, resetMainButton, setButtonLoader, setButtonText, showButton } from '../../../utils/tgButtonUtils'
 
 // @ts-ignore
 const tg = window['Telegram']['WebApp']
@@ -29,8 +29,6 @@ const ReferralLinkInput = () => {
     const tasks = useSelector((state: any) => state.tasks)
     const dispatch = useDispatch()
     const [taskInput, setTaskInput] = useState<string>('')
-    const [checkTaskButtonIsLoading, setCheckTaskButtonIsLoading] =
-        useState<boolean>(false)
     const [isFaildInput, setIsFaildInput] = useState<boolean>(false)
     const [stepData, setStepData] = useState<any>({})
     const [faildMessage, setFaildMessage] = useState<string>('')
@@ -95,12 +93,12 @@ const ReferralLinkInput = () => {
         setTaskInput('')
         setIsFaildInput(true)
         setFaildMessage(message)
-        setCheckTaskButtonIsLoading(false)
+        setButtonLoader(false);
     }
 
     const checkTaskWithInput = async () => {
 
-        setCheckTaskButtonIsLoading(true);
+        setButtonLoader(true, false);
 
         if (taskInput === '') {
             setFaild('Invalid link')
@@ -122,7 +120,7 @@ const ReferralLinkInput = () => {
                     type: "error",
                 })
             );
-            setCheckTaskButtonIsLoading(false);
+            setButtonLoader(false);
             return;
         }
 
@@ -141,7 +139,7 @@ const ReferralLinkInput = () => {
                     type: "error",
                 })
             );
-            setCheckTaskButtonIsLoading(false);
+            setButtonLoader(false);
             return;
         }
 
@@ -154,7 +152,7 @@ const ReferralLinkInput = () => {
             })
         );
 
-        setCheckTaskButtonIsLoading(false);
+        setButtonLoader(false);
         if (supertask_id === 'not_supertask') navigate(ROUTE_TASKS)
         else navigate(`${ROUTE_SUPERTASKS}/${supertask_id}`)
 
@@ -234,6 +232,11 @@ const ReferralLinkInput = () => {
 
     useEffect(() => {
         tgMainButtonShow();
+        return () => {
+            // @ts-ignore
+            tg.MainButton.offClick(checkTaskWithInput)
+            hideButton()
+        }
     }, [])
 
     return (

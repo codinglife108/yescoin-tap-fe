@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Panel from '../../../components/Panel/Panel'
 import BackgroundGlow from '../../../components/BackgroundGlow/BackgroundGlow'
 import { formatNumberWithSpaces } from '../../../utils/mathUtils'
@@ -17,18 +18,18 @@ import { Button, Input } from '@nextui-org/react'
 import { ROUTE_HOME, ROUTE_SUPERTASKS, ROUTE_TASKS } from '../../../routes'
 import { OpenInNew } from '@mui/icons-material'
 import './RequireInput.css'
+import { hideButton, resetMainButton, setButtonLoader, setButtonText, showButton } from '../../../utils/tgButtonUtils'
 
 // @ts-ignore
 const tg = window['Telegram']['WebApp']
 
 const RequireInput = () => {
     const { id, supertask_id } = useParams()
+    const { t } = useTranslation()
     const navigate = useNavigate()
     const tasks = useSelector((state: any) => state.tasks)
     const dispatch = useDispatch()
     const [taskInput, setTaskInput] = useState<string>('')
-    const [checkTaskButtonIsLoading, setCheckTaskButtonIsLoading] =
-        useState<boolean>(false)
     const [isFaildInput, setIsFaildInput] = useState<boolean>(false)
     const [isOpenNewTab, setIsOpenNewTab] = useState<boolean>(false)
     const [stepData, setStepData] = useState<any>({})
@@ -94,10 +95,11 @@ const RequireInput = () => {
         setTaskInput('')
         setIsFaildInput(true)
         setFaildMessage(message)
-        setCheckTaskButtonIsLoading(false)
+        setButtonLoader(false);
     }
 
     const checkTaskWithInput = async () => {
+        setButtonLoader(true, false);
         if (taskInput === '') {
             setFaild('Invalid code')
             return
@@ -116,7 +118,7 @@ const RequireInput = () => {
             return
         }
 
-        setCheckTaskButtonIsLoading(false)
+        setButtonLoader(false);
         dispatch(getDispatchObject(ADD_GOLD, stepData['award']))
 
         const event = new Event('TASKS_UPDATE')
@@ -271,6 +273,31 @@ const RequireInput = () => {
         }
     }
 
+    const tgMainButtonShow = () => {
+        resetMainButton()
+        // @ts-ignore
+        tg.MainButton.onClick(checkTaskWithInput)
+        hideButton()
+        setTimeout(() => {
+            setButtonText(t('checkTask'))
+            showButton()
+        }, 50)
+        return () => {
+            // @ts-ignore
+            tg.MainButton.offClick(checkTaskWithInput)
+            hideButton()
+        }
+    }
+
+    useEffect(() => {
+        tgMainButtonShow();
+        return () => {
+            // @ts-ignore
+            tg.MainButton.offClick(checkTaskWithInput)
+            hideButton()
+        }
+    }, [])
+
     useEffect(() => {
         createEventListeners()
         return () => {
@@ -410,24 +437,6 @@ const RequireInput = () => {
                             </p>
                         )}
                     </div>
-                </div>
-                <div
-                    style={{
-                        display: 'block',
-                        width: '100%',
-                        paddingBottom: '3rem',
-                    }}
-                >
-                    <Button
-                        size='lg'
-                        fullWidth
-                        style={{ backgroundColor: '#3b82f6' }}
-                        className={'text-white'}
-                        isLoading={checkTaskButtonIsLoading}
-                        onClick={() => checkTaskWithInput()}
-                    >
-                        Check task
-                    </Button>
                 </div>
             </div>
         </Panel>

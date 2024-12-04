@@ -422,6 +422,12 @@ const SuperTasks = () => {
 
     useEffect(() => {
         tgMainButtonShow();
+        return () => {
+            // @ts-ignore
+            tg.MainButton.offClick(telegramButtonClick)
+            // @ts-ignore
+            tg.MainButton.hide()
+        }
     }, [])
 
     useEffect(() => {
