@@ -93,12 +93,12 @@ const ReferralLinkInput = () => {
         setTaskInput('')
         setIsFaildInput(true)
         setFaildMessage(message)
-        setButtonLoader(false);
+        // setButtonLoader(false);
     }
 
     const checkTaskWithInput = async () => {
 
-        setButtonLoader(true, false);
+        // setButtonLoader(true, false);
 
         if (taskInput === '') {
             setFaild('Invalid link')
@@ -120,7 +120,7 @@ const ReferralLinkInput = () => {
                     type: "error",
                 })
             );
-            setButtonLoader(false);
+            // setButtonLoader(false);
             return;
         }
 
@@ -139,7 +139,7 @@ const ReferralLinkInput = () => {
                     type: "error",
                 })
             );
-            setButtonLoader(false);
+            // setButtonLoader(false);
             return;
         }
 
@@ -152,7 +152,7 @@ const ReferralLinkInput = () => {
             })
         );
 
-        setButtonLoader(false);
+        // setButtonLoader(false);
         if (supertask_id === 'not_supertask') navigate(ROUTE_TASKS)
         else navigate(`${ROUTE_SUPERTASKS}/${supertask_id}`)
 
