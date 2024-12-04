@@ -122,6 +122,11 @@ const InviteFriend: FC<InviteFriendProps> = () => {
 
     useEffect(() => {
         tgMainButtonShow();
+        return () => {
+            // @ts-ignore
+            tg.MainButton.offClick(copyLink)
+            hideButton()
+        }
     }, [])
 
     return (
